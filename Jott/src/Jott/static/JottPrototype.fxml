@@ -79,27 +79,5 @@
             </VBox>
          </children>
       </VBox>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@JottPrototype.css" HBox.hgrow="ALWAYS">
-         <children>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="jott_page_label" stylesheets="@JottPrototype.css" text="Notebook 1: Note 1" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="400.0" styleClass="jott_page_scroll_pane" stylesheets="@JottPrototype.css" VBox.vgrow="ALWAYS">
-               <content>
-                  <FlowPane focusTraversable="true" prefHeight="494.0" prefWidth="460.0" rowValignment="TOP" stylesheets="@JottPrototype.css">
-                     <children>
-                        <Button mnemonicParsing="false" text="Bottom Button">
-                           <FlowPane.margin>
-                              <Insets top="500.0" />
-                           </FlowPane.margin>
-                        </Button>
-                     </children>
-                  </FlowPane>
-               </content>
-            </ScrollPane>
-         </children>
-      </VBox>
    </children>
 </HBox>
