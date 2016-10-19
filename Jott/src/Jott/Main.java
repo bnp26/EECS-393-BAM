@@ -11,6 +11,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
+			
+			
 			Scene scene = new Scene(page,600,700);
 			primaryStage.setScene(scene);
 			primaryStage.show();
