@@ -4,22 +4,24 @@
 .jott_notebook_combo_box {
     -fx-background-color: #ffffff;
     -fx-border-width: 1px;
-    -fx-border-color: #dddddd;
-    -fx-pref-width: 134px;
+    -fx-border-color: #f9f9f9;
+    -fx-pref-width: 135px;
+    -fx-padding: 0px 0px 0px 2px;
 }
 
 .jott_page_item {
-    -fx-padding: 10px 30px 10px 40px;
+    -fx-padding: 0px 0px 0px 40px;
     -fx-background-color: #fafafa;
     -fx-pref-width: 135px;
     -fx-pref-height: 40px;
     -fx-border-width:0px;
 }
 
-.jott_current_page {
+.jott_current_page_item {
     -fx-background-color: #efefef;
     -fx-border-width: 1.5px;
     -fx-border-color: #e0e0e0;
+    -fx-padding: 0px 0px 0px 11.5px;
 }
 
 .jott_page_scroll_pane {
@@ -32,8 +34,8 @@
     -fx-background-color: #e7e7e7;
     text-align: center;
     -fx-pref-width: 135px;
-    -fx-pref-height: 30px;
-    -fx-background-repeat: no-repeat;
+    -fx-pref-height: 40px;
+    -fx-padding: 0px 9px 0px 0px;
 
 }
 
