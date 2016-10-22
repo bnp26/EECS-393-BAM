@@ -20,16 +20,33 @@ public class Notebook {
 	public void populatePages() {}
 	
 	/**
+	 * returns the page object of the passed pageID.
 	 * 
-	 * @return 
+	 * @param String pageID
+	 * 
+	 * @return Page
 	 * @see Page.java
 	 */
-	public Page getPage() {
+	public Page getPage(String pageID) {
 		return null;
 	}
 	
-	public void createPage() {}
+	/**
+	 * <p>Creates a new page object in both the current page and the MongoDB server. 
+	 * Returns the ID of the newly created page.</p>
+	 * 
+	 * @return String 
+	 * 
+	 */
+	public String createPage(String newName) { return null;}
 	
+	/**
+	 * <p>Renames the currently selected Notebook to the entered parameter.</p>
+	 * 
+	 * @param String newName
+	 * 
+	 * @return void
+	 */
 	public void renameNotebook() {}
 	
 	@Override
