@@ -23,12 +23,19 @@ public class Cursor {
 	}
 	
 	public Letter delete(){
+		Letter newNext = next.getNext();
+		Letter oldNext = next;
+		setNext(newNext);
 		
-		return null;
+		return oldNext;
 	}
 	
 	public Letter backspace(){
-		return null;
+		Letter newPrevious = previous.getPrevious();
+		Letter oldPrevious = previous;
+		setPrevious(newPrevious);
+		
+		return oldPrevious;
 	}
 	
 	public void move(Location loc){

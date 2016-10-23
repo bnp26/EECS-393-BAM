@@ -27,7 +27,7 @@
                            <content>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="128.0">
                                  <children>
-                                    <Label cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="128.0" scaleShape="false" stylesheets="@EECS-393-BAM/JottPrototype.css" text="Note 1">
+                                    <Label cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="128.0" scaleShape="false" stylesheets="@JottPrototype.css" text="Note 1">
                                        <padding>
                                           <Insets left="8.0" />
                                        </padding>
