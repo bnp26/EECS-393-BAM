@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Notebook {
 	
-	private ArrayList<Page> pages;
 	private String name;
+	private ArrayList<Page> pages;
 	
 	/**
 	 *@author bnp26
