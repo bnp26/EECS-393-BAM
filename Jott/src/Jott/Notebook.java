@@ -4,20 +4,29 @@ import java.util.ArrayList;
 
 public class Notebook {
 	
-	private String name;
-	private ArrayList<Page> pages;
+	private String name; // this is equal to the key in the key/value pair in the notebooks pane HashMap.
+	private PagePane pagePane;
+	
+	public Notebook() {
+		name = null;
+	}
+	
+	public Notebook(String name) {
+		this.name = name;
+		this.pagePane = new PagePane();
+	}
 	
 	/**
 	 *@author bnp26
 	 *<p>
-	 *populatePages uses a connection to MongoDB to populate the pages of 
-	 *the selected notebook upon selecting a notebook
+	 *populateNotebooks uses a connection to MongoDB to populate the of 
+	 *the selected notebook upon selecting a notebook with it's assiciated pages.
 	 *</p>
 	 *@param 
 	 *@return 
 	 *
 	*/
-	public void populatePages() {}
+	public void populateNotebook() {}
 	
 	/**
 	 * returns the page object of the passed pageID.
