@@ -7,10 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputDialog;
@@ -23,7 +20,7 @@ public class NotebooksPane implements Initializable{
 	public TextInputDialog newNotebookDialog;
 	
 	@FXML	//fx:id="notebookxComboBox"
-	private ComboBox<String> notebooksComboBox;
+	private ComboBox<Notebook> notebooksComboBox;
 	
 	public NotebooksPane() {
 		//here add all the notebooks in the mongoDB database to the notebooks array list.
@@ -37,10 +34,10 @@ public class NotebooksPane implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		assert notebooksComboBox != null : "fx:id=\"notebooksComboBox\" was not injected: check your FXML file 'jottPrototype.fxml'.";
 		
-		notebooksComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+		notebooksComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Notebook>(){
 
 			@Override
-			public void changed(ObservableValue<? extends String> selected, String oldNotebook, String newNotebook) {
+			public void changed(ObservableValue<? extends Notebook> selected, Notebook oldNotebook, Notebook newNotebook) {
 				if(newNotebook.equals("Create New Notebook"))
 				{
 					String newNotebookName;

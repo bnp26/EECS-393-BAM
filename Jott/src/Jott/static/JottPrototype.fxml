@@ -21,10 +21,10 @@
                <children>
                   <VBox prefWidth="128.0">
                      <children>
-                        <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" onMouseClicked="#viewAllNotebooks" prefHeight="39.0" prefWidth="135.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
+                        <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" prefHeight="39.0" prefWidth="135.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
                         	<items>
 								<FXCollections fx:factory="observableArrayList">
-                       				<String fx:value="Create New Notebook" />
+                       				<String fx:value="Create New Notebook"/>
                        			</FXCollections>
                         	</items>
                         </ComboBox>

@@ -22,6 +22,10 @@ public class JottController {
 		
 	}
 	
+	public void createNewNotebook(ActionEvent ae) {
+		System.out.println("trying to create a new notebook");
+	}
+	
 	public void createNewNote(ActionEvent ae) {
 		//when the "Create New Note" button is clicked, logic here is executed.
 		System.out.println("clicked");

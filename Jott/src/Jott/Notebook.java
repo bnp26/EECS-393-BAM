@@ -62,4 +62,8 @@ public class Notebook {
 	public String toString(){
 		return name;
 	}
+	
+	public int compareTo(Notebook notebook) {
+		return this.name.compareTo(notebook.toString());
+	}
 }
