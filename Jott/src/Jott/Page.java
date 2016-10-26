@@ -8,6 +8,7 @@ public class Page {
 	
 	private String name;
 	private LinkedList<Line> lines;
+	private Notebook parent;
 	private Cursor cursor;
 	
 	private Label pageLabel;

@@ -13,7 +13,7 @@ public class Main extends Application {
 		try {
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
 			NotebooksPane notebooksPane = new NotebooksPane();
-			Region secondRegion = getNotePaneRegion(page);
+			Region secondRegion = getPagePaneRegion(page);
 			Scene scene = new Scene(page,600,700);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -26,7 +26,7 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	public Region getNotePaneRegion(Region region)
+	public Region getPagePaneRegion(Region region)
 	{
 		Region newRegion = new Region();
 		while(region.getChildrenUnmodifiable().get(0).getClass() == Region.class) {
@@ -36,3 +36,20 @@ public class Main extends Application {
 		
 	}
 }
+/*
+Notebook 
+	-name (unique)
+
+Page
+	-name (also unique)
+	-notebook (Foreign Key)
+
+Line
+	-linenum
+	-linestr
+	-Page (Forgein Key)
+
+
+//Notebook <- Page (page has a foreign key to Notebook
+//Page <- Line (Line has a foreign key to PAge)
+*/

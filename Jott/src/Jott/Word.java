@@ -1,5 +1,7 @@
 package Jott;
 
+import javafx.scene.layout.HBox;
+
 public class Word {
 
 	private Letter first;
@@ -7,6 +9,8 @@ public class Word {
 	private Word next;
 	private int length;
 	private boolean isHighlighted;
+	
+	private HBox letterHBox;
 	
 	public Word(Letter first) {
 		this.first = first;

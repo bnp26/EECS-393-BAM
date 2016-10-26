@@ -47,6 +47,6 @@ public class Cursor {
 	}
 	
 	public void enter(){}
-	
+	//Make Page Create the cursor.
 	
 }
