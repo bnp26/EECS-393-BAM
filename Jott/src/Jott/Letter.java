@@ -1,5 +1,7 @@
 package Jott;
 
+import javafx.scene.control.Label;
+
 public class Letter {
 
 	private char value;
@@ -7,8 +9,12 @@ public class Letter {
 	private Letter next;
 	private Location location;
 	
+	private Label letterLabel;
+	
 	public Letter(char val) {
 		value = val;
+		letterLabel = new Label();
+		setUpLabel(value);
 	}
 	
 	public Letter(char val, Letter next) {
@@ -24,6 +30,12 @@ public class Letter {
 	public Letter(char val, int line, int word, int letter) {
 		value = val;
 		location = new Location(line, word, letter);
+	}
+	
+	private void setUpLabel(char val) {
+		String str = new String();
+		str+=val;
+		System.out.println(str);
 	}
 	
 	public Letter getNext() {
