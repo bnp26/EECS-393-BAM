@@ -47,7 +47,12 @@ public class MongoDB {
         try {
             mongoClient = new MongoClient("localhost", 27017);
             db = mongoClient.getDB(Notebook);
-            pageList = (ArrayList)db.getCollectionNames();
+            Set<String> pageSet = db.getCollectionNames();
+            boolean added = pageList.addAll(pageSet);
+            if(added)
+            	System.out.println("added the returned pages to my ArrayList pageList");
+            else
+            	System.out.println("could not add returned pages to my ArrayList");
         }
         catch(Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );

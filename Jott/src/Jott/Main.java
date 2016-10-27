@@ -13,6 +13,7 @@ public class Main extends Application {
 		try {
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
 			NotebooksPane notebooksPane = new NotebooksPane();
+			
 			Region secondRegion = getPagePaneRegion(page);
 			Scene scene = new Scene(page,600,700);
 			primaryStage.setScene(scene);
