@@ -21,7 +21,7 @@
     -fx-background-color: #efefef;
     -fx-border-width: 1.5px;
     -fx-border-color: #e0e0e0;
-    -fx-padding: 0px 0px 0px 11.5px;
+    -fx-padding: 0px 0px 0px 0px;
 }
 
 .jott_page_scroll_pane {
@@ -34,18 +34,22 @@
     -fx-background-color: #e7e7e7;
     -fx-pref-width: 128px;
     -fx-pref-height: 40px;
-    -fx-padding: 0px 9px 0px 0px;
+    -fx-padding: 0px 0px 0px 0px;
 }
 
 .jott_new_page_button:armed {
     -fx-background-color: #d6d6d6;
     -fx-pref-width: 128px;
     -fx-pref-height: 40px;
-    -fx-padding: 0px 9px 0px 0px;
+    -fx-padding: 0px 0px 0px 0px;
 }
 
 .jott_page_label {
     -fx-background-color: #eeeeee;
+}
 
-
+.scroll-pane {
+    /*Removing the ugly focus rectangle is best done by disabling scrollpane borders entirely. Thanks, Oracle.*/
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }

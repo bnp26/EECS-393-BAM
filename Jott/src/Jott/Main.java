@@ -15,7 +15,7 @@ public class Main extends Application {
 			NotebooksPane notebooksPane = new NotebooksPane();
 			
 			Region secondRegion = getPagePaneRegion(page);
-			Scene scene = new Scene(page,600,700);
+			Scene scene = new Scene(page,800,600);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
