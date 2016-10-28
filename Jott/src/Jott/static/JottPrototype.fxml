@@ -32,7 +32,7 @@
                            <content>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="128.0">
                                  <children>
-                                    <Button cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#selectNote" prefHeight="46.0" prefWidth="128.0" scaleShape="false" stylesheets="@JottPrototype.css" text="Note 1">
+                                    <Button cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#selectPage" prefHeight="46.0" prefWidth="128.0" scaleShape="false" stylesheets="@JottPrototype.css" text="Page 1">
                                        <padding>
                                           <Insets left="8.0" />
                                        </padding>
@@ -53,7 +53,7 @@
                                           <Insets bottom="-2.0" />
                                        </VBox.margin>
                                     </Separator>
-                                    <Label maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="121.0" styleClass="jott_page_item" stylesheets="@JottPrototype.css" text="Note 2">
+                                    <Label maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="121.0" styleClass="jott_page_item" stylesheets="@JottPrototype.css" text="Page 2">
                                        <padding>
                                           <Insets left="8.0" />
                                        </padding>
@@ -63,7 +63,7 @@
                                           <Insets bottom="-2.0" />
                                        </VBox.margin>
                                     </Separator>
-                                    <Button id="newPageButton" fx:id="newPageButton" mnemonicParsing="false" onAction="#createNewNote" prefHeight="26.0" prefWidth="128.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Note">
+                                    <Button id="newPageButton" fx:id="newPageButton" mnemonicParsing="false" onAction="#createNewPage" prefHeight="26.0" prefWidth="128.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
                                        <graphic>
                                           <ImageView>
                                              <image>
