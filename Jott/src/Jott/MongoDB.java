@@ -8,16 +8,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 import java.util.ArrayList;
 
-import com.mongodb.MongoException;
-
-import com.mongodb.DBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.Mongo;
 
-import com.mongodb.ServerAddress;
-import java.util.Arrays;
-
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +32,7 @@ public class MongoDB {
     }
     
     public static ArrayList<String> getPages(String Notebook) {
-        
+                
         DB db;
         MongoClient mongoClient;
         ArrayList<String> pageList = new ArrayList<String>();
@@ -47,19 +40,17 @@ public class MongoDB {
         try {
             mongoClient = new MongoClient("localhost", 27017);
             db = mongoClient.getDB(Notebook);
-            Set<String> pageSet = db.getCollectionNames();
-            boolean added = pageList.addAll(pageSet);
-            if(added)
-            	System.out.println("added the returned pages to my ArrayList pageList");
-            else
-            	System.out.println("could not add returned pages to my ArrayList");
+            Set<String> myset = db.getCollectionNames();
+            for(String str : myset) {
+                pageList.add(str);
+            }
         }
         catch(Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return pageList;
     }
-       
+    
     public static void insertLine(String Notebook, String Page, int linenum, String linestr) {
       DB db;
       MongoClient mongoClient;
