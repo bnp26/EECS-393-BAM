@@ -2,7 +2,7 @@ package Jott;
 
 import java.util.LinkedList;
 
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 public class Page {
 	
@@ -11,21 +11,21 @@ public class Page {
 	private Notebook parent;
 	private Cursor cursor;
 	
-	private Label pageLabel;
+	private Button pageButton;
 	
 	public Page(String name) {
 		this.name = name;
 		lines = new LinkedList<Line>();
 		
-		pageLabel = new Label();
+		pageButton = new Button();
 	}
 	
-	public void setLabel(Label label){
-		this.pageLabel = label;
+	public void setButton(Button button){
+		this.pageButton = button;
 	}
 	
-	public Label getLabel() {
-		return pageLabel;
+	public Button getButton() {
+		return pageButton;
 	}
 	
 	public String getName() {

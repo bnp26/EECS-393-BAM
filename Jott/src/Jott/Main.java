@@ -12,10 +12,15 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
-			NotebooksPane notebooksPane = new NotebooksPane();
 			
 			Region secondRegion = getPagePaneRegion(page);
 			Scene scene = new Scene(page,800,600);
+			
+			NotebooksPane notebooksPane = new NotebooksPane();
+			PagesPane pagesPane = new PagesPane();
+			
+			JottController controller = new JottController(notebooksPane, pagesPane);
+			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
