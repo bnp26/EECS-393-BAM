@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Notebook {
 	
 	private String name; // this is equal to the key in the key/value pair in the notebooks pane HashMap.
-	private PagePane pagePane;
+	private PagesPane pagePane;
 	
 	public Notebook() {
 		name = null;
@@ -13,7 +13,7 @@ public class Notebook {
 	
 	public Notebook(String name) {
 		this.name = name;
-		this.pagePane = new PagePane();
+		this.pagePane = new PagesPane();
 	}
 	
 	/**
