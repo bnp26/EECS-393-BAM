@@ -15,18 +15,32 @@ public class PagesPane {
 		pages.add(page);
 	}
 	
-	private boolean hasPage(String name) {
+	public ArrayList<Page> getPages() {
+		return pages;
+	}
+	
+	public boolean hasPage(String name) {
 		if(pages.size() == 0)
 			return false;
 		
 		for(Page page : pages)
 		{
-			if(page.getName() == name)
+			System.out.println(page.getName() + "\t" +name);
+			
+			if(page.getName().equals(name))
 				return true;
 		}
 		
 		return false;	
 	}
 	
+	public String toString() {
+		String pagesList = "";
+		
+		for(Page page : pages)
+			pagesList += "[" + page.getName() + "]";
+		
+		return pagesList;
+	}
 	
 }

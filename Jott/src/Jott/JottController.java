@@ -26,8 +26,8 @@ public class JottController {
 	private Button newPageButton;
 	
 	public JottController() {
-		this.notebooksPane = null;
-		this.pagesPane = null;
+		this.notebooksPane = new NotebooksPane();
+		this.pagesPane = new PagesPane();
 	}
 	
 	public JottController(NotebooksPane notebooksPane, PagesPane pagesPane) {
@@ -59,10 +59,15 @@ public class JottController {
 		if(result.isPresent()) {
 			newPageName = new String(result.get());
 			
-			addNewPage(newPageName);
+			if(pagesPane.hasPage(newPageName)) 
+				System.out.println("this notebook already has a page by this name");
+			else	
+				addNewPage(newPageName);
+				
 		}
 		
 		System.out.println("clicked");
+		System.out.println(pagesPane.toString());
 		updateTitle(ae);
 	}
 	

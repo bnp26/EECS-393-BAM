@@ -16,10 +16,7 @@ public class Main extends Application {
 			Region secondRegion = getPagePaneRegion(page);
 			Scene scene = new Scene(page,800,600);
 			
-			NotebooksPane notebooksPane = new NotebooksPane();
-			PagesPane pagesPane = new PagesPane();
-			
-			JottController controller = new JottController(notebooksPane, pagesPane);
+			JottController controller = new JottController();
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
