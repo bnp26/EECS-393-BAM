@@ -86,6 +86,9 @@ public class JottController {
 		//adds the new button to the pagesVBox but puts it always at the end of the list but above the add new page button
 		pagesVBox.getChildren().add(vBoxSize-1, newPage);
 		
+		pagesPane.addPage(page);
+		
+		
 		newPage.setVisible(true);
 		return true;
 	}
@@ -95,13 +98,8 @@ public class JottController {
 		Button newPage = new Button();
 		//setting up the new page button
 		newPage.setText(name);
-		newPage.setPrefWidth(128);
-		newPage.setPrefHeight(26);
-		newPage.getStyleClass().add("jott_page_item");
 		
-		//String cssStylesheet = this.getClass().getResource("/static/JottPrototype.css").toExternalForm();
-		//newPage.getStylesheets().add(cssStylesheet);
-		//System.out.println(cssStylesheet);
+		newPage.getStyleClass().add("jott_page_item");
 		
 		return newPage;
 	}

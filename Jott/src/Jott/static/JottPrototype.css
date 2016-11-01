@@ -10,11 +10,12 @@
 }
 
 .jott_page_item {
-    -fx-padding: 0px 0px 0px 40px;
+	-fx-alignment: center-left;
+    -fx-padding: 0 0 0 40;
     -fx-background-color: #fafafa;
     -fx-pref-width: 128px;
     -fx-pref-height: 40px;
-    -fx-border-width:0px;
+    -fx-border-width:2px;
 }
 
 .jott_current_page_item {
