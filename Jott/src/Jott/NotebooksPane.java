@@ -59,6 +59,14 @@ public class NotebooksPane implements Initializable{
 		});
 	}
 	
+	public void createNewNotebook(String name) {
+		Notebook newNotebook = new Notebook(name);
+	}
+	
+	public void updatePane() {
+		
+	}
+	
 	private void newNotebookDialogSetup()
 	{
 		//setup new notebook dialog box details

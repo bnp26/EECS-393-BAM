@@ -83,7 +83,7 @@ public class JottController {
 
 		//creates the new page button
 		Button newPage = createPageButton(name);
-
+		
 		//finds the number of children in the pagesVBox
 		int vBoxSize = pagesVBox.getChildrenUnmodifiable().size();
 		

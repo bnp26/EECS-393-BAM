@@ -6,7 +6,6 @@ public class PagesPane {
 	
 	private ArrayList<Page> pages;
 	
-	
 	public PagesPane() {
 		pages = new ArrayList<Page>();
 	}

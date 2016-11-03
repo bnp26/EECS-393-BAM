@@ -7,6 +7,10 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+import org.bson.Document;
 
 import com.mongodb.DBCursor;
 import com.mongodb.Mongo;
@@ -31,7 +35,7 @@ public class MongoDB {
         
         ArrayList<String> notebooks = new ArrayList<String>();
         try {
-            mongoClient = new MongoClient("localhost", 27017);
+            mongoClient = new MongoClient(host, port);
             notebooksIterable = mongoClient.listDatabaseNames();
             MongoCursor cursor = notebooksIterable.iterator();
             for(String str; cursor.hasNext();) {
@@ -68,44 +72,69 @@ public class MongoDB {
     
     
     public void insertLine(String Notebook, String Page, int linenum, String linestr) {
-      MongoDatabase db;
-      MongoClient mongoClient;
-      MongoCollection collection;
-      //ArrayList<String> appsApplied = new ArrayList<String>();
+    	MongoDatabase db;
+		MongoClient mongoClient;
+		MongoCollection collection;
+		JottBSONObject lineBSONObj = new JottBSONObject();
+		//ArrayList<String> appsApplied = new ArrayList<String>();
+		try{ 
+			// To connect to mongodb server
+	        mongoClient = new MongoClient("localhost", 27017);
+	        db = mongoClient.getDatabase(Notebook);
+	        collection = db.getCollection(Page); // --implicitly creates collection if none exists 
+	        if(!collectionExists(Notebook, Page)) {
+	        	db.createCollection(Page);
+	        	System.out.println("created new collection");
+	            lineBSONObj.createNewLine(linenum, linestr);
+	        }
+	        else
+	        {
+	        	if(lineBSONObj.containsKey(new Integer(linenum).toString())){
+	        		HashMap<Integer, String> lineMap = (HashMap<Integer, String>) lineBSONObj.toMap();
+	        		final int lineMapSize = lineMap.size();
+	        		
+	        		for(int counter = lineMapSize + 1; counter > linenum; counter--)
+	        		{
+	        			Integer currentLineNumber  = new Integer(counter);
+	        			Integer previousLineNumber = new Integer(counter - 1);
+	        			String currentLine = lineMap.get(previousLineNumber.toString());
+	        			
+	        			lineBSONObj.put(currentLineNumber.toString(), currentLine);
+	        		}
+	        		
+	        		lineBSONObj.put(new Integer(linenum).toString(), linestr);
+	        	}
+	        }
+	        collection.insertOne(lineBSONObj);
+		}catch(Exception e){
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		}
+    }
     
-      try{ 
-        // To connect to mongodb server
+    public String getLine(String notebook, String page, int linenum) {
+    	
+    	
+    	return null;
+    }
+    
+    public boolean collectionExists(String notebook, final String collectionName) {
+    	MongoDatabase db;
+        MongoClient mongoClient;
         mongoClient = new MongoClient("localhost", 27017);
-        db = mongoClient.getDatabase(Notebook);
-	collection = db.getCollection(Page); // --implicitly creates collection if none exists 
-	 
-        BasicDBObject doc = new BasicDBObject(); // create a document object
-     
-        FindIterable cursor = collection.find();
-
-        BasicDBObject query = new BasicDBObject("linenum", linenum);
-        MongoCursor mongoCursor = collection.find(query).iterator();
-        boolean found = false;
-        try {
-           while(mongoCursor.hasNext()) {
-               System.out.println(mongoCursor.next());
-               found = true;
-        }
-        } finally {
-           mongoCursor.close();
-        }
-        
-        if(!found) {   
-            doc.put("linenum", linenum);
-            doc.put("linestr", linestr);
-            collection.insertOne(doc);
-        }
-        
-      }catch(Exception e){
-         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-      }
-   }
-
+        db = mongoClient.getDatabase(notebook);
+    	MongoIterable collectionNames = db.listCollectionNames();
+    	MongoCursor cursor = collectionNames.iterator();
+    	while(cursor.hasNext())
+    	{
+    		String currentCollection = (String) cursor.next();
+    		
+    		if(collectionName.equals(currentCollection)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
 }
     
     

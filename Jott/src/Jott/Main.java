@@ -11,6 +11,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			MongoDB mongodb = new MongoDB();
+			mongodb.insertLine("Notebook1", "page 1", 3, "abcdefg");
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
 			
 			Region secondRegion = getPagePaneRegion(page);
