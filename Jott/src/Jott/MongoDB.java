@@ -8,6 +8,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bson.Document;
@@ -71,49 +72,91 @@ public class MongoDB {
     
     
     
-    public void insertLine(String Notebook, String Page, int linenum, String linestr) {
+    public void insertLine(String notebook, String page, int linenum, String linestr) {
     	MongoDatabase db;
 		MongoClient mongoClient;
-		MongoCollection collection;
-		JottBSONObject lineBSONObj = new JottBSONObject();
+		MongoCollection<Document> collection;
+		
+		Document doc = new Document();
+		doc.append("linenum", new Integer(linenum));
+        doc.append("linestr", linestr);
 		//ArrayList<String> appsApplied = new ArrayList<String>();
 		try{ 
 			// To connect to mongodb server
 	        mongoClient = new MongoClient("localhost", 27017);
-	        db = mongoClient.getDatabase(Notebook);
-	        collection = db.getCollection(Page); // --implicitly creates collection if none exists 
-	        if(!collectionExists(Notebook, Page)) {
-	        	db.createCollection(Page);
+	        db = mongoClient.getDatabase(notebook);
+	        collection = db.getCollection(page); // --implicitly creates collection if none exists 
+	        if(!collectionExists(notebook, page)) {
 	        	System.out.println("created new collection");
-	            lineBSONObj.createNewLine(linenum, linestr);
+	        	db.createCollection(page);
+	        	System.out.println("about to insert doc to the database");
+	            collection.insertOne(doc);
 	        }
 	        else
 	        {
-	        	if(lineBSONObj.containsKey(new Integer(linenum).toString())){
-	        		HashMap<Integer, String> lineMap = (HashMap<Integer, String>) lineBSONObj.toMap();
-	        		final int lineMapSize = lineMap.size();
+	        	Document query = new Document("linenum", new Integer(linenum));
+	        	FindIterable<Document> queryIterator = collection.find(query);
+	        	
+	        	if(queryIterator.first() != null) {
+	        		long collectionLength = collection.count();
 	        		
-	        		for(int counter = lineMapSize + 1; counter > linenum; counter--)
+	        		for(int counter = (int) (collectionLength + 1); counter > linenum; counter--)
 	        		{
-	        			Integer currentLineNumber  = new Integer(counter);
-	        			Integer previousLineNumber = new Integer(counter - 1);
-	        			String currentLine = lineMap.get(previousLineNumber.toString());
+	        			Document newQuery = new Document("linestr", new Integer(counter - 1));
 	        			
-	        			lineBSONObj.put(currentLineNumber.toString(), currentLine);
+	        			FindIterable<Document> currentIterable = collection.find(newQuery);
+	        			MongoCursor<Document> currentCursor = currentIterable.iterator();
+	        			
+	        			Document currentDoc = currentCursor.next();
+	        			currentDoc.put("linenum", new Integer(counter));
+	        			
+	        			collection.findOneAndReplace(newQuery, currentDoc);
 	        		}
-	        		
-	        		lineBSONObj.put(new Integer(linenum).toString(), linestr);
+
+	    	        System.out.println("about to insert doc to the database");
+	        		collection.insertOne(doc);
 	        	}
 	        }
-	        collection.insertOne(lineBSONObj);
 		}catch(Exception e){
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
     }
     
     public String getLine(String notebook, String page, int linenum) {
-    	
-    	
+    	MongoDatabase db;
+		MongoClient mongoClient;
+		MongoCollection collection;
+		
+		try{ 
+			// To connect to mongodb server
+	        mongoClient = new MongoClient("localhost", 27017);
+	        db = mongoClient.getDatabase(notebook);
+	        collection = db.getCollection(page); // --implicitly creates collection if none exists 
+	        if(!collectionExists(notebook, page)) {
+	        	System.out.println("Collection does not exist");
+	        	return null;
+	        }
+	        else
+	        {
+	        	MongoCursor cursor = collection.find().iterator();
+	        	System.out.println(cursor.tryNext().toString());
+	        	
+	        	while(cursor.hasNext())
+	        	{
+	        		Document currentDoc = (Document) cursor.next();
+	        		Integer linenumValue = new Integer(linenum);
+	        		
+	        		if(currentDoc.getInteger("linenum").equals(linenumValue))
+	        			return currentDoc.getString("linestr");
+	        	}
+	        	System.out.println("Could not find line");
+	        	return null;
+	        }
+	        
+		}
+		catch(Exception e){
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		}
     	return null;
     }
     

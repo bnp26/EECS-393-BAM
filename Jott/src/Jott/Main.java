@@ -13,6 +13,7 @@ public class Main extends Application {
 		try {
 			MongoDB mongodb = new MongoDB();
 			mongodb.insertLine("Notebook1", "page 1", 3, "abcdefg");
+			System.out.println(mongodb.getLine("Notebook1", "page 1", 3));
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
 			
 			Region secondRegion = getPagePaneRegion(page);
