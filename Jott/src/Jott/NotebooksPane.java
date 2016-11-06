@@ -19,15 +19,13 @@ public class NotebooksPane implements Initializable{
 	
 	public TextInputDialog newNotebookDialog;
 	
-	@FXML	//fx:id="notebookxComboBox"
+	@FXML	//fx:id="notebooksComboBox"
 	private ComboBox<Notebook> notebooksComboBox;
 	
 	public NotebooksPane() {
 		//here add all the notebooks in the mongoDB database to the notebooks array list.
 		//this is initializing for now an empty array of notebooks
 		notebooks = new HashMap<String, Notebook>();
-		
-		newNotebookDialogSetup();
 	}
 	
 	@Override

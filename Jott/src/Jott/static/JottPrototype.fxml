@@ -32,37 +32,6 @@
                            <content>
                               <VBox fx:id="pagesVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="128.0">
                                  <children>
-                                    <!-- <Button cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" onAction="#selectPage" prefHeight="46.0" prefWidth="128.0" scaleShape="false" stylesheets="@JottPrototype.css" text="Page 1">
-                                       <padding>
-                                          <Insets left="8.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView>
-                                             <image>
-                                                <Image url="@ic_label_black_24dp/web/ic_label_black_24dp_1x.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <styleClass>
-                                          <String fx:value="jott_page_item" />
-                                          <String fx:value="jott_current_page_item" />
-                                       </styleClass>
-                                    </Button>
-                                    <Separator prefWidth="200.0">
-                                       <VBox.margin>
-                                          <Insets bottom="-2.0" />
-                                       </VBox.margin>
-                                    </Separator>
-                                    <Label maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="121.0" styleClass="jott_page_item" stylesheets="@JottPrototype.css" text="Page 2">
-                                       <padding>
-                                          <Insets left="8.0" />
-                                       </padding>
-                                    </Label>
-                                    <Separator prefWidth="200.0">
-                                       <VBox.margin>
-                                          <Insets bottom="-2.0" />
-                                       </VBox.margin>
-                                    </Separator>-->
                                     <Button id="newPageButton" fx:id="newPageButton" mnemonicParsing="false" onAction="#createNewPage" prefHeight="26.0" prefWidth="128.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
                                        <graphic>
                                           <ImageView>
@@ -70,7 +39,8 @@
                                                 <Image url="@ic_note_add_black_24dp/web/ic_note_add_black_24dp_1x.png" />
                                              </image>
                                           </ImageView>
-                                       </graphic></Button>
+                                       </graphic>
+                                    </Button>
                                  </children>
                               </VBox>
                            </content>
