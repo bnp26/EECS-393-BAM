@@ -4,7 +4,7 @@ public class Cursor {
 	private Location location;
 	private Letter previous;
 	private Letter next;
-	
+
 	public Letter getPrevious() {
 		return previous;
 	}

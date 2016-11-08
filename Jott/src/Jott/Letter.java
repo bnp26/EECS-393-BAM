@@ -1,6 +1,11 @@
 package Jott;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 
 public class Letter {
 
@@ -13,7 +18,6 @@ public class Letter {
 	
 	public Letter(char val) {
 		value = val;
-		letterLabel = new Label();
 		setUpLabel(value);
 	}
 	
@@ -31,13 +35,14 @@ public class Letter {
 		value = val;
 		location = new Location(line, word, letter);
 	}
-	
+
 	private void setUpLabel(char val) {
-		String str = new String();
-		str+=val;
-		System.out.println(str);
-	}
-	
+        String str = new String();
+        str += val;
+        letterLabel = new Label();
+        letterLabel.setPrefSize(5, 5);
+    }
+
 	public Letter getNext() {
 		return next;
 	}

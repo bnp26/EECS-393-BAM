@@ -1,10 +1,9 @@
 package Jott;
 	
 import javafx.application.Application;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.fxml.*;
 
 public class Main extends Application {
@@ -15,11 +14,14 @@ public class Main extends Application {
 			mongodb.insertLine("Notebook1", "page 1", 3, "abcdefg");
 			System.out.println(mongodb.getLine("Notebook1", "page 1", 3));
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
-			
-			Region secondRegion = getPagePaneRegion(page);
-			Scene scene = new Scene(page,800,600);
-			
-			JottController controller = new JottController();
+
+            Region secondRegion = getPagePaneRegion(page);
+			Scene scene = new Scene(page,640, 480);
+
+			NotebooksPane notebooksPane = new NotebooksPane();
+			PagesPane pagesPane = new PagesPane();
+
+			JottController controller = new JottController(notebooksPane, pagesPane);
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
