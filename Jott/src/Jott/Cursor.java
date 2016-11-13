@@ -1,10 +1,20 @@
 package Jott;
 
 public class Cursor extends Glyph{
-	
+
+    private Location location;
+
+    public Cursor() {
+        super();
+        location = null;
+    }
+
+    public Cursor(Location loc) {
+        super();
+        location = loc;
+    }
+
 	public Glyph insertLetter(char letter) {
-        Location currentLocation = this.getLocation();
-        Location newLetterLocation = new Location(currentLocation.getLineNum(), currentLocation.getWordNum(), currentLocation.getLetterNum());
         Letter newLetter = new Letter(letter);
 
         newLetter.setPrevious(this.getPrevious());
@@ -31,7 +41,15 @@ public class Cursor extends Glyph{
 		
 		return oldPrevious;
 	}
-	
+
+	public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location loc) {
+        location = loc;
+    }
+
 	public void move(Location loc){
 		this.setLocation(loc);
 	}

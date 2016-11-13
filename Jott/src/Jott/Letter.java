@@ -21,12 +21,10 @@ public class Letter extends Glyph{
 	}
 	
 	public Letter(char val, Location loc) {
-		super(loc);
 		value = val;
 	}
 	
 	public Letter(char val, int line, int word, int letter) {
-		super(new Location(line, word, letter));
 		value = val;
 	}
 
