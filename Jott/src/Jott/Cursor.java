@@ -1,52 +1,39 @@
 package Jott;
 
-public class Cursor {
-	private Location location;
-	private Letter previous;
-	private Letter next;
-
-	public Letter getPrevious() {
-		return previous;
-	}
-	public void setPrevious(Letter previous) {
-		this.previous = previous;
-	}
-	public Letter getNext() {
-		return next;
-	}
-	public void setNext(Letter next) {
-		this.next = next;
-	}
+public class Cursor extends Glyph{
 	
 	public Letter insertLetter(char letter) {
 		return null;
 	}
 	
 	public Letter delete(){
-		Letter newNext = next.getNext();
-		Letter oldNext = next;
+		Letter oldNext = this.getNext();
+		Letter newNext = this.getNext().getNext();
+
 		setNext(newNext);
 		
 		return oldNext;
 	}
 	
 	public Letter backspace(){
-		Letter newPrevious = previous.getPrevious();
-		Letter oldPrevious = previous;
+		Letter oldPrevious = this.getPrevious();
+		Letter newPrevious = this.getPrevious().getPrevious();
 		setPrevious(newPrevious);
 		
 		return oldPrevious;
 	}
 	
 	public void move(Location loc){
-		location = loc;
+		this.setLocation(loc);
 	}
 	
 	public void move(int line, int word, int letter){
-		location.changeLocation(line, word, letter);
+		this.getLocation().changeLocation(line, word, letter);
 	}
 	
-	public void enter(){}
+	public void enter(){
+		
+	}
 	//Make Page Create the cursor.
 	
 }
