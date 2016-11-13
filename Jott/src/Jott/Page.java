@@ -67,7 +67,7 @@ public class Page {
 
 	public void selectPage() {
         pageButton.getStyleClass().add("jott_current_page_item");
-        Image imageDecline = new Image(getClass().getResourceAsStream("static/ic_label_black_24dp/web/ic_label_black_24dp_1x.png"));
+        Image imageDecline = new Image(getClass().getResourceAsStream("static/ic_label_black_24dp/web/ic_label_black_24dp_2x.png"));
         pageButton.setGraphic(new ImageView(imageDecline));
     }
 

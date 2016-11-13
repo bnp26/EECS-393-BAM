@@ -1,12 +1,16 @@
 package Jott;
 
+import javafx.scene.control.Label;
+
 public class Cursor extends Glyph{
 
     private Location location;
+    private Label cursorLabel;
 
     public Cursor() {
         super();
         location = null;
+        cursorLabel = new Label();
     }
 
     public Cursor(Location loc) {

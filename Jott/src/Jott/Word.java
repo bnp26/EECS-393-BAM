@@ -47,6 +47,7 @@ public class Word implements Iterable<Glyph>{
 
         @Override
         public Glyph next() {
+            current = current.getNext();
             return current.getNext();
         }
     }

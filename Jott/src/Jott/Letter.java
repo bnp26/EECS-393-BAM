@@ -14,10 +14,17 @@ public class Letter extends Glyph{
 		setUpLabel(value);
 	}
 	
-	public Letter(char val, Letter next) {
+	public Letter(char val, Glyph previous) {
+		super();
+		value = val;
+		this.setPrevious(previous);
+	}
+
+	public Letter(char val, Glyph next, Glyph previous) {
 		super();
 		value = val;
 		this.setNext(next);
+		this.setPrevious(previous);
 	}
 	
 	public Letter(char val, Location loc) {
