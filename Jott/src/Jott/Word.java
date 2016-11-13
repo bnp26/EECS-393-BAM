@@ -7,9 +7,9 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.Consumer;
 
-public class Word implements Iterable<Letter>{
+public class Word implements Iterable<Glyph>{
 
-	private Letter first;
+	private Glyph first;
 	private Word previous;
 	private Word next;
 
@@ -18,7 +18,7 @@ public class Word implements Iterable<Letter>{
 	
 	private HBox letterHBox;
 
-	public Word(Letter first) {
+	public Word(Glyph first) {
 		this.first = first;
 	}
 
@@ -28,13 +28,13 @@ public class Word implements Iterable<Letter>{
 		this.next = next;
 	}
 
-    public Iterator<Letter> iterator() {
+    public Iterator<Glyph> iterator() {
         return new WordIterator();
     }
 
-    private class WordIterator implements Iterator<Letter> {
+    private class WordIterator implements Iterator<Glyph> {
 
-        private Letter current;
+        private Glyph current;
 
         public WordIterator () {
             current = Word.this.first;
@@ -46,7 +46,7 @@ public class Word implements Iterable<Letter>{
         }
 
         @Override
-        public Letter next() {
+        public Glyph next() {
             return current.getNext();
         }
     }
