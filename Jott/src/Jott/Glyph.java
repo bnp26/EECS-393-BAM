@@ -10,19 +10,11 @@ public abstract class Glyph {
     private Glyph next;
 
     public Glyph() {
-        location = null;
         previous = null;
         next = null;
     }
 
-    public Glyph(Location loc) {
-        location = loc;
-        next = null;
-        previous = null;
-    }
-
-    public Glyph(Location loc, Glyph next, Glyph previous) {
-        location = loc;
+    public Glyph(Glyph next, Glyph previous) {
         next = next;
         previous = previous;
     }
@@ -47,13 +39,5 @@ public abstract class Glyph {
         previous = newLetter;
 
         return oldPrevious;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location loc) {
-        location = loc;
     }
 }

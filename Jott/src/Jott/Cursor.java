@@ -3,12 +3,16 @@ package Jott;
 public class Cursor extends Glyph{
 	
 	public Glyph insertLetter(char letter) {
+        Location currentLocation = this.getLocation();
+        Location newLetterLocation = new Location(currentLocation.getLineNum(), currentLocation.getWordNum(), currentLocation.getLetterNum());
         Letter newLetter = new Letter(letter);
 
-        newLetter.setPrevious((Letter)this.getPrevious());
-        newLetter.setNext((Glyph)this);
+        newLetter.setPrevious(this.getPrevious());
+        newLetter.setNext(this);
 
-        return null;
+        this.setPrevious(newLetter);
+
+        return newLetter;
 	}
 	
 	public Letter delete(){
