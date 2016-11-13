@@ -2,13 +2,18 @@ package Jott;
 
 public class Cursor extends Glyph{
 	
-	public Letter insertLetter(char letter) {
-		return null;
+	public Glyph insertLetter(char letter) {
+        Letter newLetter = new Letter(letter);
+
+        newLetter.setPrevious((Letter)this.getPrevious());
+        newLetter.setNext((Glyph)this);
+
+        return null;
 	}
 	
 	public Letter delete(){
-		Letter oldNext = this.getNext();
-		Letter newNext = this.getNext().getNext();
+		Letter oldNext = (Letter)this.getNext();
+        Letter newNext = (Letter)this.getNext().getNext();
 
 		setNext(newNext);
 		
@@ -16,8 +21,8 @@ public class Cursor extends Glyph{
 	}
 	
 	public Letter backspace(){
-		Letter oldPrevious = this.getPrevious();
-		Letter newPrevious = this.getPrevious().getPrevious();
+		Letter oldPrevious = (Letter)this.getPrevious();
+		Letter newPrevious = (Letter)this.getPrevious().getPrevious();
 		setPrevious(newPrevious);
 		
 		return oldPrevious;
@@ -32,7 +37,7 @@ public class Cursor extends Glyph{
 	}
 	
 	public void enter(){
-		
+
 	}
 	//Make Page Create the cursor.
 	

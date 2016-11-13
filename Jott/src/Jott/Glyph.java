@@ -6,8 +6,8 @@ package Jott;
 public abstract class Glyph {
 
     private Location location;
-    private Letter previous;
-    private Letter next;
+    private Glyph previous;
+    private Glyph next;
 
     public Glyph() {
         location = null;
@@ -21,29 +21,29 @@ public abstract class Glyph {
         previous = null;
     }
 
-    public Glyph(Location loc, Letter next, Letter previous) {
+    public Glyph(Location loc, Glyph next, Glyph previous) {
         location = loc;
         next = next;
         previous = previous;
     }
 
-    public Letter getNext() {
+    public Glyph getNext() {
         return next;
     }
 
-    public Letter setNext(Letter newLetter) {
-        Letter oldNext = next;
+    public Glyph setNext(Glyph newLetter) {
+        Glyph oldNext = next;
         next = newLetter;
 
         return oldNext;
     }
 
-    public Letter getPrevious() {
+    public Glyph getPrevious() {
         return next;
     }
 
-    public Letter setPrevious(Letter newLetter) {
-        Letter oldPrevious = previous;
+    public Glyph setPrevious(Glyph newLetter) {
+        Glyph oldPrevious = previous;
         previous = newLetter;
 
         return oldPrevious;
