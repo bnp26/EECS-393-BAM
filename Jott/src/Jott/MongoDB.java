@@ -1,4 +1,4 @@
-package Jott;
+package trial;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -15,6 +15,7 @@ import org.bson.Document;
 
 import com.mongodb.DBCursor;
 import com.mongodb.Mongo;
+import com.mongodb.MongoNamespace;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -49,8 +50,74 @@ public class MongoDB {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return notebooks;
-    }
+    } // getNotebooks()
 
+    /*
+    public void createNotebook(String notebook) {
+
+        MongoDatabase db;
+        MongoClient mongoClient;
+
+        try {
+            mongoClient = new MongoClient(host, port);
+            db = mongoClient.getDatabase(notebook);
+        }
+        catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    } // createPage()
+    */
+    
+    // Need to create a page together with a notebook
+    public void createPage(String notebook, String page) {
+
+        MongoDatabase db;
+        MongoClient mongoClient;
+
+        try {
+            mongoClient = new MongoClient(host, port);
+            db = mongoClient.getDatabase(notebook);
+
+            if (!collectionExists(notebook, page)) {
+                System.out.println("created new collection");
+                db.createCollection(page);
+            }
+            else
+                System.out.println("Such page with the given name exists");
+        }
+        catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    } // createPage()
+    
+    public void renamePage(String notebook, String page, String newPage) {
+
+        MongoNamespace newPageName = new MongoNamespace(notebook, newPage);
+
+        MongoDatabase db;
+        MongoClient mongoClient;
+        MongoCollection<Document> collection;
+        boolean rename = false;
+            
+        try {
+            mongoClient = new MongoClient(host, port);
+            db = mongoClient.getDatabase(notebook);
+            
+            if (!collectionExists(notebook, page)) {
+                System.out.println("such a page does not exist!");
+            }
+            else {
+                collection = db.getCollection(page); // --implicitly creates collection if none exists 
+                collection.renameCollection(newPageName);
+            }
+            
+            
+        }
+        catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    } // createPage()
+    
     public ArrayList<String> getPages(String Notebook) {
 
         MongoDatabase db;
@@ -68,7 +135,7 @@ public class MongoDB {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return pageList;
-    }
+    } // getPages()
 
     // increments the line numbers of the lines after the position inserted
     public void insertLine(String notebook, String page, int linenum, String linestr) {
@@ -121,7 +188,7 @@ public class MongoDB {
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-    }
+    } // insertLine()
     
     // decrements the line numbers of the lines after the position deleted
     public void deleteLine(String notebook, String page, int linenum){ 
@@ -171,7 +238,7 @@ public class MongoDB {
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-    }
+    } // deleteLine()
 
     public String getLine(String notebook, String page, int linenum) {
         MongoDatabase db;
@@ -202,12 +269,13 @@ public class MongoDB {
                 return null;
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return null;
-    }
-
+    } // getLine()
+   
     public boolean collectionExists(String notebook, final String collectionName) {
         MongoDatabase db;
         MongoClient mongoClient;
@@ -223,6 +291,6 @@ public class MongoDB {
             }
         }
         return false;
-    }
+    } // collectionExists()
 
 }
