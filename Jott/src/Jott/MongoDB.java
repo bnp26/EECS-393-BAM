@@ -70,6 +70,7 @@ public class MongoDB {
         return pageList;
     }
 
+    // increments the line numbers of the lines after the position inserted
     public void insertLine(String notebook, String page, int linenum, String linestr) {
         MongoDatabase db;
         MongoClient mongoClient;
@@ -114,6 +115,56 @@ public class MongoDB {
                     collection.insertOne(doc);
                 } else {
                     collection.insertOne(doc);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+    
+    // decrements the line numbers of the lines after the position deleted
+    public void deleteLine(String notebook, String page, int linenum){ 
+        MongoDatabase db;
+        MongoClient mongoClient;
+        MongoCollection<Document> collection;
+        
+        try {
+            // To connect to mongodb server
+            mongoClient = new MongoClient("localhost", 27017);
+            db = mongoClient.getDatabase(notebook);
+            collection = db.getCollection(page); // --implicitly creates collection if none exists 
+            if (!collectionExists(notebook, page)) {
+                System.out.println("The notebook - page combination doesn't exist");
+                
+            } 
+            else {
+                Document query = new Document("linenum", new Integer(linenum));
+                FindIterable<Document> queryIterator = collection.find(query);
+                long collectionLength = collection.count();
+                System.out.println("collectionLength=" + collectionLength);
+                System.out.println("QI " + queryIterator.first());
+                
+                // Deleting the last line
+                if(linenum == collectionLength) {
+                    collection.deleteOne(query);
+                }
+                
+                else {
+                    int difference = (int) collectionLength - linenum;
+                    collection.deleteOne(query);
+
+                    for (int counter = 1; difference >= counter; counter++) {
+                            Document newQuery = new Document("linenum", new Integer(linenum + counter));
+
+                            FindIterable<Document> currentIterable = collection.find(newQuery);
+                            MongoCursor<Document> currentCursor = currentIterable.iterator();
+
+                            Document currentDoc = currentCursor.next();
+                            currentDoc.put("linenum", new Integer(linenum + counter - 1));
+
+                            collection.findOneAndReplace(newQuery, currentDoc);
+                    }
                 }
             }
 
