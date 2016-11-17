@@ -1,4 +1,4 @@
-package Jott;
+package trial;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -65,8 +65,7 @@ public class MongoDB {
         try {
             mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
-
-            if (db!=null) {
+            if (getNotebooks().contains(notebook)) {
                 System.out.println("dropping the notebook");
                 db.drop();
             }
