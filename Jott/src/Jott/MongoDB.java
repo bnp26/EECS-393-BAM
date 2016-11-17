@@ -32,6 +32,10 @@ public class MongoDB {
         port = 27017;
     }
 
+    /*
+    METHODS FOR NOTEBOOK
+    */
+    
     public ArrayList<String> getNotebooks() {
 
         MongoClient mongoClient;
@@ -51,9 +55,9 @@ public class MongoDB {
         }
         return notebooks;
     } // getNotebooks()
-
-    /*
-    public void createNotebook(String notebook) {
+    
+    // Will remove the notebook if no other page exists
+    public void deleteNotebook(String notebook) {
 
         MongoDatabase db;
         MongoClient mongoClient;
@@ -61,11 +65,21 @@ public class MongoDB {
         try {
             mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
+
+            if (db!=null) {
+                System.out.println("dropping the notebook");
+                db.drop();
+            }
+            else
+                System.out.println("Such notebook with the given name exists");
         }
         catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-    } // createPage()
+    } // deleteNotebook()
+    
+    /*
+    METHODS FOR PAGE
     */
     
     // Need to create a page together with a notebook
@@ -111,12 +125,35 @@ public class MongoDB {
                 collection.renameCollection(newPageName);
             }
             
-            
         }
         catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     } // createPage()
+    
+    // Will remove the notebook if no other page exists
+    public void deletePage(String notebook, String page) {
+
+        MongoDatabase db;
+        MongoClient mongoClient;
+        MongoCollection<Document> collection;
+
+        try {
+            mongoClient = new MongoClient(host, port);
+            db = mongoClient.getDatabase(notebook);
+
+            if (collectionExists(notebook, page)) {
+                collection = db.getCollection(page); // --implicitly creates collection if none exists 
+                System.out.println("dropping the page");
+                collection.drop();
+            }
+            else
+                System.out.println("Such page with the given name exists");
+        }
+        catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    } // deletePage()
     
     public ArrayList<String> getPages(String Notebook) {
 
