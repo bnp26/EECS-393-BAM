@@ -14,7 +14,7 @@ public class Page {
 	
 	private String name;
 	private LinkedList<Line> lines;
-	private VBox flowPaneRows;
+	private FlowPane lineFlowPane;
 	private Notebook parent;
 	private Cursor cursor;
 
@@ -24,6 +24,7 @@ public class Page {
 		this.name = name;
 		lines = new LinkedList<Line>();
 		Cursor cursor = new Cursor();
+        lineFlowPane = new FlowPane();
 	}
 
 	public void setButton(Button button){
@@ -45,14 +46,22 @@ public class Page {
 	public LinkedList<Line> getLines() {
 		return lines;
 	}
-	
+
+	public Cursor getCursor() {
+		return cursor;
+	}
+
+	public void setCursor(Cursor cursor) {
+		this.cursor = cursor;
+	}
+
 	public void addLine() {
 		Line line = new Line();
-        FlowPane lineFlowPane = new FlowPane();
-        lineFlowPane.setPrefSize(480, 28);
+        FlowPane flowPane = line.getFlowPane();
+        flowPane.setPrefSize(480, 28);
+
 		int numLines = lines.size();
 		lines.add(numLines-1, line);
-        this.flowPaneRows.getChildren().add(numLines-1, flowPaneRows);
 	}
 	
 	public boolean removeLine(int lineNum) {
@@ -67,7 +76,7 @@ public class Page {
 
 	public void selectPage() {
         pageButton.getStyleClass().add("jott_current_page_item");
-        Image imageDecline = new Image(getClass().getResourceAsStream("static/ic_label_black_24dp/web/ic_label_black_24dp_2x.png"));
+        Image imageDecline = new Image(getClass().getResourceAsStream("static/ic_label_black_24dp_2x.png"));
         pageButton.setGraphic(new ImageView(imageDecline));
     }
 

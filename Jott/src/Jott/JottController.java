@@ -1,5 +1,6 @@
 package Jott;
 
+import java.util.LinkedList;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
@@ -29,7 +30,7 @@ public class JottController {
 		
 	@FXML //fx:id="newPageButton"
 	private Button newPageButton;
-	
+
 	public JottController() {
 		this.notebooksPane = new NotebooksPane();
 		this.pagesPane = new PagesPane();
@@ -78,6 +79,31 @@ public class JottController {
 		//prints out the x and y coordinates of the click
 		System.out.println(me.getX() + ", " + me.getY());
 
+		double xLoc = me.getX();
+		double yLoc = me.getY();
+		Location loc = new Location();
+		loc = loc.pixelsToLocation(xLoc, yLoc);
+
+		Page selectedPage = pagesPane.getSelectedPage();
+
+		if(selectedPage == null){
+			System.out.println("page is null");
+		}
+
+		if(selectedPage.getLines().size() < loc.getLineNum()) {
+			System.out.println("adding cursor to the last line");
+			loc.setLineNum(selectedPage.getLines().size()-1);
+		}
+		LinkedList<Line> lines = selectedPage.getLines();
+        if(lines.size() == 0) {
+            selectedPage.addLine();
+        }
+        Line currentLine = lines.get(loc.getLineNum());
+
+
+
+        Cursor cursor = selectedPage.getCursor();
+		cursor.setLocation(loc);
 
 	}
 

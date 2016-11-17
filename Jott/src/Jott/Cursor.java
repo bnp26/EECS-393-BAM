@@ -5,12 +5,10 @@ import javafx.scene.control.Label;
 public class Cursor extends Glyph{
 
     private Location location;
-    private Label cursorLabel;
 
     public Cursor() {
         super();
         location = null;
-        cursorLabel = new Label();
     }
 
     public Cursor(Location loc) {
@@ -52,19 +50,21 @@ public class Cursor extends Glyph{
 
     public void setLocation(Location loc) {
         location = loc;
+        this.getLabel().setLayoutX(loc.getXPixelValue());
+        this.getLabel().setLayoutY(loc.getYPixelValue());
     }
 
 	public void move(Location loc){
 		this.setLocation(loc);
 	}
 	
-	public void move(int line, int word, int letter){
-		this.getLocation().changeLocation(line, word, letter);
+	public void move(int line, int letter){
+		this.getLocation().changeLocation(line, letter);
 	}
 	
 	public void enter(){
 
 	}
 	//Make Page Create the cursor.
-	
+
 }

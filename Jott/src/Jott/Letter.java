@@ -1,17 +1,16 @@
 package Jott;
 
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 
 public class Letter extends Glyph{
 
 	private char value;
-	
-	private Label letterLabel;
-	
+
 	public Letter(char val) {
 		super();
 		value = val;
-		setUpLabel(value);
+        Label newLabel = setUpLabel(value);
 	}
 	
 	public Letter(char val, Glyph previous) {
@@ -26,20 +25,11 @@ public class Letter extends Glyph{
 		this.setNext(next);
 		this.setPrevious(previous);
 	}
-	
-	public Letter(char val, Location loc) {
-		value = val;
-	}
-	
-	public Letter(char val, int line, int word, int letter) {
-		value = val;
-	}
 
-	private void setUpLabel(char val) {
-        String str = new String();
-        str += val;
-        letterLabel = new Label();
-        letterLabel.setPrefSize(5, 5);
+	private Label setUpLabel(char val) {
+        Label newLabel = new Label();
+        newLabel.setText(new String(val+""));
+        return newLabel;
     }
 	
 	public char getValue() {

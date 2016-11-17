@@ -1,5 +1,7 @@
 package Jott;
 
+import javafx.scene.control.Label;
+
 /**
  * Created by bnp26 on 11/13/16.
  */
@@ -8,10 +10,12 @@ public abstract class Glyph {
     private Location location;
     private Glyph previous;
     private Glyph next;
+    private Label label;
 
     public Glyph() {
         previous = null;
         next = null;
+        label = new Label();
     }
 
     public Glyph(Glyph next, Glyph previous) {
@@ -39,5 +43,14 @@ public abstract class Glyph {
         previous = newLetter;
 
         return oldPrevious;
+    }
+
+    public void setLabel(Label label)
+    {
+        this.label = label;
+    }
+
+    public Label getLabel() {
+        return label;
     }
 }

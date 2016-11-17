@@ -55,8 +55,8 @@
       </VBox>
       <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" onMouseClicked="#pageClicked">
          <content>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" rowValignment="TOP">
-               <children>
+            <FlowPane prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" onMouseClicked="#pageClicked">
+               <!--<children>
                   <Label text="THISISAREALLYLONGLABELREPRESENTINGAWORD" />
                   <Label text="Label" />
                   <Label layoutX="280.0" layoutY="10.0" text="Label" />
@@ -436,7 +436,7 @@
                   <Label layoutX="346.0" layoutY="78.0" text="Label" />
                   <Label layoutX="402.0" layoutY="197.0" text="Label" />
                   <Label layoutX="150.0" layoutY="180.0" text="Label" />
-               </children>
+               </children>-->
             </FlowPane>
          </content>
       </ScrollPane>

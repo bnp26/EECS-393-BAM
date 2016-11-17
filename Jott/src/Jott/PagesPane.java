@@ -44,8 +44,11 @@ public class PagesPane {
         selectedPage.deselectPage();
         selectedPage = page;
         page.selectPage();
-
     }
+
+    public Page getSelectedPage() {
+		return selectedPage;
+	}
 
 	public ArrayList<Page> getPages() {
 		return pages;
