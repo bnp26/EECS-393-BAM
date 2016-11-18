@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextInputDialog;
@@ -30,6 +31,9 @@ public class JottController {
 		
 	@FXML //fx:id="newPageButton"
 	private Button newPageButton;
+
+    @FXML //fx:id="mainFlowPane"
+    private FlowPane mainFlowPane;
 
 	public JottController() {
 		this.notebooksPane = new NotebooksPane();
@@ -89,22 +93,25 @@ public class JottController {
 		if(selectedPage == null){
 			System.out.println("page is null");
 		}
+		else {
+            System.out.println("page is not null");
+            selectedPage.setFlowPane(mainFlowPane);
+		}
 
 		if(selectedPage.getLines().size() < loc.getLineNum()) {
 			System.out.println("adding cursor to the last line");
 			loc.setLineNum(selectedPage.getLines().size()-1);
 		}
-		LinkedList<Line> lines = selectedPage.getLines();
-        if(lines.size() == 0) {
-            selectedPage.addLine();
-        }
-        Line currentLine = lines.get(loc.getLineNum());
-
-
-
         Cursor cursor = selectedPage.getCursor();
-		cursor.setLocation(loc);
-
+        if(cursor == null) {
+            System.out.println("FUCK THIS SHIT. IT DOESN'T FIND THE CURSOR THAT WAS ALREADY INITIALIZED!");
+        }
+        else{
+            cursor.setLocation(loc);
+        }
+        Line line = new Line();
+        line.setFlowPane(mainFlowPane);
+		selectedPage.addLine();
 	}
 
 	private boolean addNewPage(String name) {

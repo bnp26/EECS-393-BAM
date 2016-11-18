@@ -13,7 +13,7 @@ public class Cursor extends Glyph{
 
     public Cursor(Location loc) {
         super();
-        location = loc;
+        this.setLocation(loc);
     }
 
 	public Glyph insertLetter(char letter) {
@@ -52,6 +52,8 @@ public class Cursor extends Glyph{
         location = loc;
         this.getLabel().setLayoutX(loc.getXPixelValue());
         this.getLabel().setLayoutY(loc.getYPixelValue());
+        this.getLabel().setText("|");
+        this.getLabel().setVisible(true);
     }
 
 	public void move(Location loc){

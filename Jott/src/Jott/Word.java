@@ -2,9 +2,7 @@ package Jott;
 
 import javafx.scene.layout.HBox;
 
-import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class Word implements Iterable<Glyph>{
@@ -12,6 +10,8 @@ public class Word implements Iterable<Glyph>{
 	private Glyph first;
 	private Word previous;
 	private Word next;
+
+    private LinkedList<Letter> wordLetters;
 
 	private int length;
 	private boolean isHighlighted;
@@ -23,10 +23,29 @@ public class Word implements Iterable<Glyph>{
 	}
 
 	public Word(Letter first, Word previous, Word next) {
-		this.first = first;
+        wordLetters = new LinkedList<Letter>();
+        wordLetters.add(first);
+        this.first = first;
 		this.previous = previous;
 		this.next = next;
 	}
+
+	public Word(String str) {
+        ArrayList<Letter> letters = new ArrayList<Letter>();
+        for(int x = 0; x < str.length(); x++) {
+            Letter letter;
+            if(x == 0) {
+                letter = new Letter(str.charAt(x));
+                letters.add(letter);
+            } else {
+                letter = new Letter(str.charAt(x), letters.get(x - 1));
+                letters.add(letter);
+            }
+        }
+        this.first = letters.get(0);
+        this.previous = null;
+        this.next = null;
+    }
 
     public Iterator<Glyph> iterator() {
         return new WordIterator();
