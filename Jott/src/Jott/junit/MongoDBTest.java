@@ -5,6 +5,10 @@
  */
 package Jott.junit;
 
+/**
+ *
+ * @author AlpGuvenir
+ */
 import Jott.MongoDB;
 import java.util.ArrayList;
 import org.junit.After;
@@ -20,30 +24,26 @@ import static org.junit.Assert.*;
  */
 public class MongoDBTest {
     
-    private MongoDB db;
-    
-    public MongoDBTest() {
-        db = new MongoDB();
-    }
-    
-    @Test
-    public void testingGetNotebooks() {
+    public ArrayList<String> testGetNotebooks() {
         ArrayList<String> testArray = new ArrayList<String>();
+        testArray.add("ALP");
+        testArray.add("BEN");
+        testArray.add("Note1");
         testArray.add("Notebook1");
         testArray.add("Notebook2");
-        testArray.add("Notebook3");
         testArray.add("local");
-        assertEquals("Getting notebooks from the database", testArray, db.getNotebooks());
+        return testArray;       
     }
     
-    @Test
-    public void testingGetPages() {
+    
+    public ArrayList<String> testGetPages() {
         ArrayList<String> testArray = new ArrayList<String>();
-        testArray.add("page3");
-        testArray.add("page2");
-        assertEquals("checking pages to return as the following: ", testArray, db.getPages("Notebook3"));
-    } 
-
+        testArray.add("trialPage");
+        testArray.add("trialPage2");
+        return testArray;
+        } 
+    
+    
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
