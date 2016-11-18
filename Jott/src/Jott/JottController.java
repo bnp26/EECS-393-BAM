@@ -35,6 +35,9 @@ public class JottController {
     @FXML //fx:id="mainFlowPane"
     private FlowPane mainFlowPane;
 
+    @FXML //fx:id="pageScrollPane"
+    private ScrollPane pageScrollPane;
+
 	public JottController() {
 		this.notebooksPane = new NotebooksPane();
 		this.pagesPane = new PagesPane();
@@ -122,7 +125,7 @@ public class JottController {
 		}
 		
 		//creates a new page object
-		Page page = new Page(name);
+		Page page = new Page(name, mainFlowPane);
 
 		//creates the new page button
 		Button newPage = createPageButton(name);

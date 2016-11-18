@@ -53,7 +53,7 @@
             </VBox>
          </children>
       </VBox>
-      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" fx:id="pageScrollPane">
          <content>
             <FlowPane fx:id="mainFlowPane" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" onMouseClicked="#pageClicked">
                <children>

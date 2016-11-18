@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -19,11 +21,39 @@ public class Page {
 
 	private Button pageButton;
 	
-	public Page(String name) {
+	public Page(String name, FlowPane flowPane) {
 		this.name = name;
 		lines = new LinkedList<Line>();
 		Cursor cursor = new Cursor(new Location(0, 0));
         lines.add(new Line());
+
+        //setting up flow pane event listeners
+        this.flowPane = flowPane;
+        this.flowPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                switch(keyEvent.getCode()){
+                    case UP:
+                        break;
+                    case DOWN:
+                        break;
+                    case LEFT:
+                        break;
+                    case RIGHT:
+                        break;
+                    case ENTER:
+                        break;
+                    case BACK_SPACE:
+                        break;
+                    case DELETE:
+                        break;
+                    case SHIFT:
+                        break;
+                    case TAB:
+                        break;
+                }
+            }
+        });
 	}
 
 	public void setButton(Button button){
