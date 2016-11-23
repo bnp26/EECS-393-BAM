@@ -5,10 +5,14 @@ import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -37,6 +41,8 @@ public class JottController {
 
     @FXML //fx:id="pageScrollPane"
     private ScrollPane pageScrollPane;
+
+    private boolean firstClick = false;
 
 	public JottController() {
 		this.notebooksPane = new NotebooksPane();
@@ -99,6 +105,11 @@ public class JottController {
 		else {
             System.out.println("page is not null");
             selectedPage.setFlowPane(mainFlowPane);
+            if(!firstClick)
+			    mainFlowPane.getChildren().remove(0, 1);
+            Cursor cursor = new Cursor();
+            selectedPage.setCursor(cursor);
+            mainFlowPane.getChildren().add(cursor.getLabel());
 		}
 
 		if(selectedPage.getLines().size() < loc.getLineNum()) {
@@ -116,6 +127,61 @@ public class JottController {
         line.setFlowPane(mainFlowPane);
 		selectedPage.addLine();
 	}
+
+    public void keyTyped(KeyEvent ke) {
+
+        System.out.println(ke.getCharacter());
+
+        Page selectedPage = pagesPane.getSelectedPage();
+        Cursor cursor = selectedPage.getCursor();
+
+        int lineNum = cursor.getLocation().getLineNum();
+        int letterNum = cursor.getLocation().getLetterNum();
+        LinkedList<Line> lines = selectedPage.getLines();
+        switch(ke.getCode()){
+            case UP:
+                if(lineNum == 1)
+                    break;
+                else
+                    cursor.move(lineNum - 1, letterNum);
+                break;
+            case DOWN:
+                if(lineNum == lines.size())
+                    break;
+                else
+                    cursor.move(lineNum + 1, letterNum);
+                break;
+            case LEFT:
+                if(letterNum <= 1)
+                    cursor.move(lineNum - 1, lines.get(lineNum-1).getLineValue().length()-1);
+                else
+                    cursor.move(lineNum, letterNum - 1);
+                break;
+            case RIGHT:
+                if(lines.get(lineNum).getLineValue().length() <= letterNum)
+                    cursor.move(lineNum + 1, 0);
+                else
+                    cursor.move(lineNum, letterNum + 1);
+                break;
+            case ENTER:
+                Line newLine = new Line();
+                lines.add(newLine);
+                break;
+            case BACK_SPACE:
+                cursor.backspace();
+                break;
+            case DELETE:
+                cursor.delete();
+                break;
+            case SHIFT:
+                break;
+            case TAB:
+                break;
+            default:
+                cursor.insertLetter(ke.getCharacter().toCharArray()[0]);
+                System.out.println("letter = " + ke.getCharacter().toCharArray()[0]);
+        }
+    }
 
 	private boolean addNewPage(String name) {
 		

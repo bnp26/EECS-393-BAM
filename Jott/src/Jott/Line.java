@@ -23,6 +23,10 @@ public class Line {
             lineContainer.getChildren().add(new Label(" "));
 	    lineContainer.setVisible(true);
 	}
+
+	public String getLineValue() {
+		return lineValue;
+	}
 	
 	public void moveLine(int newLineNum) {
 		this.lineNum = newLineNum;

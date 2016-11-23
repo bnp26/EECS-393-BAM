@@ -29,31 +29,7 @@ public class Page {
 
         //setting up flow pane event listeners
         this.flowPane = flowPane;
-        this.flowPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                switch(keyEvent.getCode()){
-                    case UP:
-                        break;
-                    case DOWN:
-                        break;
-                    case LEFT:
-                        break;
-                    case RIGHT:
-                        break;
-                    case ENTER:
-                        break;
-                    case BACK_SPACE:
-                        break;
-                    case DELETE:
-                        break;
-                    case SHIFT:
-                        break;
-                    case TAB:
-                        break;
-                }
-            }
-        });
+
 	}
 
 	public void setButton(Button button){
