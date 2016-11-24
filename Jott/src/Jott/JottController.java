@@ -1,8 +1,10 @@
 package Jott;
 
-import java.util.LinkedList;
-import java.util.Optional;
+import java.util.*;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -27,7 +29,7 @@ public class JottController {
 
 	private NotebooksPane notebooksPane;
 	private PagesPane pagesPane;
-	private TextInputDialog newPageDialog;
+	private TextInputDialog newPageDialog, newNotebookDialog;
 	private Page page;
 	
 	@FXML //fx:id = "pagesVBox"
@@ -41,6 +43,10 @@ public class JottController {
 
     @FXML //fx:id="pageScrollPane"
     private ScrollPane pageScrollPane;
+
+    @FXML //fx:id="notebooksComboBox"
+    private ComboBox notebooksComboBox;
+
 
     private boolean firstClick = false;
 
@@ -57,10 +63,38 @@ public class JottController {
 	public void viewAllNotebooks(ActionEvent ae) {
 		
 	}
-	
-	public void createNewNotebook(ActionEvent ae) {
-		System.out.println("trying to create a new notebook");
-	}
+
+	public void initializeComboBox() {
+        notebooksComboBox.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue ov, Object oldValue, Object newValue) {
+                String oldStr = (String)oldValue;
+                String newStr = (String)newValue;
+
+                if(newStr.equals("Create New Notebook")) {
+                    Notebook newestNotebook;
+
+                    newNotebookDialog = new TextInputDialog();
+                    newNotebookDialog .setTitle("Create New Notebook");
+                    newNotebookDialog .setHeaderText("Enter the name of your new Notebook!");
+
+                    String newNotebookName;
+                    Optional<String> result = newNotebookDialog .showAndWait();
+
+                    if(result.isPresent()) {
+                        newNotebookName = new String(result.get());
+
+                        if(pagesPane.hasPage(newNotebookName))
+                            System.out.println("this notebook already has a page by this name");
+                        else
+                            newestNotebook = createNewNotebook(newNotebookName);
+                    }
+                }
+
+            }
+        });
+
+    }
 
 	public void moveCursor(Event e) {
 	}
@@ -73,19 +107,31 @@ public class JottController {
 		
 		String newPageName;
 		Optional<String> result = newPageDialog.showAndWait();
-		
+
+        Page newPage = null;
+
 		if(result.isPresent()) {
 			newPageName = new String(result.get());
 			
 			if(pagesPane.hasPage(newPageName)) 
 				System.out.println("this notebook already has a page by this name");
 			else	
-				addNewPage(newPageName);
+				newPage = addNewPage(newPageName);
 		}
 		
 		System.out.println("clicked");
 		System.out.println(pagesPane.toString());
 		updateTitle(ae);
+
+        Cursor cursor;
+
+        if(pagesPane.getSelectedPage() == newPage) {
+            cursor = new Cursor();
+            newPage.setCursor(cursor);
+            if(!firstClick)
+                mainFlowPane.getChildren().remove(0, 1);
+        }
+
 	}
 
 	public void pageClicked(MouseEvent me) {
@@ -105,9 +151,14 @@ public class JottController {
 		else {
             System.out.println("page is not null");
             selectedPage.setFlowPane(mainFlowPane);
-            if(!firstClick)
-			    mainFlowPane.getChildren().remove(0, 1);
-            Cursor cursor = new Cursor();
+
+            Cursor cursor;
+
+            if(selectedPage.getCursor() == null)
+                cursor = new Cursor();
+            else
+                cursor = selectedPage.getCursor();
+
             selectedPage.setCursor(cursor);
             mainFlowPane.getChildren().add(cursor.getLabel());
 		}
@@ -125,6 +176,7 @@ public class JottController {
         }
         Line line = new Line();
         selectedPage.addLine();
+        mainFlowPane.getChildren().add(line.getLabel());
 	}
 
     public void keyPressed(KeyEvent ke) {
@@ -192,12 +244,13 @@ public class JottController {
             case TAB:
                 break;
             default:
-                cursor.insertLetter(ke.getCharacter().toCharArray()[0]);
+                //newLine.insertLetter(cursor.getLocation(), ;
                 System.out.println("letter = " + ke.getCharacter().toCharArray()[0]);
+                System.out.println("letter = " + ke.getCode().getName().toCharArray()[0]);
         }
     }
 
-	private boolean addNewPage(String name) {
+	private Page addNewPage(String name) {
 		
 		if(name == null)
 		{
@@ -220,8 +273,41 @@ public class JottController {
 		pagesPane.addPage(page);
         pagesPane.selectPage(page);
 		newPage.setVisible(true);
-		return true;
+		return page;
 	}
+
+    private Notebook createNewNotebook(String name) {
+
+        if(name == null)
+        {
+            name = "new notebook";
+        }
+
+        Notebook newNotebook = notebooksPane.createNewNotebook(name);
+
+        //finds the number of children in the pagesVBox
+        int comboItemsSize = notebooksComboBox.getChildrenUnmodifiable().size();
+
+
+        notebooksPane.selectNotebook(newNotebook.toString());
+        notebooksComboBox.getItems().add(0, newNotebook.toString());
+        refreshNotebooksComboBox();
+        initializeComboBox();
+        notebooksComboBox.getSelectionModel().select(newNotebook.toString());
+        return newNotebook;
+    }
+
+    private void refreshNotebooksComboBox() {
+        ArrayList<Notebook> myNotebooks = notebooksPane.getNotebooks();
+
+        final ObservableList<String> notebooksArray = notebooksComboBox.getItems();
+
+        for(Notebook current : myNotebooks) {
+            if(!notebooksArray.contains(current.toString()) && !current.equals(notebooksPane.getSelectedNotebook()))
+                notebooksComboBox.getItems().add(current.toString());
+        }
+        notebooksComboBox.getItems().set(notebooksComboBox.getItems().size()-1, "Create New Notebook");
+    }
 
 	private Button createPageButton(String name) {
 		
