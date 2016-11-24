@@ -1,6 +1,7 @@
 package Jott;
 
 import java.util.LinkedList;
+import java.util.StringJoiner;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -11,32 +12,37 @@ public class Line {
 	private int lineNum;
 	private String lineValue;
 	private boolean isEdited;
-	private FlowPane lineContainer;
+	private Label line;
 	
 	public Line() {
 		lineNum = 0;
 		isEdited = true;
-        lineValue = "                                                                         ";
-		lineContainer = new FlowPane();
-        lineContainer.setPrefSize(9*220, 16);
-        for(int x = 9; x < 9*220; x+=9)
-            lineContainer.getChildren().add(new Label(" "));
-	    lineContainer.setVisible(true);
+        lineValue = " ";
+		line = new Label("												");
 	}
 
 	public String getLineValue() {
 		return lineValue;
+	}
+
+	public void insertLetter(Location loc, char letter) {
+		int letterLoc = loc.getLetterNum();
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(lineValue);
+
+		stringBuilder.insert(letterLoc, letter);
 	}
 	
 	public void moveLine(int newLineNum) {
 		this.lineNum = newLineNum;
 	}
 
-	public void setFlowPane(FlowPane flowPane) {
-		this.lineContainer = flowPane;
-	}
+	public Label getLabel() {
+        return line;
+    }
 
-	public FlowPane getFlowPane() {
-		return lineContainer;
-	}
+    public void updateLabel() {
+        this.line.setText(lineValue);
+    }
 }

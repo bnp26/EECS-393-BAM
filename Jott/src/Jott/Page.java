@@ -25,11 +25,15 @@ public class Page {
 		this.name = name;
 		lines = new LinkedList<Line>();
 		Cursor cursor = new Cursor(new Location(0, 0));
-        lines.add(new Line());
+        int counter = 0;
+        while(counter < 20)
+        {
+            lines.add(new Line());
+            counter++;
+        }
 
         //setting up flow pane event listeners
         this.flowPane = flowPane;
-
 	}
 
 	public void setButton(Button button){

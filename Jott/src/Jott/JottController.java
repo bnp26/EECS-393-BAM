@@ -124,44 +124,58 @@ public class JottController {
             cursor.setLocation(loc);
         }
         Line line = new Line();
-        line.setFlowPane(mainFlowPane);
-		selectedPage.addLine();
+        selectedPage.addLine();
 	}
 
-    public void keyTyped(KeyEvent ke) {
-
-        System.out.println(ke.getCharacter());
+    public void keyPressed(KeyEvent ke) {
 
         Page selectedPage = pagesPane.getSelectedPage();
         Cursor cursor = selectedPage.getCursor();
 
         int lineNum = cursor.getLocation().getLineNum();
         int letterNum = cursor.getLocation().getLetterNum();
+
         LinkedList<Line> lines = selectedPage.getLines();
+
         switch(ke.getCode()){
             case UP:
-                if(lineNum == 1)
+                if(lineNum == 0) {
                     break;
-                else
-                    cursor.move(lineNum - 1, letterNum);
-                break;
+                }
+                else {
+                    lineNum -= 1;
+                    Location updatedLoc = new Location(lineNum, letterNum);
+                    cursor.setLocation(updatedLoc);
+                    break;
+                }
             case DOWN:
-                if(lineNum == lines.size())
+                if(lineNum == lines.size()-1) {
                     break;
-                else
-                    cursor.move(lineNum + 1, letterNum);
-                break;
+                }
+                else {
+                    lineNum += 1;
+                    Location updatedLoc = new Location(lineNum, letterNum);
+                    cursor.setLocation(updatedLoc);
+                    break;
+                }
             case LEFT:
-                if(letterNum <= 1)
-                    cursor.move(lineNum - 1, lines.get(lineNum-1).getLineValue().length()-1);
-                else
-                    cursor.move(lineNum, letterNum - 1);
-                break;
+                if(letterNum == 0) {
+                    lineNum-=1;
+                    Location updatedLoc = new Location(lineNum, lines.get(lineNum).getLineValue().length()-1);
+                    cursor.setLocation(updatedLoc);
+                    break;
+                }
+                else {
+                    lineNum += 1;
+                    Location updatedLoc = new Location(lineNum, letterNum);
+                    cursor.setLocation(updatedLoc);
+                    break;
+                }
             case RIGHT:
-                if(lines.get(lineNum).getLineValue().length() <= letterNum)
-                    cursor.move(lineNum + 1, 0);
-                else
-                    cursor.move(lineNum, letterNum + 1);
+                if (letterNum == lines.get(lineNum).getLineValue().length()-1) {
+
+                }
+                System.out.println(ke.getCode().toString());
                 break;
             case ENTER:
                 Line newLine = new Line();

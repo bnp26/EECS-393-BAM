@@ -8,11 +8,13 @@ public class Cursor extends Glyph{
 
     public Cursor() {
         super();
+        this.getLabel().setText("|");
         location = null;
     }
 
     public Cursor(Location loc) {
         super();
+        this.getLabel().setText("|");
         this.setLocation(loc);
     }
 
@@ -26,7 +28,7 @@ public class Cursor extends Glyph{
 
         return newLetter;
 	}
-	
+
 	public Letter delete(){
 		Letter oldNext = (Letter)this.getNext();
         Letter newNext = (Letter)this.getNext().getNext();
