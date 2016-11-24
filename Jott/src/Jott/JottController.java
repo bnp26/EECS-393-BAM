@@ -128,8 +128,10 @@ public class JottController {
         if(pagesPane.getSelectedPage() == newPage) {
             cursor = new Cursor();
             newPage.setCursor(cursor);
-            if(!firstClick)
+            if(!firstClick) {
                 mainFlowPane.getChildren().remove(0, 1);
+                firstClick = true;
+            }
         }
 
 	}
@@ -160,7 +162,9 @@ public class JottController {
                 cursor = selectedPage.getCursor();
 
             selectedPage.setCursor(cursor);
-            mainFlowPane.getChildren().add(cursor.getLabel());
+            if(!mainFlowPane.getChildren().contains(cursor.getLabel()))
+                mainFlowPane.getChildren().add(cursor.getLabel());
+
 		}
 
 		if(selectedPage.getLines().size() < loc.getLineNum()) {
@@ -262,7 +266,7 @@ public class JottController {
 
 		//creates the new page button
 		Button newPage = createPageButton(name);
-		
+
 		//finds the number of children in the pagesVBox
 		int vBoxSize = pagesVBox.getChildrenUnmodifiable().size();
 		
@@ -271,6 +275,15 @@ public class JottController {
 		pagesVBox.getChildren().add(vBoxSize-1, newPage);
 		
 		pagesPane.addPage(page);
+
+        newPage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pagesPane.selectPage(page);
+                System.out.println("selected page: " + page.getName());
+            }
+        });
+
         pagesPane.selectPage(page);
 		newPage.setVisible(true);
 		return page;
