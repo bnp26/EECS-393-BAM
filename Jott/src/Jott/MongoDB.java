@@ -21,6 +21,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
+import java.util.Collections;
 
 public class MongoDB {
 
@@ -59,7 +60,7 @@ public class MongoDB {
     // Will remove the notebook if no other page exists
     public void deleteNotebook(String notebook) {
 
-        MongoDatabase db;
+        MongoDatabase db = null;
         MongoClient mongoClient;
 
         try {
@@ -91,7 +92,7 @@ public class MongoDB {
             mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
 
-            if (!collectionExists(notebook, page)) {
+            if (!pageExists(notebook, page)) {
                 System.out.println("created new collection");
                 db.createCollection(page);
             }
@@ -116,7 +117,7 @@ public class MongoDB {
             mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
             
-            if (!collectionExists(notebook, page)) {
+            if (!pageExists(notebook, page)) {
                 System.out.println("such a page does not exist!");
             }
             else {
@@ -141,7 +142,7 @@ public class MongoDB {
             mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
 
-            if (collectionExists(notebook, page)) {
+            if (pageExists(notebook, page)) {
                 collection = db.getCollection(page); // --implicitly creates collection if none exists 
                 System.out.println("dropping the page");
                 collection.drop();
@@ -161,7 +162,7 @@ public class MongoDB {
         ArrayList<String> pageList = new ArrayList<String>();
 
         try {
-            mongoClient = new MongoClient("localhost", 27017);
+            mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(Notebook);
             MongoIterable<String> myset = db.listCollectionNames();
             for (String str : myset) {
@@ -170,8 +171,26 @@ public class MongoDB {
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
+        Collections.sort(pageList.subList(0, pageList.size()));
         return pageList;
     } // getPages()
+    
+    public boolean pageExists(String notebook, String page) {
+        MongoDatabase db;
+        MongoClient mongoClient;
+        mongoClient = new MongoClient(host, port);
+        db = mongoClient.getDatabase(notebook);
+        MongoIterable collectionNames = db.listCollectionNames();
+        MongoCursor cursor = collectionNames.iterator();
+        while (cursor.hasNext()) {
+            String currentCollection = (String) cursor.next();
+
+            if (page.equals(currentCollection)) {
+                return true;
+            }
+        }
+        return false;
+    } // pageExists()
 
     // increments the line numbers of the lines after the position inserted
     public void insertLine(String notebook, String page, int linenum, String linestr) {
@@ -185,10 +204,10 @@ public class MongoDB {
         //ArrayList<String> appsApplied = new ArrayList<String>();
         try {
             // To connect to mongodb server
-            mongoClient = new MongoClient("localhost", 27017);
+            mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
             collection = db.getCollection(page); // --implicitly creates collection if none exists 
-            if (!collectionExists(notebook, page)) {
+            if (!pageExists(notebook, page)) {
                 System.out.println("created new collection");
                 db.createCollection(page);
                 System.out.println("about to insert doc to the database");
@@ -234,10 +253,10 @@ public class MongoDB {
         
         try {
             // To connect to mongodb server
-            mongoClient = new MongoClient("localhost", 27017);
+            mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
             collection = db.getCollection(page); // --implicitly creates collection if none exists 
-            if (!collectionExists(notebook, page)) {
+            if (!pageExists(notebook, page)) {
                 System.out.println("The notebook - page combination doesn't exist");
                 
             } 
@@ -283,10 +302,10 @@ public class MongoDB {
 
         try {
             // To connect to mongodb server
-            mongoClient = new MongoClient("localhost", 27017);
+            mongoClient = new MongoClient(host, port);
             db = mongoClient.getDatabase(notebook);
             collection = db.getCollection(page); // --implicitly creates collection if none exists 
-            if (!collectionExists(notebook, page)) {
+            if (!pageExists(notebook, page)) {
                 System.out.println("Collection does not exist");
                 return null;
             } else {
@@ -312,21 +331,6 @@ public class MongoDB {
         return null;
     } // getLine()
    
-    public boolean collectionExists(String notebook, final String collectionName) {
-        MongoDatabase db;
-        MongoClient mongoClient;
-        mongoClient = new MongoClient("localhost", 27017);
-        db = mongoClient.getDatabase(notebook);
-        MongoIterable collectionNames = db.listCollectionNames();
-        MongoCursor cursor = collectionNames.iterator();
-        while (cursor.hasNext()) {
-            String currentCollection = (String) cursor.next();
-
-            if (collectionName.equals(currentCollection)) {
-                return true;
-            }
-        }
-        return false;
-    } // collectionExists()
+    
 
 }
