@@ -44,8 +44,6 @@ public class Line {
 		line.setPrefSize(Page.PAGE_WIDTH, LINE_HEIGHT);line.setMaxSize(Page.PAGE_WIDTH, 16.0);
 		line.setScaleZ(1.0);
 		line.setFont(Font.font(java.awt.Font.MONOSPACED, 14));
-		System.out.println(Font.getFamilies().toString());
-		System.out.println(Font.getFontNames().toString());
 		line.setTextAlignment(TextAlignment.LEFT);
 		line.setVisible(true);
 	}
