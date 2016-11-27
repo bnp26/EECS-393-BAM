@@ -48,6 +48,7 @@ public class JottController {
 
     private boolean firstClick = false;
     private boolean toggleCaps = false;
+    private boolean toggleSymbols = false;
 
 	public JottController() {
 		this.notebooksPane = new NotebooksPane();
@@ -181,6 +182,7 @@ public class JottController {
         int letterNum = cursor.getLocation().getLetterNum();
 
         LinkedList<Line> lines = selectedPage.getLines();
+        char num;
         switch(ke.getCode()){
             case UP:
                 if(lineNum == 0) {
@@ -264,6 +266,7 @@ public class JottController {
                 break;
             case SHIFT:
                 toggleCaps();
+                toggleSymbols();
                 break;
             case TAB:
                 System.out.println("pressed " + ke.getCode().toString());
@@ -275,8 +278,79 @@ public class JottController {
                     cursor.move(lineNum, letterNum+x);
                 }
                 break;
+            case DIGIT1:
+                num = toggleSymbols == true ? '!' : '1';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT2:
+                num = toggleSymbols == true ? '@' : '2';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT3:
+                num = toggleSymbols == true ? '#' : '3';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT4:
+                num = toggleSymbols == true ? '$' : '4';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT5:
+                num = toggleSymbols == true ? '%' : '5';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT6:
+                num = toggleSymbols == true ? '^' : '6';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT7:
+                num = toggleSymbols == true ? '&' : '7';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT8:
+                num = toggleSymbols == true ? '*' : '8';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT9:
+                num = toggleSymbols == true ? '(' : '9';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case DIGIT0:
+                num = toggleSymbols == true ? ')' : '0';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case MINUS:
+                num = toggleSymbols == true ? '-' : '_';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case EQUALS:
+                num = toggleSymbols == true ? '+' : '=';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
             default:
-                cursor.getLocation().getLineNum();
                 char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), letter);
                 letterNum+=1;
@@ -295,12 +369,17 @@ public class JottController {
         switch(ke.getCode()){
             case SHIFT:
                 toggleCaps();
+                toggleSymbols();
                 break;
         }
     }
 
     private void toggleCaps() {
         toggleCaps = !toggleCaps;
+    }
+
+    private void toggleSymbols() {
+        toggleSymbols = !toggleSymbols;
     }
 
     private void insertNewLine(int start) {

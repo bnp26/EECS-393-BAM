@@ -113,7 +113,8 @@ public class Page {
 
     public void addLinesToFlowPane() {
 		for(Line line:lines){
-			this.flowPane.getChildren().add(line.getLabel());
+			if(!flowPane.getChildren().contains(line))
+				this.flowPane.getChildren().add(line.getLabel());
 		}
 	}
 
