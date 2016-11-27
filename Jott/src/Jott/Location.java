@@ -2,8 +2,8 @@ package Jott;
 
 public class Location {
 
-    private final double LETTER_HEIGHT = 16;
-    private final double LETTER_WIDTH = 9;
+    private final double LETTER_HEIGHT = 14;
+    private final double LETTER_WIDTH = 9.5;
 
 	private int lineNum;
 //	private int wordNum;

@@ -6,16 +6,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -47,8 +43,11 @@ public class JottController {
     @FXML //fx:id="notebooksComboBox"
     private ComboBox notebooksComboBox;
 
+    @FXML //fx:id="pageMainPane"
+    private AnchorPane pageAnchorPane;
 
     private boolean firstClick = false;
+    private boolean toggleCaps = false;
 
 	public JottController() {
 		this.notebooksPane = new NotebooksPane();
@@ -96,9 +95,6 @@ public class JottController {
 
     }
 
-	public void moveCursor(Event e) {
-	}
-
 	public void createNewPage(ActionEvent ae) {
 		//when the "Create New Note" button is clicked, logic here is executed.
 		newPageDialog = new TextInputDialog();
@@ -123,15 +119,14 @@ public class JottController {
 		System.out.println(pagesPane.toString());
 		updateTitle(ae);
 
-        Cursor cursor;
+        pagesPane.selectPage(newPage);
 
-        if(pagesPane.getSelectedPage() == newPage) {
-            cursor = new Cursor();
-            newPage.setCursor(cursor);
-            if(!firstClick) {
-                mainFlowPane.getChildren().remove(0, 1);
-                firstClick = true;
-            }
+        Cursor cursor = new Cursor();
+        newPage.setCursor(cursor);
+        if(!firstClick) {
+            mainFlowPane.getChildren().remove(0, 1);
+            newPage.setFlowPane(mainFlowPane);
+            firstClick = true;
         }
 
 	}
@@ -151,36 +146,30 @@ public class JottController {
 			System.out.println("page is null");
 		}
 		else {
-            System.out.println("page is not null");
-            selectedPage.setFlowPane(mainFlowPane);
 
             Cursor cursor;
 
-            if(selectedPage.getCursor() == null)
+            if (selectedPage.getCursor() == null)
                 cursor = new Cursor();
             else
                 cursor = selectedPage.getCursor();
 
-            selectedPage.setCursor(cursor);
-            if(!mainFlowPane.getChildren().contains(cursor.getLabel()))
-                mainFlowPane.getChildren().add(cursor.getLabel());
-
-		}
+            //FIX THIS, REMOVES THE LINES FROM THE FLOW PANE
+            if (!pageAnchorPane.getChildrenUnmodifiable().contains(cursor.getCursorImage())) {
+                pageAnchorPane.getChildren().add(cursor.getCursorImage());
+            }
+            cursor.move(loc);
+        }
 
 		if(selectedPage.getLines().size() < loc.getLineNum()) {
 			System.out.println("adding cursor to the last line");
 			loc.setLineNum(selectedPage.getLines().size()-1);
 		}
-        Cursor cursor = selectedPage.getCursor();
-        if(cursor == null) {
-            System.out.println("FUCK THIS SHIT. IT DOESN'T FIND THE CURSOR THAT WAS ALREADY INITIALIZED!");
+		else if(selectedPage.getLines().size() < loc.getLineNum()+5){
+            Line line = new Line(selectedPage.getLines().size());
+            selectedPage.getLines().add(line);
+            addLineToPage(line);
         }
-        else{
-            cursor.setLocation(loc);
-        }
-        Line line = new Line();
-        selectedPage.addLine();
-        mainFlowPane.getChildren().add(line.getLabel());
 	}
 
     public void keyPressed(KeyEvent ke) {
@@ -192,7 +181,6 @@ public class JottController {
         int letterNum = cursor.getLocation().getLetterNum();
 
         LinkedList<Line> lines = selectedPage.getLines();
-
         switch(ke.getCode()){
             case UP:
                 if(lineNum == 0) {
@@ -201,7 +189,7 @@ public class JottController {
                 else {
                     lineNum -= 1;
                     Location updatedLoc = new Location(lineNum, letterNum);
-                    cursor.setLocation(updatedLoc);
+                    cursor.move(updatedLoc);
                     break;
                 }
             case DOWN:
@@ -211,46 +199,121 @@ public class JottController {
                 else {
                     lineNum += 1;
                     Location updatedLoc = new Location(lineNum, letterNum);
-                    cursor.setLocation(updatedLoc);
+                    cursor.move(updatedLoc);
                     break;
                 }
             case LEFT:
                 if(letterNum == 0) {
                     lineNum-=1;
+                    //need to fix lines before this starts to work
                     Location updatedLoc = new Location(lineNum, lines.get(lineNum).getLineValue().length()-1);
-                    cursor.setLocation(updatedLoc);
+                    cursor.move(updatedLoc);
                     break;
                 }
                 else {
-                    lineNum += 1;
+                    letterNum -= 1;
                     Location updatedLoc = new Location(lineNum, letterNum);
-                    cursor.setLocation(updatedLoc);
+                    cursor.move(updatedLoc);
                     break;
                 }
             case RIGHT:
-                if (letterNum == lines.get(lineNum).getLineValue().length()-1) {
-
+                if (letterNum == lines.get(lineNum).getLineValue().length()-1 && lines.get(lineNum+1) != null) {
+                    letterNum = 0;
+                    lineNum +=1;
                 }
+                else {
+                    letterNum+=1;
+                }
+                Location updatedLoc = new Location(lineNum, letterNum);
+                cursor.move(updatedLoc);
                 System.out.println(ke.getCode().toString());
                 break;
             case ENTER:
-                Line newLine = new Line();
-                lines.add(newLine);
+                //gotta add instances if there is a bullet point and such
+                if(lines.get(lineNum+1) != null) {
+                    insertNewLine(lineNum+1);
+                }
+                cursor.move(lineNum+1, 0);
+                System.out.println(ke.getCode().toString());
                 break;
             case BACK_SPACE:
-                cursor.backspace();
+                if(letterNum < lines.get(lineNum).getLineValue().length()-1) {
+                    Line line = lines.get(lineNum);
+                    String lineVal = line.getLineValue();
+                    lineVal = lineVal.substring(0, letterNum) + lineVal.substring(letterNum + 1);
+                    letterNum -= 1;
+                    //line.setLineValue(lineVal);
+                } else if(letterNum == 0) {
+                    lines.remove(lineNum);
+                    lineNum -=1;
+                    letterNum = lines.get(lineNum).getLineValue().length()-1;
+                }
+                else {
+                    Line line = lines.get(lineNum);
+                    String lineVal = line.getLineValue();
+                    lineVal = lineVal.substring(0, letterNum);
+                    //line.setLineValue(lineVal);
+                }
+                cursor.move(lineNum, letterNum);
+                    break;
+            case CAPS:
+                toggleCaps();
                 break;
             case DELETE:
-                cursor.delete();
+                System.out.println("pressed " + ke.getCode().toString());
                 break;
             case SHIFT:
+                toggleCaps();
                 break;
             case TAB:
+                System.out.println("pressed " + ke.getCode().toString());
+                for(int x = 1; x < 5; x++){
+                    if(lines.get(lineNum).getLineValue().length() >= 40) {
+                        cursor.move(lineNum + 1, 0);
+                    }
+                    lines.get(lineNum).insertLetter(cursor.getLocation(), ' ');
+                    cursor.move(lineNum, letterNum+x);
+                }
                 break;
             default:
-                //newLine.insertLetter(cursor.getLocation(), ;
-                System.out.println("letter = " + ke.getCharacter().toCharArray()[0]);
-                System.out.println("letter = " + ke.getCode().getName().toCharArray()[0]);
+                cursor.getLocation().getLineNum();
+                char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), letter);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                System.out.println("letter = " + ke.getCode().toString());
+                System.out.println("letter = " + ke.getCode().getName().toString());
+                break;
+        }
+    }
+
+    public void keyReleased(KeyEvent ke) {
+        Page selectedPage = pagesPane.getSelectedPage();
+        Cursor cursor = selectedPage.getCursor();
+
+        LinkedList<Line> lines = selectedPage.getLines();
+        switch(ke.getCode()){
+            case SHIFT:
+                toggleCaps();
+                break;
+        }
+    }
+
+    private void toggleCaps() {
+        toggleCaps = !toggleCaps;
+    }
+
+    private void insertNewLine(int start) {
+        Page selectedPage = pagesPane.getSelectedPage();
+        LinkedList<Line> lines = selectedPage.getLines();
+
+        Line newLine = new Line(start);
+        lines.add(newLine);
+
+        for(int x = lines.size()-2; x >= start; x--) {
+            Line linePlaceHolder = lines.get(x);
+            lines.set(x, newLine);
+            lines.set(x-1, linePlaceHolder);
         }
     }
 
@@ -332,6 +395,10 @@ public class JottController {
 		
 		return newPage;
 	}
+
+	private void addLineToPage(Line line) {
+        this.mainFlowPane.getChildren().add(line.getLabel());
+    }
 	
 	
 	public void updateTitle(ActionEvent ae) {

@@ -1,74 +1,68 @@
 package Jott;
 
-import javafx.scene.control.Label;
+import javafx.animation.FadeTransition;
+import javafx.animation.Timeline;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
-public class Cursor extends Glyph{
+public class Cursor {
 
     private Location location;
+    private Rectangle cursorImage;
 
     public Cursor() {
-        super();
-        this.getLabel().setText("|");
-        location = null;
+        cursorImage = new Rectangle(2.0, 16.0,Paint.valueOf("BLACK"));
+        setCursorTransition();
+        location = new Location(0,0);
     }
-
-    public Cursor(Location loc) {
-        super();
-        this.getLabel().setText("|");
-        this.setLocation(loc);
-    }
-
-	public Glyph insertLetter(char letter) {
-        Letter newLetter = new Letter(letter);
-
-        newLetter.setPrevious(this.getPrevious());
-        newLetter.setNext(this);
-
-        this.setPrevious(newLetter);
-
-        return newLetter;
-	}
-
-	public Letter delete(){
-		Letter oldNext = (Letter)this.getNext();
-        Letter newNext = (Letter)this.getNext().getNext();
-
-		setNext(newNext);
-		
-		return oldNext;
-	}
-	
-	public Letter backspace(){
-		Letter oldPrevious = (Letter)this.getPrevious();
-		Letter newPrevious = (Letter)this.getPrevious().getPrevious();
-		setPrevious(newPrevious);
-		
-		return oldPrevious;
-	}
 
 	public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location loc) {
-        location = loc;
-        this.getLabel().setLayoutX(loc.getXPixelValue());
-        this.getLabel().setLayoutY(loc.getYPixelValue());
-        this.getLabel().setText("|");
-        this.getLabel().setVisible(true);
+    public Rectangle getCursorImage() {
+        return cursorImage;
     }
 
-	public void move(Location loc){
-		this.setLocation(loc);
+    private void setLocation(Location loc) {
+        location = loc;
+    }
+
+	public void move(Location loc) {
+        this.setLocation(loc);
+        moveImage(loc);
 	}
 	
 	public void move(int line, int letter){
-		this.getLocation().changeLocation(line, letter);
+        Location newLoc = new Location(line, letter);
+        this.setLocation(newLoc);
+        moveImage(new Location(line, letter));
 	}
-	
-	public void enter(){
 
-	}
+	private void moveImage(Location newLoc) {
+        this.cursorImage.setX(newLoc.getXPixelValue());
+        this.cursorImage.setY(newLoc.getYPixelValue());
+
+        this.cursorImage.setVisible(true);
+        setCursorTransition();
+
+        System.out.println("cursor should be at: ("+this.getLocation().getXPixelValue() + ", " + this.getLocation().getYPixelValue()+")");
+        System.out.println("cursor is at: ("+cursorImage.xProperty().get() + ", " + cursorImage.yProperty().get()+")");
+    }
+
+	private void setCursorTransition() {
+        FadeTransition ft = new FadeTransition(Duration.millis(600), this.cursorImage);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+        ft.setCycleCount(Timeline.INDEFINITE);
+        ft.setAutoReverse(true);
+        ft.play();
+    }
+
 	//Make Page Create the cursor.
 
 }

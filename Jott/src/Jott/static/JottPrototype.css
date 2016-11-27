@@ -5,7 +5,7 @@
     -fx-background-color: #ffffff;
     -fx-border-width: 1px;
     -fx-border-color: #f9f9f9;
-    -fx-pref-width: 128px;
+    -fx-pref-width: 150px;
     -fx-padding: 0px 0px 0px 2px;
 }
 
@@ -13,7 +13,7 @@
 	-fx-alignment: center-left;
     -fx-padding: 0 0 0 40;
     -fx-background-color: #fafafa;
-    -fx-pref-width: 128px;
+    -fx-pref-width: 150px;
     -fx-pref-height: 40px;
     -fx-border-width:2px;
 }
@@ -33,14 +33,14 @@
 
 .jott_new_page_button {
     -fx-background-color: #e7e7e7;
-    -fx-pref-width: 128px;
+    -fx-pref-width: 150px;
     -fx-pref-height: 40px;
     -fx-padding: 0px 0px 0px 0px;
 }
 
 .jott_new_page_button:armed {
     -fx-background-color: #d6d6d6;
-    -fx-pref-width: 128px;
+    -fx-pref-width: 150px;
     -fx-pref-height: 40px;
     -fx-padding: 0px 0px 0px 0px;
 }

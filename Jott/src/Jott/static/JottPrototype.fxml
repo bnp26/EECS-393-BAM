@@ -11,32 +11,34 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Jott.JottController">
+<?import javafx.scene.layout.AnchorPane?>
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Jott.JottController">
    <children>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="128.0" style="-fx-background-color: #eeeeee;" stylesheets="@JottPrototype.css">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #eeeeee;" stylesheets="@JottPrototype.css">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="200.0" prefWidth="150.0">
                <children>
-                  <VBox prefWidth="128.0">
+                  <VBox prefWidth="150.0">
                      <children>
-                        <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" prefHeight="39.0" prefWidth="135.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
-                        	<items>
-								<FXCollections fx:factory="observableArrayList">
-                       				<String fx:value="Create New Notebook" />
-                       			</FXCollections>
-                        	</items>
+                        <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" editable="false" onShown="#initializeComboBox" prefHeight="39.0" prefWidth="150.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
+                           <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                 <String fx:value="Create New Notebook" />
+                              </FXCollections>
+                           </items>
                         </ComboBox>
-                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="pagesVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="128.0">
+                              <VBox fx:id="pagesVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0">
                                  <children>
-                                    <Button id="newPageButton" fx:id="newPageButton" mnemonicParsing="false" onAction="#createNewPage" prefHeight="26.0" prefWidth="128.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
+                                    <Button id="newPageButton" fx:id="newPageButton" mnemonicParsing="false" onAction="#createNewPage" prefHeight="26.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
                                        <graphic>
                                           <ImageView>
                                              <image>
-                                                <Image url="@ic_note_add_black_24dp_2x.png" requestedHeight="28.5" preserveRatio="true"/>
+                                                <Image preserveRatio="true" requestedHeight="28.5" url="@ic_note_add_black_24dp_2x.png" />
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
@@ -53,14 +55,18 @@
             </VBox>
          </children>
       </VBox>
-      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" fx:id="pageScrollPane">
-         <content>
-            <FlowPane fx:id="mainFlowPane" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" onMouseClicked="#pageClicked" onKeyTyped="#keyTyped">
-               <children>
-                  <Label text="THISISAREALLYLONGLABELREPRESENTINGAWORD" />
-               </children>
-            </FlowPane>
-         </content>
-      </ScrollPane>
+      <AnchorPane fx:id="pageAnchorPane" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" onMouseClicked="#pageClicked" prefHeight="601.0" prefWidth="751.0">
+         <children>
+            <ScrollPane fitToWidth="true" prefHeight="601.0" prefWidth="751.0">
+               <content>
+                  <FlowPane fx:id="mainFlowPane" prefHeight="600.0" prefWidth="765.0" prefWrapLength="500.0" rowValignment="TOP">
+                     <children>
+                        <Label prefHeight="16" prefWidth="740.0" text="Welcome To Jott" />
+                     </children>
+                  </FlowPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
    </children>
 </HBox>

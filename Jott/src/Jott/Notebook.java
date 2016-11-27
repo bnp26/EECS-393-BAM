@@ -31,10 +31,10 @@ public class Notebook {
 	/**
 	 * returns the page object of the passed pageID.
 	 * 
-	 * @param String pageID
+	 * @param pageID
 	 * 
 	 * @return Page
-	 * @see Page.java
+	 * @see Page
 	 */
 	public Page getPage(String pageID) {
 		return null;
@@ -44,19 +44,21 @@ public class Notebook {
 	 * <p>Creates a new page object in both the current page and the MongoDB server. 
 	 * Returns the ID of the newly created page.</p>
 	 * 
-	 * @return String 
+	 * @return String
 	 * 
 	 */
 	public String createPage(String newName) { return null;}
 	
 	/**
 	 * <p>Renames the currently selected Notebook to the entered parameter.</p>
-	 * 
-	 * @param String newName
-	 * 
+	 *
+	 * @param String
+	 *
 	 * @return void
 	 */
-	public void renameNotebook() {}
+	public void renameNotebook(String newName) {
+		name = newName;
+	}
 	
 	@Override
 	public String toString(){

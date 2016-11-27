@@ -20,7 +20,7 @@ public class Main extends Application {
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
 
             Region secondRegion = getPagePaneRegion(page);
-			Scene scene = new Scene(page,640, 480);
+			Scene scene = new Scene(page,900, 600);
 
 			NotebooksPane notebooksPane = new NotebooksPane();
 			PagesPane pagesPane = new PagesPane();
@@ -67,7 +67,6 @@ public class Main extends Application {
 			System.out.println("trying to find Region");
 		}
 		return newRegion;
-		
 	}
 }
 /*
