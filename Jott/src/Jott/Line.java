@@ -43,7 +43,7 @@ public class Line {
 		//line.setBorder(new Border(new BorderStroke(Paint.valueOf("black"), null, new CornerRadii(1.0), BorderStroke.THIN)));
 		line.setPrefSize(Page.PAGE_WIDTH, LINE_HEIGHT);line.setMaxSize(Page.PAGE_WIDTH, 16.0);
 		line.setScaleZ(1.0);
-		line.setFont(new Font("Monospaced", 14));
+		line.setFont(Font.font("Monospaced", 14));
 		line.setTextAlignment(TextAlignment.LEFT);
 		line.setVisible(true);
 	}
