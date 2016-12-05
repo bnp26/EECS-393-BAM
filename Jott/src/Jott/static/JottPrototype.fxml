@@ -9,19 +9,18 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.AnchorPane?>
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Jott.JottController">
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #eeeeee;" stylesheets="@JottPrototype.css">
          <children>
-            <VBox prefHeight="200.0" prefWidth="150.0">
+            <VBox prefHeight="605.0" prefWidth="150.0">
                <children>
-                  <VBox prefWidth="150.0">
+                  <VBox maxHeight="-Infinity" prefHeight="612.0" prefWidth="150.0">
                      <children>
                         <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" editable="false" onShown="#initializeComboBox" prefHeight="39.0" prefWidth="150.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
                            <items>
@@ -34,18 +33,20 @@
                            <content>
                               <VBox fx:id="pagesVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0">
                                  <children>
-                                    <Button id="newPageButton" fx:id="newPageButton" mnemonicParsing="false" onAction="#createNewPage" prefHeight="26.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
-                                       <graphic>
-                                          <ImageView>
-                                             <image>
-                                                <Image preserveRatio="true" requestedHeight="28.5" url="@ic_note_add_black_24dp_2x.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic></Button>
+
                                  </children>
                               </VBox>
                            </content>
                         </ScrollPane>
+                        <Button id="newPageButton" fx:id="newPageButton" alignment="CENTER" mnemonicParsing="false" onAction="#createNewPage" prefHeight="313.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
+                           <graphic>
+                              <ImageView>
+                                 <image>
+                                    <Image preserveRatio="true" requestedHeight="28.5" url="@ic_note_add_black_24dp_2x.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                      <padding>
                         <Insets top="1.0" />

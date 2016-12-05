@@ -414,7 +414,7 @@ public class JottController {
 		
 		page.setButton(newPage); 
 		//adds the new button to the pagesVBox but puts it always at the end of the list but above the add new page button
-		pagesVBox.getChildren().add(vBoxSize-1, newPage);
+        pagesVBox.getChildren().add(newPage);
 		
 		pagesPane.addPage(page);
 
