@@ -54,6 +54,7 @@ public class Line {
 
 	public void insertLetter(Location loc, char letter) {
 	    System.out.println("location = (" + loc.getLineNum() + ", " + loc.getLetterNum() + ")");
+	    System.out.print("letter = " + letter);
 		if(loc.getLineNum() != lineNum) {
 			System.out.println("trying to add letter to wrong line");
 			return;

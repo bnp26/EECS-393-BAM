@@ -342,7 +342,7 @@ public class JottController {
                 cursor.move(lineNum, letterNum);
                 break;
             case MINUS:
-                num = toggleSymbols == true ? '-' : '_';
+                num = toggleSymbols == true ? '_' : '-';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
                 cursor.move(lineNum, letterNum);
@@ -350,6 +350,11 @@ public class JottController {
             case EQUALS:
                 num = toggleSymbols == true ? '+' : '=';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case SPACE:
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), ' ');
                 letterNum+=1;
                 cursor.move(lineNum, letterNum);
                 break;
