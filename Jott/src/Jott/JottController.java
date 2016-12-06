@@ -157,6 +157,9 @@ public class JottController {
             }
             cursor.move(loc);
         }
+        if(selectedPage == null) {
+		    return;
+        }
 
 		if(selectedPage.getLines().size() < loc.getLineNum()) {
 			System.out.println("adding cursor to the last line");
