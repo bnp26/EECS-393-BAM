@@ -2,6 +2,7 @@ package Jott;
 
 import java.util.*;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -31,7 +32,7 @@ public class JottController {
 	private VBox pagesVBox;
 		
 	@FXML //fx:id="newPageButton"
-	private Button newPageButton;
+	private JFXButton newPageButton;
 
     @FXML //fx:id="mainVBox"
     private VBox mainVBox;
@@ -408,7 +409,7 @@ public class JottController {
 		Page page = new Page(name, mainVBox);
 
 		//creates the new page button
-		Button newPage = createPageButton(name);
+		JFXButton newPage = createPageButton(name);
 
 		//finds the number of children in the pagesVBox
 		int vBoxSize = pagesVBox.getChildrenUnmodifiable().size();
@@ -465,9 +466,9 @@ public class JottController {
         notebooksComboBox.getItems().set(notebooksComboBox.getItems().size()-1, "Create New Notebook");
     }
 
-	private Button createPageButton(String name) {
+	private JFXButton createPageButton(String name) {
 		
-		Button newPage = new Button();
+		JFXButton newPage = new JFXButton();
 		//setting up the new page button
 		newPage.setText(name);
 		

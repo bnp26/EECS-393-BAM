@@ -3,7 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -37,7 +37,7 @@
                               </VBox>
                            </content>
                         </ScrollPane>
-                        <Button id="newPageButton" fx:id="newPageButton" alignment="CENTER" mnemonicParsing="false" onAction="#createNewPage" prefHeight="313.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
+                        <JFXButton id="newPageButton" fx:id="newPageButton" alignment="CENTER" mnemonicParsing="false" onAction="#createNewPage" prefHeight="313.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
                            <graphic>
                               <ImageView>
                                  <image>
@@ -45,7 +45,7 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                        </Button>
+                        </JFXButton>
                      </children>
                      <padding>
                         <Insets top="1.0" />
@@ -57,7 +57,7 @@
       </VBox>
       <AnchorPane fx:id="pageAnchorPane" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" onMouseClicked="#pageClicked" prefHeight="601.0" prefWidth="751.0">
          <children>
-            <ScrollPane fitToWidth="true" prefHeight="601.0" prefWidth="751.0">
+            <ScrollPane fitToWidth="true" prefHeight="601.0" prefWidth="751.0" styleClass="edge-to-edge">
                <content>
                   <VBox fx:id="mainVBox" prefHeight="600.0" prefWidth="765.0" >
                      <children>
