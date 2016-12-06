@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextInputDialog;
@@ -34,8 +33,8 @@ public class JottController {
 	@FXML //fx:id="newPageButton"
 	private Button newPageButton;
 
-    @FXML //fx:id="mainFlowPane"
-    private FlowPane mainFlowPane;
+    @FXML //fx:id="mainVBox"
+    private VBox mainVBox;
 
     @FXML //fx:id="pageScrollPane"
     private ScrollPane pageScrollPane;
@@ -125,8 +124,8 @@ public class JottController {
         Cursor cursor = new Cursor();
         newPage.setCursor(cursor);
         if(!firstClick) {
-            mainFlowPane.getChildren().remove(0, 1);
-            newPage.setFlowPane(mainFlowPane);
+            mainVBox.getChildren().remove(0, 1);
+            newPage.setVBox(mainVBox);
             firstClick = true;
         }
 
@@ -165,11 +164,13 @@ public class JottController {
 		if(selectedPage.getLines().size() < loc.getLineNum()) {
 			System.out.println("adding cursor to the last line");
 			loc.setLineNum(selectedPage.getLines().size()-1);
+            page.selectPage();
 		}
 		else if(selectedPage.getLines().size() < loc.getLineNum()+5){
             Line line = new Line(selectedPage.getLines().size());
             selectedPage.getLines().add(line);
             addLineToPage(line);
+            page.selectPage();
         }
 	}
 
@@ -404,7 +405,7 @@ public class JottController {
 		}
 		
 		//creates a new page object
-		Page page = new Page(name, mainFlowPane);
+		Page page = new Page(name, mainVBox);
 
 		//creates the new page button
 		Button newPage = createPageButton(name);
@@ -476,7 +477,7 @@ public class JottController {
 	}
 
 	private void addLineToPage(Line line) {
-        this.mainFlowPane.getChildren().add(line.getLabel());
+        this.mainVBox.getChildren().add(line.getLabel());
     }
 	
 	

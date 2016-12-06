@@ -40,11 +40,12 @@ public class PagesPane {
             selectedPage = page;
             selectedPage.selectPage();
             return;
-        }
-        selectedPage.deselectPage();
-        selectedPage = page;
-        page.selectPage();
-    }
+        } else {
+			selectedPage.deselectPage();
+			selectedPage = page;
+			page.selectPage();
+		}
+	}
 
     public Page getSelectedPage() {
 		return selectedPage;

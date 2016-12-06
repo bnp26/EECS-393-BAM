@@ -26,9 +26,10 @@ public class Line {
 		isEdited = true;
 		lineValue = "";
 		line = new Label(lineValue);
-		//line.setBackground(new Background(new BackgroundFill(Paint.valueOf("YELLOW"), null, null)));
+		line.setBackground(new Background(new BackgroundFill(Paint.valueOf("YELLOW"), null, null)));
 		//line.setBorder(new Border(new BorderStroke(Paint.valueOf("black"), null, new CornerRadii(1.0), BorderStroke.THIN)));
-		line.setPrefSize(Page.PAGE_WIDTH, LINE_HEIGHT);line.setMaxSize(Page.PAGE_WIDTH, 16.0);
+//		line.setPrefSize(Page.PAGE_WIDTH, LINE_HEIGHT);
+//		line.setMaxSize(Page.PAGE_WIDTH, 16.0);
 		line.setScaleZ(1.0);
 		line.setFont(Font.font(java.awt.Font.MONOSPACED, 14));
 		line.setTextAlignment(TextAlignment.LEFT);

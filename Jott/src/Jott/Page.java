@@ -2,13 +2,8 @@ package Jott;
 
 import java.util.LinkedList;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -17,16 +12,16 @@ public class Page {
 	private String name;
 	private LinkedList<Line> lines;
 	private Cursor cursor;
-    private FlowPane flowPane;
+    private VBox vBox;
 
 	private Button pageButton;
 
 	public static final double PAGE_WIDTH = 740;
 
-	public Page(String name, FlowPane flowPane) {
+	public Page(String name, VBox vBox) {
 		this.name = name;
 		//setting up flow pane event listeners
-		this.flowPane = flowPane;
+		this.vBox = vBox;
 
 		lines = new LinkedList<Line>();
 		Cursor cursor = new Cursor();
@@ -55,12 +50,12 @@ public class Page {
 		name = newName;
 	}
 
-	public void setFlowPane(FlowPane pane) {
-        this.flowPane = pane;
+	public void setVBox(VBox pane) {
+        this.vBox = pane;
     }
 
-    public FlowPane getFlowPane() {
-        return flowPane;
+    public VBox getVBox() {
+        return vBox;
     }
 
 	public LinkedList<Line> getLines() {
@@ -102,23 +97,23 @@ public class Page {
         pageButton.setGraphic(new ImageView(imageDecline));
         pageButton.getGraphic().setScaleX(0.5);
         pageButton.getGraphic().setScaleY(0.5);
-		addLinesToFlowPane();
+		addLinesToPage();
     }
 
     public void deselectPage() {
-		removeLinesFromFlowPane();
+		removeLinesFromPage();
 		pageButton.getStyleClass().remove("jott_current_page_item");
         pageButton.setGraphic(new ImageView());
     }
 
-    public void addLinesToFlowPane() {
+    public void addLinesToPage() {
 		for(Line line:lines){
-			if(!flowPane.getChildren().contains(line))
-				this.flowPane.getChildren().add(line.getLabel());
+			if(!vBox.getChildren().contains(line))
+				this.vBox.getChildren().add(line.getLabel());
 		}
 	}
 
-	public void removeLinesFromFlowPane() {
-		this.flowPane.getChildren().remove(0, this.flowPane.getChildren().size());
+	public void removeLinesFromPage() {
+		this.vBox.getChildren().remove(0, this.vBox.getChildren().size());
 	}
 }

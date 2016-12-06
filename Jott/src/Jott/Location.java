@@ -2,7 +2,7 @@ package Jott;
 
 public class Location {
 
-    private final double LETTER_HEIGHT = 15;
+    private final double LETTER_HEIGHT = 18;
     private final double LETTER_WIDTH = 8.40625;
 
 	private int lineNum;
@@ -74,8 +74,8 @@ public class Location {
     }
 
     public double getYPixelValue() {
-        double yLoc = 0;
-        yLoc = LETTER_HEIGHT * lineNum;
+		//the 2 is a constant to offset the cursor a little.
+        double yLoc = LETTER_HEIGHT * lineNum + 2;
         return yLoc;
     }
 }
