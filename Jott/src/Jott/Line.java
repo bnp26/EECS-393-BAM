@@ -21,18 +21,20 @@ public class Line {
 	private boolean isEdited;
 	private Label line;
 
+        
+        // Constructor for Line with passing lineNum argument
 	public Line(int lineNum) {
 		this.lineNum = lineNum;
 		isEdited = true;
-		lineValue = "";
+		lineValue = ""; // initially lineValue is an empty string
 		line = new Label(lineValue);
 		line.setBackground(new Background(new BackgroundFill(Paint.valueOf("YELLOW"), null, null)));
 		//line.setBorder(new Border(new BorderStroke(Paint.valueOf("black"), null, new CornerRadii(1.0), BorderStroke.THIN)));
 //		line.setPrefSize(Page.PAGE_WIDTH, LINE_HEIGHT);
 //		line.setMaxSize(Page.PAGE_WIDTH, 16.0);
 		line.setScaleZ(1.0);
-		line.setFont(Font.font(java.awt.Font.MONOSPACED, 14));
-		line.setTextAlignment(TextAlignment.LEFT);
+		line.setFont(Font.font(java.awt.Font.MONOSPACED, 14)); // Using Monospaced font with size 14
+		line.setTextAlignment(TextAlignment.LEFT); // Text allignment assigned to LEFT
 		line.setVisible(true);
 	}
 
@@ -52,7 +54,9 @@ public class Line {
 		return lineValue;
 	}
 
-	public void insertLetter(Location loc, char letter) {
+        // insertLetter method need the location and character value
+        // to add it to the Line instance
+	public void insertLetter(Location loc, char letter) { 
 	    System.out.println("location = (" + loc.getLineNum() + ", " + loc.getLetterNum() + ")");
 	    System.out.print("letter = " + letter);
 		if(loc.getLineNum() != lineNum) {
@@ -63,9 +67,10 @@ public class Line {
 			System.out.println("trying to add a letter to a line where it can't");
 			return;
 		}
-        String startValue = lineValue.substring(0, loc.getLetterNum());
+                // if we have not returned yet, add the character to the correct line
+                String startValue = lineValue.substring(0, loc.getLetterNum());
 		String endValue = lineValue.substring(loc.getLetterNum());
-		lineValue = startValue + letter + endValue;
+		lineValue = startValue + letter + endValue; // add the letter to the line
 		System.out.println(lineValue);
 		updateLabel();
 	}
