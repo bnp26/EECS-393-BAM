@@ -17,8 +17,6 @@
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #eeeeee;" stylesheets="@JottPrototype.css">
          <children>
-            <VBox maxHeight="-Infinity" prefHeight="612.0" prefWidth="150.0">
-               <children>
                   <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" editable="false" onShown="#initializeComboBox" prefHeight="39.0" prefWidth="150.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
                      <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -44,11 +42,6 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-               </children>
-               <padding>
-                  <Insets top="1.0" />
-               </padding>
-            </VBox>
          </children>
       </VBox>
       <AnchorPane fx:id="pageAnchorPane" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" onMouseClicked="#pageClicked" prefHeight="601.0" prefWidth="751.0">
