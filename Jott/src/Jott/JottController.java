@@ -126,6 +126,10 @@ public class JottController {
 
             pagesPane.selectPage(newPage);
 
+            mainVBox.requestFocus();
+            newPage.getCursor().move(0, 0);
+            newPage.getCursor().getCursorImage().setVisible(true);
+            pageAnchorPane.getChildren().add(newPage.getCursor().getCursorImage());
         }
 	}
 
