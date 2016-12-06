@@ -32,7 +32,7 @@ public class MongoDB {
         host = new String("localhost");
         port = 27017;
     }
-
+    // axg769
     /*
     METHODS FOR NOTEBOOK
     */
@@ -71,7 +71,7 @@ public class MongoDB {
                 db.drop();
             }
             else
-                System.out.println("Such notebook with the given name exists");
+                System.out.println("Such notebook with the given name does not exist");
         }
         catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -191,6 +191,26 @@ public class MongoDB {
         }
         return false;
     } // pageExists()
+    
+    public long getPageLength(String notebook, String page) {
+        MongoDatabase db;
+        MongoClient mongoClient;
+        MongoCollection<Document> collection;
+        long collectionLength = 0;
+        
+        try {
+            // To connect to mongodb server
+            mongoClient = new MongoClient(host, port);
+            db = mongoClient.getDatabase(notebook);
+            collection = db.getCollection(page); // --implicitly creates collection if none exists 
+            collectionLength = collection.count();
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return collectionLength;
+    } // getPageLength()
+
 
     // increments the line numbers of the lines after the position inserted
     public void insertLine(String notebook, String page, int linenum, String linestr) {
