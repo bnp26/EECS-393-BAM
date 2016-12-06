@@ -53,6 +53,7 @@ public class Line {
 	}
 
 	public void insertLetter(Location loc, char letter) {
+	    System.out.println("location = (" + loc.getLineNum() + ", " + loc.getLetterNum() + ")");
 		if(loc.getLineNum() != lineNum) {
 			System.out.println("trying to add letter to wrong line");
 			return;
@@ -61,8 +62,9 @@ public class Line {
 			System.out.println("trying to add wha letter to the line where it can't");
 			return;
 		}
-
-		lineValue += letter;
+        String startValue = lineValue.substring(0, loc.getLetterNum());
+		String endValue = lineValue.substring(loc.getLetterNum());
+		lineValue = startValue + letter + endValue;
 		System.out.println(lineValue);
 		updateLabel();
 	}

@@ -125,6 +125,7 @@ public class JottController {
                 newPage.setVBox(mainVBox);
                 firstClick = true;
             }
+            newPage.getButton().fire();
         }
 	}
 
@@ -427,7 +428,6 @@ public class JottController {
                 System.out.println("selected page: " + page.getName());
             }
         });
-
         pagesPane.selectPage(page);
 		newPage.setVisible(true);
 		return page;

@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.*;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 public class Page {
@@ -97,6 +96,8 @@ public class Page {
         pageButton.setGraphic(new ImageView(imageDecline));
         pageButton.getGraphic().setScaleX(0.5);
         pageButton.getGraphic().setScaleY(0.5);
+        this.getCursor().getCursorImage().setVisible(true);
+        this.getCursor().move(this.getCursor().getLocation());
 		addLinesToPage();
     }
 
@@ -104,11 +105,12 @@ public class Page {
 		removeLinesFromPage();
 		pageButton.getStyleClass().remove("jott_current_page_item");
         pageButton.setGraphic(new ImageView());
+        this.getCursor().getCursorImage().setVisible(false);
     }
 
     public void addLinesToPage() {
 		for(Line line:lines){
-			if(!vBox.getChildren().contains(line))
+			if(!vBox.getChildren().contains(line.getLabel()))
 				this.vBox.getChildren().add(line.getLabel());
 		}
 	}
