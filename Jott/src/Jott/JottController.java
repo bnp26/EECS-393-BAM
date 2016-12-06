@@ -108,28 +108,24 @@ public class JottController {
         Page newPage = null;
 
 		if(result.isPresent()) {
-			newPageName = new String(result.get());
-			
-			if(pagesPane.hasPage(newPageName)) 
-				System.out.println("this notebook already has a page by this name");
-			else	
-				newPage = addNewPage(newPageName);
-		}
-		
-		System.out.println("clicked");
-		System.out.println(pagesPane.toString());
-		updateTitle(ae);
+            newPageName = new String(result.get());
 
-        pagesPane.selectPage(newPage);
+            if (pagesPane.hasPage(newPageName))
+                System.out.println("this notebook already has a page by this name");
+            else
+                newPage = addNewPage(newPageName);
+            updateTitle(ae);
 
-        Cursor cursor = new Cursor();
-        newPage.setCursor(cursor);
-        if(!firstClick) {
-            mainVBox.getChildren().remove(0, 1);
-            newPage.setVBox(mainVBox);
-            firstClick = true;
+            pagesPane.selectPage(newPage);
+
+            Cursor cursor = new Cursor();
+            newPage.setCursor(cursor);
+            if (!firstClick) {
+                mainVBox.getChildren().remove(0, 1);
+                newPage.setVBox(mainVBox);
+                firstClick = true;
+            }
         }
-
 	}
 
 	public void pageClicked(MouseEvent me) {
