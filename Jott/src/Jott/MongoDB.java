@@ -189,6 +189,7 @@ public class MongoDB {
             MongoIterable<String> myset = db.listCollectionNames();
             for (String str : myset) {
                 pageList.add(str);
+                pageList.remove("-**BLANK**-");
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
