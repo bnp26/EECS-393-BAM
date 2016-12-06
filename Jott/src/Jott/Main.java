@@ -2,8 +2,11 @@ package Jott;
 	
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -26,6 +29,10 @@ public class Main extends Application {
 			PagesPane pagesPane = new PagesPane();
 
 			JottController controller = new JottController(notebooksPane, pagesPane);
+
+			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
+			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
+
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

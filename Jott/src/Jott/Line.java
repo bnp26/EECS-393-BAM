@@ -60,7 +60,7 @@ public class Line {
 			return;
 		}
 		if(loc.getLetterNum()>lineValue.length()){
-			System.out.println("trying to add wha letter to the line where it can't");
+			System.out.println("trying to add a letter to a line where it can't");
 			return;
 		}
         String startValue = lineValue.substring(0, loc.getLetterNum());

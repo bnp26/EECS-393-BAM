@@ -185,6 +185,8 @@ public class JottController {
 
         LinkedList<Line> lines = selectedPage.getLines();
         char num;
+
+        System.out.println("code = " + ke.getCode().toString());
         switch(ke.getCode()){
             case UP:
                 if(lineNum == 0) {
