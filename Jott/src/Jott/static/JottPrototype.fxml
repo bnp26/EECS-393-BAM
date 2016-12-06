@@ -17,31 +17,31 @@
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #eeeeee;" stylesheets="@JottPrototype.css">
          <children>
-                  <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" editable="false" onShown="#initializeComboBox" prefHeight="39.0" prefWidth="150.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
-                     <items>
-                        <FXCollections fx:factory="observableArrayList">
-                           <String fx:value="Create New Notebook" />
-                        </FXCollections>
-                     </items>
-                  </ComboBox>
-                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0" VBox.vgrow="ALWAYS">
-                     <content>
-                        <VBox fx:id="pagesVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0">
-                           <children>
+            <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" editable="false" onShown="#initializeComboBox" prefHeight="39.0" prefWidth="150.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Create New Notebook" />
+                  </FXCollections>
+               </items>
+            </ComboBox>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="pagesVBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="150.0">
+                     <children>
 
-                           </children>
-                        </VBox>
-                     </content>
-                  </ScrollPane>
-                  <JFXButton id="newPageButton" fx:id="newPageButton" alignment="CENTER" mnemonicParsing="false" onAction="#createNewPage" prefHeight="39.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
-                     <graphic>
-                        <ImageView>
-                           <image>
-                              <Image preserveRatio="true" requestedHeight="28.5" url="@ic_note_add_black_24dp_2x.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <JFXButton id="newPageButton" fx:id="newPageButton" alignment="CENTER" mnemonicParsing="false" onAction="#createNewPage" prefHeight="39.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image preserveRatio="true" requestedHeight="28.5" url="@ic_note_add_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children>
       </VBox>
       <AnchorPane fx:id="pageAnchorPane" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" onMouseClicked="#pageClicked" prefHeight="601.0" prefWidth="751.0">
