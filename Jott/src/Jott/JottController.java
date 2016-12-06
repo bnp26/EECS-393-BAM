@@ -237,22 +237,23 @@ public class JottController {
                 System.out.println(ke.getCode().toString());
                 break;
             case BACK_SPACE:
-                if(letterNum < lines.get(lineNum).getLineValue().length()-1) {
+                if(letterNum == 0) {
+                    lines.remove(lineNum);
+                    lineNum -= 1;
+                    letterNum = lines.get(lineNum).getLineValue().length() - 1;
+                }
+                else if(letterNum < lines.get(lineNum).getLineValue().length()-1) {
                     Line line = lines.get(lineNum);
                     String lineVal = line.getLineValue();
                     lineVal = lineVal.substring(0, letterNum) + lineVal.substring(letterNum + 1);
                     letterNum -= 1;
-                    //line.setLineValue(lineVal);
-                } else if(letterNum == 0) {
-                    lines.remove(lineNum);
-                    lineNum -=1;
-                    letterNum = lines.get(lineNum).getLineValue().length()-1;
+                    line.setLineValue(lineVal);
                 }
                 else {
                     Line line = lines.get(lineNum);
                     String lineVal = line.getLineValue();
                     lineVal = lineVal.substring(0, letterNum);
-                    //line.setLineValue(lineVal);
+                    line.setLineValue(lineVal);
                 }
                 cursor.move(lineNum, letterNum);
                     break;
