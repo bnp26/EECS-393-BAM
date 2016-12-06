@@ -23,31 +23,7 @@ public class Notebook {
                 //mdb.createPage(name, "*!!!!*");
 		this.pagePane = new PagesPane();
 	}
-	
-	/**
-	 *@author bnp26
-	 *<p>
-	 *populateNotebooks uses a connection to MongoDB to populate the of 
-	 *the selected notebook upon selecting a notebook with it's assiciated pages.
-	 *</p>
-	 *@param 
-	 *@return 
-	 *
-	*/
-	public void populateNotebook() {
-            /*
-            ArrayList<String> notebookList = mdb.getNotebooks();
-            if (arrayList.contains("Notebook Name") {
-                ArrayList<String> pageList = mdb.getPages("Notebook name");
-            }
-            
-            // If we just want to get what is inside a notebook
-            // call getPages() 
-            // and than for each page desired
-            // call getLine()
-            */
-        }
-	
+
 	/**
 	 * returns the page object of the passed pageID.
 	 * 

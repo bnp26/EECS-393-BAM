@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.*;
 
+import java.util.ArrayList;
+
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
@@ -38,6 +40,21 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void populateData(MongoDB mongoDB, JottController controller) {
+		NotebooksPane notebooksPane = controller.getNotebooksPane();
+		PagesPane pagesPane = controller.getPagesPane();
+
+		ArrayList<String> notebooks = mongoDB.getNotebooks();
+
+		for(String notebook:notebooks) {
+			notebooksPane.createNewNotebook(notebook);
+
+			Notebook current = notebooksPane.getNotebook(notebook);
+
+		}
+
 	}
 
 	private void setUpGUI() {

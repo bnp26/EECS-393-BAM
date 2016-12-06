@@ -34,6 +34,10 @@ public class NotebooksPane {
 		return notebooksArrayList;
 	}
 
+	public Notebook getNotebook(String notebookStr) {
+		return notebooks.get(notebookStr);
+	}
+
 	public Notebook createNewNotebook(String name) {
 		Notebook newNotebook = new Notebook(name);
 		this.notebooks.put(name, newNotebook);

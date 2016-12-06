@@ -60,9 +60,13 @@ public class JottController {
 		this.pagesPane = pagesPane;
 	}
 	
-	public void viewAllNotebooks(ActionEvent ae) {
-		
-	}
+	public PagesPane getPagesPane() {
+	    return this.pagesPane;
+    }
+
+    public NotebooksPane getNotebooksPane() {
+        return this.notebooksPane;
+    }
 
 	public void initializeComboBox() {
         notebooksComboBox.valueProperty().addListener(new ChangeListener() {
@@ -126,7 +130,7 @@ public class JottController {
 
             pagesPane.selectPage(newPage);
 
-            mainVBox.requestFocus();
+            pageAnchorPane.requestFocus();
             newPage.getCursor().move(0, 0);
             newPage.getCursor().getCursorImage().setVisible(true);
             pageAnchorPane.getChildren().add(newPage.getCursor().getCursorImage());
