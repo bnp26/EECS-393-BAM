@@ -15,7 +15,7 @@ public class Cursor {
     private Rectangle cursorImage;
 
     public Cursor() {
-        cursorImage = new Rectangle(2.0, 16.0,Paint.valueOf("BLACK"));
+        cursorImage = new Rectangle(2.0, 15.0,Paint.valueOf("BLACK"));
         setCursorTransition();
         location = new Location(0,0);
     }
@@ -49,7 +49,7 @@ public class Cursor {
 
         this.cursorImage.setVisible(true);
         setCursorTransition();
-
+        this.cursorImage.setVisible(true);
         System.out.println("cursor should be at: ("+this.getLocation().getXPixelValue() + ", " + this.getLocation().getYPixelValue()+")");
         System.out.println("cursor is at: ("+cursorImage.xProperty().get() + ", " + cursorImage.yProperty().get()+")");
     }
