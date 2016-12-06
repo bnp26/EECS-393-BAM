@@ -37,6 +37,28 @@ public class MongoDB {
     METHODS FOR NOTEBOOK
     */
     
+    public void createNotebook(String notebook) {
+
+        MongoDatabase db;
+        MongoClient mongoClient;
+        String page = "-**BLANK**-";
+        
+        try {
+            mongoClient = new MongoClient(host, port);
+            db = mongoClient.getDatabase(notebook);
+
+            if (!pageExists(notebook, page)) {
+                System.out.println("created new collection");
+                db.createCollection(page);
+            }
+            else
+                System.out.println("Such page with the given name exists");
+        }
+        catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    } // createPage()
+    
     public ArrayList<String> getNotebooks() {
 
         MongoClient mongoClient;
