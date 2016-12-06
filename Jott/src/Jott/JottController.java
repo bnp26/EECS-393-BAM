@@ -116,8 +116,6 @@ public class JottController {
                 newPage = addNewPage(newPageName);
             updateTitle(ae);
 
-            pagesPane.selectPage(newPage);
-
             Cursor cursor = new Cursor();
             newPage.setCursor(cursor);
             if (!firstClick) {
@@ -125,7 +123,9 @@ public class JottController {
                 newPage.setVBox(mainVBox);
                 firstClick = true;
             }
-            newPage.getButton().fire();
+
+            pagesPane.selectPage(newPage);
+
         }
 	}
 
