@@ -258,7 +258,6 @@ public class JottController implements Initializable {
     }
 
 	public void initializeComboBox() {
-        refreshNotebooksComboBox();
         notebooksComboBox.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue ov, Object oldValue, Object newValue) {
@@ -570,6 +569,60 @@ public class JottController implements Initializable {
                 break;
             case DIGIT0:
                 num = toggleSymbols == true ? ')' : '0';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case COMMA:
+                num = toggleSymbols == true ? '<' : ',';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case PERIOD:
+                num = toggleSymbols == true ? '>' : '.';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case QUOTE:
+                num = toggleSymbols == true ? '\"' : '\'';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case SEMICOLON:
+                num = toggleSymbols == true ? ':' : ';';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case BACK_QUOTE:
+                num = toggleSymbols == true ? '~' : '`';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case SLASH:
+                num = toggleSymbols == true ? '?' : '/';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case BACK_SLASH:
+                num = toggleSymbols == true ? '|' : '\\';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case BRACELEFT:
+                num = toggleSymbols == true ? '{' : '[';
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                break;
+            case BRACERIGHT:
+                num = toggleSymbols == true ? '}' : ']';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
                 cursor.move(lineNum, letterNum);

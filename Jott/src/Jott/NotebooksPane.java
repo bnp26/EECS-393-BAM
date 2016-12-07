@@ -31,6 +31,7 @@ public class NotebooksPane {
 		this.pagesVBox = pagesVBox;
 
 		notebooks = new HashMap<String, Notebook>();
+		/*
 		mdb = new MongoDB();
 
 		ArrayList<String> notebooks = mdb.getNotebooks();
@@ -39,7 +40,7 @@ public class NotebooksPane {
 			if(notebook.equals("admin") || notebook.equals("local") || notebook.equals("Create New Notebook"))
 				continue;
 			createNewNotebook(notebook);
-		}
+		}*/
 	}
 
 	public ArrayList<Notebook> getNotebooks() {
