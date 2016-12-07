@@ -17,9 +17,22 @@ public class Page {
 
 	public static final double PAGE_WIDTH = 740;
 
+	public Page(String name) {
+        this.name = name;
+
+        lines = new LinkedList<Line>();
+        Cursor cursor = new Cursor();
+        this.cursor = cursor;
+        int counter = 0;
+        while(counter < 20)
+        {
+            lines.add(new Line(counter));
+            counter++;
+        }
+    }
+
 	public Page(String name, VBox vBox) {
 		this.name = name;
-		//setting up flow pane event listeners
 		this.vBox = vBox;
 
 		lines = new LinkedList<Line>();

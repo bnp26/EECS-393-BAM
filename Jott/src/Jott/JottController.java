@@ -27,6 +27,7 @@ public class JottController {
 	private PagesPane pagesPane;
 	private TextInputDialog newPageDialog, newNotebookDialog;
 	private Page page;
+	private MongoDB mongoDB;
 	
 	@FXML //fx:id = "pagesVBox"
 	private VBox pagesVBox;
@@ -50,12 +51,12 @@ public class JottController {
     private boolean toggleCaps = false;
     private boolean toggleSymbols = false;
 
-	public JottController() {
-		this.notebooksPane = new NotebooksPane();
-		this.pagesPane = new PagesPane();
-	}
-	
-	public JottController(NotebooksPane notebooksPane, PagesPane pagesPane) {
+    public JottController() {
+        this.notebooksPane = new NotebooksPane();
+        this.pagesPane = new PagesPane();
+    }
+
+    public JottController(NotebooksPane notebooksPane, PagesPane pagesPane) {
 		this.notebooksPane = notebooksPane;
 		this.pagesPane = pagesPane;
 	}
@@ -66,6 +67,10 @@ public class JottController {
 
     public NotebooksPane getNotebooksPane() {
         return this.notebooksPane;
+    }
+
+    public void setPagesPane(PagesPane pagesPane) {
+        this.pagesPane = pagesPane;
     }
 
 	public void initializeComboBox() {
@@ -94,10 +99,12 @@ public class JottController {
                             newestNotebook = createNewNotebook(newNotebookName);
                     }
                 }
-
+                else {
+                    notebooksPane.selectNotebook((String)newValue);
+                }
             }
         });
-
+        refreshNotebooksComboBox();
     }
 
 	public void createNewPage(ActionEvent ae) {
@@ -426,9 +433,6 @@ public class JottController {
 
 		//creates the new page button
 		JFXButton newPage = createPageButton(name);
-
-		//finds the number of children in the pagesVBox
-		int vBoxSize = pagesVBox.getChildrenUnmodifiable().size();
 		
 		page.setButton(newPage); 
 		//adds the new button to the pagesVBox but puts it always at the end of the list but above the add new page button
@@ -469,7 +473,7 @@ public class JottController {
         return newNotebook;
     }
 
-    private void refreshNotebooksComboBox() {
+    public void refreshNotebooksComboBox() {
         ArrayList<Notebook> myNotebooks = notebooksPane.getNotebooks();
 
         final ObservableList<String> notebooksArray = notebooksComboBox.getItems();

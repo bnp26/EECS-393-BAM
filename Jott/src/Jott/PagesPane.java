@@ -30,9 +30,9 @@ public class PagesPane {
             }
         });
 
-        selectPage(page);
 		page.setButton(button);
         selectedPage = page;
+//		selectPage(page);
 	}
 
 	public void selectPage(Page page) {

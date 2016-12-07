@@ -356,16 +356,17 @@ public class MongoDB {
                 return null;
             } else {
                 MongoCursor cursor = collection.find().iterator();
-                System.out.println(cursor.tryNext().toString());
+                //System.out.println(cursor.tryNext().toString());
 
-                while (cursor.hasNext()) {
+                do {
                     Document currentDoc = (Document) cursor.next();
                     Integer linenumValue = new Integer(linenum);
 
                     if (currentDoc.getInteger("linenum").equals(linenumValue)) {
                         return currentDoc.getString("linestr");
                     }
-                }
+                }while (cursor.hasNext());
+
                 System.out.println("Could not find line");
                 return null;
             }

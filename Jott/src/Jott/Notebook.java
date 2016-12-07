@@ -1,15 +1,14 @@
 package Jott;
 
-import java.util.ArrayList;
-
 public class Notebook {
 	
 	private String name; // this is equal to the key in the key/value pair in the notebooks pane HashMap.
-	private PagesPane pagePane;
-	MongoDB mdb = new MongoDB();
+	private PagesPane pagesPane;
+	private MongoDB mdb;
 
 	public Notebook() {
 		name = null;
+		mdb = new MongoDB();
 	}
 	
 	public Notebook(String name) {
@@ -21,7 +20,8 @@ public class Notebook {
                 // we are not going to show this page when we are viewing the pages
                 
                 //mdb.createPage(name, "*!!!!*");
-		this.pagePane = new PagesPane();
+		this.pagesPane = new PagesPane();
+		mdb = new MongoDB();
 	}
 
 	/**
@@ -37,36 +37,28 @@ public class Notebook {
             ArrayList<String> notebookList = mdb.getNotebooks();
             if (arrayList.contains("Notebook Name") {
                 ArrayList<String> pageList = mdb.getPages("Notebook Name");
-            
+
                 if (pageList.size()>1)
                     pageList.remove("*!!!!*") //Remove the dummy page
                     // However this should be done if there is more than one page,
                     // else the whole DB is dropped
-            
+
                 pageList.get(pageID); // This will only give you the name of the page
                 Then you can use the name of the pagee for line operations
-            
+
                 // However to do stuff like insertLine, deleteLine etc.
-                // we call it with arguments 
+                // we call it with arguments
                 // ADD A LINE: String notebook, String page, int linenum, String linestr
                 // DELETE A LINE: String notebook, String page, int linenum
             }
             */
-            return null;
-	}
-	
-	/**
-	 * <p>Creates a new page object in both the current page and the MongoDB server. 
-	 * Returns the ID of the newly created page.</p>
-	 * 
-	 * @return String
-	 * 
-	 */
-	public String createPage(String newName) { return null;}
-            /*
-                mdb.createPage("Notebook name", "Page name");
-            */
 
+            int index = this.pagesPane.getPages().indexOf(pageID);
+            if(index == -1)
+            	return null;
+			else
+				return this.pagesPane.getPages().get(index);
+	}
         
 	/**
 	 * <p>Renames the currently selected Notebook to the entered parameter.</p>
@@ -81,7 +73,9 @@ public class Notebook {
 	public void renameNotebook(String newName) {
 		name = newName;
 	}
-	
+
+	public PagesPane getPagesPane() {return pagesPane;}
+
 	@Override
 	public String toString(){
 		return name;
