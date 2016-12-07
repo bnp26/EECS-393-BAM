@@ -50,11 +50,15 @@
             </JFXButton>
          </children>
       </VBox>
-      <AnchorPane fx:id="pageAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" onMouseClicked="#pageClicked" prefHeight="601.0" prefWidth="751.0" HBox.hgrow="ALWAYS">
+      <AnchorPane fx:id="pageAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" onMouseClicked="#pageClicked" prefHeight="601.0" prefWidth="751.0" HBox.hgrow="ALWAYS">
          <children>
-            <ScrollPane fitToWidth="true" prefHeight="601.0" prefWidth="751.0" styleClass="edge-to-edge">
+            <ScrollPane fitToWidth="true" prefHeight="601.0" prefWidth="751.0" styleClass="edge-to-edge" >
                <content>
-                  <VBox fx:id="mainVBox" prefHeight="600.0" prefWidth="765.0" style="-fx-background-color: #eeeeee;">
+                  <VBox fx:id="mainVBox" prefHeight="600.0" prefWidth="765.0" style="-fx-background-color: #eeeeee;" fillWidth="true" onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased"
+
+
+
+                  >
                      <children>
                         <Label prefHeight="16" prefWidth="740.0" text="Welcome To Jott" />
                      </children>

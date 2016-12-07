@@ -1,5 +1,6 @@
 package Jott;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.*;
 
@@ -12,10 +13,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.control.TextInputDialog;
@@ -54,6 +62,12 @@ public class JottController implements Initializable {
     private boolean toggleCaps = false;
     private boolean toggleSymbols = false;
 
+    private String highlitedString = "";
+    private Location highlightStart = null;
+    private Location highlightEnd = null;
+
+    private Polygon highlightedShape = new Polygon ();
+
     public JottController() {
         this.notebooksPane = null;
         this.pagesPane = null;
@@ -74,6 +88,134 @@ public class JottController implements Initializable {
 
     public void setPagesPane(PagesPane pagesPane) {
         this.pagesPane = pagesPane;
+    }
+
+    public void mousePressed(MouseEvent me) {
+        double xLoc = me.getX();
+        double yLoc = me.getY();
+
+        Location loc = new Location();
+        loc = loc.pixelsToLocation(xLoc, yLoc);
+
+        highlightStart = loc;
+
+        double startXPixel = highlightStart.getXPixelValue();
+        double startYPixel = highlightStart.getYPixelValue();
+
+        double startXPixel2 = startXPixel + 2.0;
+        double startYPixel2 = startYPixel + 15.0;
+
+        highlightedShape.getPoints().addAll(new Double[] {
+                startXPixel, startYPixel,
+                startXPixel2, startYPixel2
+        });
+        if(!pageAnchorPane.getChildren().contains(highlightedShape))
+            pageAnchorPane.getChildren().add(highlightedShape);
+    }
+
+    public void mouseReleased(MouseEvent me) {
+        double xLoc = me.getX();
+        double yLoc = me.getY();
+
+        Location loc = new Location();
+        loc = loc.pixelsToLocation(xLoc, yLoc);
+
+        highlightEnd = loc;
+
+        pageAnchorPane.getChildren().remove(highlightedShape);
+        highlightedShape = new Polygon ();
+    }
+
+    public void mouseDragged(MouseEvent me) {
+        double xLoc = me.getX();
+        double yLoc = me.getY();
+
+        Location loc = new Location();
+        loc = loc.pixelsToLocation(xLoc, yLoc);
+
+        double startXPixel = highlightStart.getXPixelValue();
+        double startYPixel = highlightStart.getYPixelValue();
+
+        double startXPixel2 = startXPixel + 2.0;
+        double startYPixel2 = startYPixel + 15.0;
+
+        //this is the top left corner
+        double endXPixel = loc.getXPixelValue();
+        double endYPixel = loc.getYPixelValue();
+
+        double endXPixel2 = endXPixel + 2.0;
+        double endYPixel2 = endYPixel + 15.0;
+
+        highlightedShape.getPoints().remove(0, highlightedShape.getPoints().size());
+
+        int longestLine = 0;
+
+        for(Line line : pagesPane.getSelectedPage().getLines()) {
+            if(longestLine < line.getLineValue().length()) {
+                longestLine = line.getLineValue().length();
+            }
+        }
+        System.out.println("(" + startXPixel + ", " + startYPixel + ")");
+        System.out.println("(" + startXPixel2 + ", " + startYPixel2 + ")");
+        System.out.println("(" + 0.0 + ", " + startYPixel2 + ")");
+        System.out.println("(" + 0.0 + ", " + endYPixel2 + ")");
+        System.out.println("(" + endXPixel2 + ", " + endYPixel2 + ")");
+        System.out.println("(" + endXPixel + ", " + endYPixel + ")");
+        System.out.println("(" + 8.40625 * longestLine + ", " + endYPixel + ")");
+        System.out.println("(" + 8.40625 * longestLine + ", " + startYPixel + ")");
+        if(loc.getLineNum() != highlightStart.getLineNum()) {
+            //this is going above
+            Double pointsArray[] = new Double[16];
+            ArrayList<Double> points = new ArrayList<Double>();
+
+            pointsArray[0] = startXPixel; //top left of cursor starting loc
+            pointsArray[1] = startYPixel;
+
+            pointsArray[2] = startXPixel2; //bottom left of cursor starting loc
+            pointsArray[3] = startYPixel2;
+
+            pointsArray[4] = 0.0;          //left most edge of page at bottom of the cursors height
+            pointsArray[5] = startYPixel2;
+
+            pointsArray[6] = 0.0;          //left most edge of page at bottom of current loc's height
+            pointsArray[7] = endYPixel2;
+
+            pointsArray[8] = endXPixel2;
+            pointsArray[9] = endYPixel2;
+
+            pointsArray[10] = endXPixel;
+            pointsArray[11] = endYPixel;
+
+            pointsArray[12] = pageAnchorPane.getWidth();
+            pointsArray[13] = endYPixel;
+
+            pointsArray[14] = pageAnchorPane.getWidth();
+            pointsArray[15] = startYPixel;
+
+            highlightedShape.getPoints().addAll(pointsArray);
+
+        }
+        else {
+            //this is the top left corner
+
+
+            highlightedShape.getPoints().addAll(new Double[] {
+                    startXPixel, startYPixel,
+                    startXPixel2, startYPixel2,
+                    endXPixel2, endYPixel2,
+                    endXPixel, endYPixel
+            });
+
+            Color color = Color.rgb(175, 238, 238, 0.45);
+
+            highlightedShape.setFill(color);
+            highlightedShape.setVisible(true);
+        }
+
+        Page selectedPage = pagesPane.getSelectedPage();
+
+//        Line draggedLine = selectedPage.getLines().get(loc.getLineNum());
+//        char letter = draggedLine.getLineValue().charAt(loc.getLetterNum());
     }
 
 	public void initializeComboBox() {
