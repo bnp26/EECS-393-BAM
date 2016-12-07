@@ -61,6 +61,11 @@ public class JottController implements Initializable {
     private boolean toggleCaps = false;
     private boolean toggleSymbols = false;
 
+    private boolean toggleControl = false;
+    private boolean toggleBold = false;
+    private boolean toggleItalics = false;
+    private boolean toggleUnderline = false;
+    
     private StringBuilder highlitedString = new StringBuilder();
     private Location highlightStart = null;
     private Location highlightEnd = null;
@@ -546,14 +551,43 @@ public class JottController implements Initializable {
                 letterNum+=1;
                 cursor.move(lineNum, letterNum);
                 break;
-            default:
-                char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
-                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), letter);
-                letterNum+=1;
-                cursor.move(lineNum, letterNum);
-                System.out.println("letter = " + ke.getCode().toString());
-                System.out.println("letter = " + ke.getCode().getName().toString());
+            case CONTROL:
+                toggleControl = true;
                 break;
+            default:
+                if(toggleControl) {
+                    // IF B - Bold
+                    // IF C - Copy
+                    // IF I - Italic
+                    // IF U - Underline
+                    // IF V - Paste
+                    if(ke.getCode().getName().equals("B")) {
+                        if(toggleBold) {
+                            System.out.println("THE CONTROL IS HELD DOWN" + ke.getCode().getName());
+                            System.out.println("ToggleBold to false");
+                            toggleBold = false;
+                        }
+                        else {
+                            System.out.println("THE CONTROL IS HELD DOWN" + ke.getCode().getName());
+                            System.out.println("ToggleBold to true");
+                            toggleBold = true;
+                        }
+                    }
+                        
+                    else if (ke.getCode().getName().equals("I")) {
+                        toggleItalics = true;
+                    }
+                    
+                }
+                else {
+                    char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
+                    lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), letter);
+                    letterNum+=1;
+                    cursor.move(lineNum, letterNum);
+                    System.out.println("letter = " + ke.getCode().toString());
+                    System.out.println("letter = " + ke.getCode().getName().toString());
+                    break;
+                }
         }
     }
 
