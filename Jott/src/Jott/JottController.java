@@ -229,19 +229,19 @@ public class JottController implements Initializable {
                     break;
                 }
             case LEFT:
-                if(letterNum == 0) {
+                if(letterNum == 0 && lineNum != 0) {
                     lineNum-=1;
                     //need to fix lines before this starts to work
-                    Location updatedLoc = new Location(lineNum, lines.get(lineNum).getLineValue().length()-1);
-                    cursor.move(updatedLoc);
-                    break;
+                    letterNum = lines.get(lineNum).getLineValue().length() - 1;
                 }
                 else {
-                    letterNum -= 1;
-                    Location updatedLoc = new Location(lineNum, letterNum);
-                    cursor.move(updatedLoc);
-                    break;
+                    letterNum-=1;
                 }
+
+                Location updatedLocation = new Location(lineNum, letterNum);
+                cursor.move(updatedLocation);
+                System.out.println(ke.getCode().toString());
+                break;
             case RIGHT:
                 if (letterNum == lines.get(lineNum).getLineValue().length()-1 && lines.get(lineNum+1) != null) {
                     letterNum = 0;
@@ -256,10 +256,8 @@ public class JottController implements Initializable {
                 break;
             case ENTER:
                 //gotta add instances if there is a bullet point and such
-                    lineNum+=1;
-                    insertNewLine(lineNum);
-                    cursor.move(lineNum, 0);
-
+                selectedPage.createNewLine(lineNum+1);
+                lineNum+=1;
                 break;
             case BACK_SPACE:
                 if(letterNum == 0 && lineNum != 0) {
@@ -406,18 +404,7 @@ public class JottController implements Initializable {
 
     private void insertNewLine(int start) {
         Page selectedPage = pagesPane.getSelectedPage();
-        LinkedList<Line> lines = selectedPage.getLines();
-
-        Line newLine = new Line(start);
-        lines.add(newLine);
-
-        for(int x = lines.size()-2; x >= start; x--) {
-            Line linePlaceHolder = lines.get(x);
-            lines.set(x, newLine);
-            lines.set(x-1, linePlaceHolder);
-            lines.get(x-1).setLineNum(x-1);
-        }
-
+        selectedPage.createNewLine(start);
         selectedPage.addLinesToPage();
     }
 
@@ -449,9 +436,11 @@ public class JottController implements Initializable {
         });
         Rectangle cursor = pagesPane.getSelectedPage().getCursor().getCursorImage();
         int cursorImageIndex = pageAnchorPane.getChildren().indexOf(cursor);
-        pageAnchorPane.getChildren().remove(cursorImageIndex);
+        if(cursorImageIndex != -1) {
+            pageAnchorPane.getChildren().remove(cursorImageIndex);
+        }
         pagesPane.selectPage(page);
-		newPage.setVisible(true);
+        newPage.setVisible(true);
 		return page;
 	}
 

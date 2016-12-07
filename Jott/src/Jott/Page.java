@@ -105,6 +105,37 @@ public class Page {
 		}
 	}
 
+	public void createNewLine(int lineNum) {
+		Line line = new Line(lineNum);
+		Line endLine = new Line(lines.size());
+		lines.add(lines.size(), endLine);
+
+		int counter = lineNum;
+
+		while(!lines.get(counter).getLineValue().equals(""))
+			counter++;
+
+		if(counter == 1) {
+			lines.set(counter + 1, lines.get(counter));
+			lines.get(counter + 1).setLineNum(counter + 1);
+		}
+		else if(!(counter <= 0)) {
+			lines.set(counter + 1, lines.get(counter));
+			lines.get(counter + 1).setLineNum(counter + 1);
+
+			for (int x = counter - 2; x > lineNum; x--) {
+				Line linePlaceHolder = lines.get(x);
+				linePlaceHolder.setLineNum(linePlaceHolder.getLineNum() + 1);
+				lines.set(x + 1, linePlaceHolder);
+			}
+		}
+
+		lines.set(lineNum, line);
+		cursor.move(lineNum, 0);
+		removeLinesFromPage();
+		addLinesToPage();
+	}
+
 	public void selectPage() {
         pageButton.getStyleClass().add("jott_current_page_item");
         Image imageDecline = new Image(getClass().getResourceAsStream("static/ic_label_black_24dp_2x.png"));
