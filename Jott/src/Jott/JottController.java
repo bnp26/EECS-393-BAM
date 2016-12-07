@@ -269,7 +269,7 @@ public class JottController implements Initializable {
                     letterNum = lines.get(lineNum).getLineValue().length() - 1;
                     cursor.move(lineNum, letterNum);
                 }
-                else {
+                else if(!(lineNum == 0 && letterNum == 0)){
                     Line line = lines.get(lineNum);
 
                     line.removeLetter(cursor.getLocation());
