@@ -62,6 +62,7 @@ public class JottController implements Initializable {
     private boolean toggleSymbols = false;
 
     private boolean toggleControl = false;
+    private boolean toggleShift = false;
     private boolean toggleBold = false;
     private boolean toggleItalics = false;
     private boolean toggleUnderline = false;
@@ -437,11 +438,49 @@ public class JottController implements Initializable {
                 break;
             case ENTER:
                 //gotta add instances if there is a bullet point and such
-                selectedPage.createNewLine(lineNum+1);
+                String newLineValue = "";
+                if(lines.get(lineNum).isBulleted() && lines.get(lineNum).getLineValue().substring(lines.get(lineNum).getLineValue().length()-3).equals(" - ")) {
+                    lines.get(lineNum).setLineValue("");
+                    lines.get(lineNum).toggleBullet();
+                    cursor.move(lineNum, 0);
+                    lines.get(lineNum).updateLabel();
+                    break;
+                }
+                else if(lines.get(lineNum).isBulleted()) {
+                    selectedPage.createNewLine(lineNum+1);
+                    for(int x = 0; x < lines.get(lineNum).getBulletTier()-1; x++) {
+                        newLineValue+="  ";
+                    }
+                    newLineValue+=" - ";
+                    lines.get(lineNum + 1).setLineValue(newLineValue);
+                    lines.get(lineNum + 1).updateLabel();
+                } else {
+                    selectedPage.createNewLine(lineNum+1);
+                }
                 lineNum+=1;
+                letterNum=0+newLineValue.length();
+                cursor.move(lineNum, letterNum);
                 break;
             case BACK_SPACE:
-                if(letterNum == 0 && lineNum != 0) {
+                if(letterNum == 3 && lines.get(lineNum).isBulleted()) {
+                    Location loc1 = new Location(lineNum, 0);
+                    Location loc2 = new Location(lineNum, 1);
+                    Location loc3 = new Location(lineNum, 2);
+
+                    lines.get(lineNum).removeLetter(loc3);
+                    lines.get(lineNum).removeLetter(loc2);
+                    lines.get(lineNum).removeLetter(loc1);
+
+                    letterNum -= 3;
+                    cursor.move(lineNum, letterNum);
+                }else if(lines.get(lineNum).isBulleted() && lines.get(lineNum).getLineValue().charAt(letterNum-2) == '-') {
+                    Location loc1 = new Location(lineNum, 0);
+                    Location loc2 = new Location(lineNum, 1);
+
+                    lines.get(lineNum).removeLetter(loc2);
+                    lines.get(lineNum).removeLetter(loc1);
+                }
+                else if(letterNum == 0 && lineNum != 0) {
                     lines.remove(lineNum);
                     lineNum -= 1;
                     letterNum = lines.get(lineNum).getLineValue().length() - 1;
@@ -463,6 +502,7 @@ public class JottController implements Initializable {
             case SHIFT:
                 toggleCaps();
                 toggleSymbols();
+                toggleShift=true;
                 break;
             case TAB:
                 System.out.println("pressed " + ke.getCode().toString());
@@ -536,9 +576,18 @@ public class JottController implements Initializable {
                 break;
             case MINUS:
                 num = toggleSymbols == true ? '_' : '-';
-                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
-                letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                if(num == '-' && letterNum == 0) {
+                    lines.get(lineNum).insertLetter(cursor.getLocation(), ' ');
+                    lines.get(lineNum).insertLetter(cursor.getLocation(), num);
+                    lines.get(lineNum).insertLetter(cursor.getLocation(), ' ');
+                    lines.get(lineNum).toggleBullet();
+                    letterNum += 3;
+                    cursor.move(lineNum, letterNum);
+                } else {
+                    lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
+                    letterNum += 1;
+                    cursor.move(lineNum, letterNum);
+                }
                 break;
             case EQUALS:
                 num = toggleSymbols == true ? '+' : '=';
@@ -547,9 +596,22 @@ public class JottController implements Initializable {
                 cursor.move(lineNum, letterNum);
                 break;
             case SPACE:
-                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), ' ');
-                letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                if(toggleControl && lines.get(lineNum).isBulleted()) {
+                    lines.get(cursor.getLocation().getLineNum()).insertLetter(new Location(cursor.getLocation().getLineNum(), 0) , ' ');
+                    lines.get(cursor.getLocation().getLineNum()).insertLetter(new Location(cursor.getLocation().getLineNum(), 0) , ' ');
+                    letterNum += 2;
+                    cursor.move(lineNum, letterNum);
+                } else if(toggleShift && lines.get(lineNum).isBulleted() && !lines.get(lineNum).getLineValue().substring(0,3).equals(" - ")) {
+                    Location loc1 = new Location(lineNum, 0);
+                    lines.get(lineNum).removeLetter(loc1);
+                    lines.get(lineNum).removeLetter(loc1);
+                    letterNum-=2;
+                    cursor.move(lineNum, letterNum);
+                } else {
+                    lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), ' ');
+                    letterNum += 1;
+                    cursor.move(lineNum, letterNum);
+                }
                 break;
             case CONTROL:
                 toggleControl = true;
@@ -561,6 +623,7 @@ public class JottController implements Initializable {
                     // IF I - Italic
                     // IF U - Underline
                     // IF V - Paste
+                    // IF SPACE - Tab Bullet Point
                     if(ke.getCode().getName().equals("B")) {
                         if(toggleBold) {
                             System.out.println("THE CONTROL IS HELD DOWN" + ke.getCode().getName());
@@ -600,6 +663,10 @@ public class JottController implements Initializable {
             case SHIFT:
                 toggleCaps();
                 toggleSymbols();
+                toggleShift = false;
+                break;
+            case CONTROL:
+                toggleControl = false;
                 break;
         }
     }

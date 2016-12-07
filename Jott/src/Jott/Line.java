@@ -20,12 +20,16 @@ public class Line {
 	private String lineValue;
 	private boolean isEdited;
 	private Label line;
+	private boolean isBulleted;
+	private int bulletTier;
 
         
         // Constructor for Line with passing lineNum argument
 	public Line(int lineNum) {
 		this.lineNum = lineNum;
 		isEdited = true;
+		isBulleted = false;
+		bulletTier = 0;
 		lineValue = ""; // initially lineValue is an empty string
 		line = new Label(lineValue);
 		line.setBackground(new Background(new BackgroundFill(Paint.valueOf("YELLOW"), null, null)));
@@ -36,6 +40,22 @@ public class Line {
 		line.setFont(Font.font(java.awt.Font.MONOSPACED, 14)); // Using Monospaced font with size 14
 		line.setTextAlignment(TextAlignment.LEFT); // Text allignment assigned to LEFT
 		line.setVisible(true);
+	}
+
+	public void toggleBullet() {
+		if(!isBulleted)
+			bulletTier = 1;
+		else
+			bulletTier = 0;
+		isBulleted = !isBulleted;
+	}
+
+	public int getBulletTier() {
+		return bulletTier;
+	}
+
+	public boolean isBulleted() {
+		return isBulleted;
 	}
 
 	public void setLineNum(int num) {
@@ -85,10 +105,16 @@ public class Line {
 			return;
 		}
 		// if we have not returned yet, add the character to the correct line
-		String startValue = lineValue.substring(0, loc.getLetterNum()-1);
-		String endValue = lineValue.substring(loc.getLetterNum());
-		lineValue = startValue + endValue; // add the letter to the line
-		updateLabel();
+		if(loc.getLetterNum()!=0) {
+			String startValue = lineValue.substring(0, loc.getLetterNum() - 1);
+			String endValue = lineValue.substring(loc.getLetterNum());
+			lineValue = startValue + endValue; // add the letter to the line
+			updateLabel();
+		}
+		else {
+			lineValue = lineValue.substring(1);
+			updateLabel();
+		}
 	}
 
 	public void moveLine(int newLineNum) {
@@ -99,7 +125,7 @@ public class Line {
         return line;
     }
 
-    private void updateLabel() {
+    public void updateLabel() {
         this.line.setText(lineValue);
     }
 }
