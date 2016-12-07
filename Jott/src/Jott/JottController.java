@@ -240,6 +240,7 @@ public class JottController implements Initializable {
 
                 Location updatedLocation = new Location(lineNum, letterNum);
                 cursor.move(updatedLocation);
+                pageAnchorPane.setFocusTraversable(true);
                 System.out.println(ke.getCode().toString());
                 break;
             case RIGHT:
