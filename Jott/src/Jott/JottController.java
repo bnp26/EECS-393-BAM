@@ -185,14 +185,13 @@ public class JottController implements Initializable {
 		if(selectedPage.getLines().size() < loc.getLineNum()) {
 			System.out.println("adding cursor to the last line");
 			loc.setLineNum(selectedPage.getLines().size()-1);
-            page.selectPage();
 		}
 		else if(selectedPage.getLines().size() < loc.getLineNum()+5){
             Line line = new Line(selectedPage.getLines().size());
             selectedPage.getLines().add(line);
             addLineToPage(line);
-            page.selectPage();
         }
+        pageAnchorPane.requestFocus();
 	}
 
     public void keyPressed(KeyEvent ke) {
