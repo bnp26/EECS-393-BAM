@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.control.TextInputDialog;
 /**
@@ -255,11 +256,10 @@ public class JottController implements Initializable {
                 break;
             case ENTER:
                 //gotta add instances if there is a bullet point and such
-                if(lines.get(lineNum+1) != null) {
-                    insertNewLine(lineNum+1);
-                }
-                cursor.move(lineNum+1, 0);
-                System.out.println(ke.getCode().toString());
+                    lineNum+=1;
+                    insertNewLine(lineNum);
+                    cursor.move(lineNum, 0);
+
                 break;
             case BACK_SPACE:
                 if(letterNum == 0 && lineNum != 0) {
@@ -415,7 +415,10 @@ public class JottController implements Initializable {
             Line linePlaceHolder = lines.get(x);
             lines.set(x, newLine);
             lines.set(x-1, linePlaceHolder);
+            lines.get(x-1).setLineNum(x-1);
         }
+
+        selectedPage.addLinesToPage();
     }
 
 	private Page addNewPage(String name) {
@@ -444,6 +447,9 @@ public class JottController implements Initializable {
                 System.out.println("selected page: " + page.getName());
             }
         });
+        Rectangle cursor = pagesPane.getSelectedPage().getCursor().getCursorImage();
+        int cursorImageIndex = pageAnchorPane.getChildren().indexOf(cursor);
+        pageAnchorPane.getChildren().remove(cursorImageIndex);
         pagesPane.selectPage(page);
 		newPage.setVisible(true);
 		return page;
