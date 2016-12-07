@@ -52,8 +52,10 @@ public class JottController {
     private boolean toggleSymbols = false;
 
     public JottController() {
-        this.notebooksPane = new NotebooksPane();
-        this.pagesPane = new PagesPane();
+        this.notebooksPane = new NotebooksPane(pagesVBox);
+        this.pagesPane = null;
+
+
     }
 
     public JottController(NotebooksPane notebooksPane, PagesPane pagesPane) {
@@ -74,17 +76,18 @@ public class JottController {
     }
 
 	public void initializeComboBox() {
+        refreshNotebooksComboBox();
         notebooksComboBox.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue ov, Object oldValue, Object newValue) {
                 String oldStr = (String)oldValue;
                 String newStr = (String)newValue;
 
-                if(newStr.equals("Create New Notebook")) {
+                System.out.println(ov.getValue());
+                if(newStr != null && newStr.equals("Create New Notebook")) {
                     Notebook newestNotebook;
 
                     newNotebookDialog = new TextInputDialog();
-                    newNotebookDialog .setTitle("Create New Notebook");
                     newNotebookDialog .setHeaderText("Enter the name of your new Notebook!");
 
                     String newNotebookName;
@@ -95,16 +98,18 @@ public class JottController {
 
                         if(pagesPane.hasPage(newNotebookName))
                             System.out.println("this notebook already has a page by this name");
-                        else
-                            newestNotebook = createNewNotebook(newNotebookName);
+                        else {
+                            createNewNotebook(newNotebookName);
+                            refreshNotebooksComboBox();
+                        }
                     }
+                    refreshNotebooksComboBox();
                 }
                 else {
                     notebooksPane.selectNotebook((String)newValue);
                 }
             }
         });
-        refreshNotebooksComboBox();
     }
 
 	public void createNewPage(ActionEvent ae) {
@@ -467,20 +472,17 @@ public class JottController {
 
         notebooksPane.selectNotebook(newNotebook.toString());
         notebooksComboBox.getItems().add(0, newNotebook.toString());
-        refreshNotebooksComboBox();
-        initializeComboBox();
         notebooksComboBox.getSelectionModel().select(newNotebook.toString());
         return newNotebook;
     }
 
     public void refreshNotebooksComboBox() {
         ArrayList<Notebook> myNotebooks = notebooksPane.getNotebooks();
-
-        final ObservableList<String> notebooksArray = notebooksComboBox.getItems();
+        if(notebooksComboBox.getItems().size() > 0)
+            notebooksComboBox.getItems().remove(0, notebooksComboBox.getItems().size());
 
         for(Notebook current : myNotebooks) {
-            if(!notebooksArray.contains(current.toString()) && !current.equals(notebooksPane.getSelectedNotebook()))
-                notebooksComboBox.getItems().add(current.toString());
+            notebooksComboBox.getItems().add(current.toString());
         }
         notebooksComboBox.getItems().set(notebooksComboBox.getItems().size()-1, "Create New Notebook");
     }

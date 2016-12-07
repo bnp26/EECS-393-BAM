@@ -1,17 +1,17 @@
 package Jott;
 
+import javafx.scene.layout.VBox;
+
 public class Notebook {
 	
 	private String name; // this is equal to the key in the key/value pair in the notebooks pane HashMap.
 	private PagesPane pagesPane;
-	private MongoDB mdb;
 
 	public Notebook() {
 		name = null;
-		mdb = new MongoDB();
 	}
 	
-	public Notebook(String name) {
+	public Notebook(String name, VBox pagesVBox) {
 		this.name = name;
                 
                 // need to create a notebook in such a way
@@ -20,8 +20,7 @@ public class Notebook {
                 // we are not going to show this page when we are viewing the pages
                 
                 //mdb.createPage(name, "*!!!!*");
-		this.pagesPane = new PagesPane();
-		mdb = new MongoDB();
+		this.pagesPane = new PagesPane(name, pagesVBox);
 	}
 
 	/**

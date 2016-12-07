@@ -18,12 +18,17 @@ public class NotebooksPane {
 	private HashMap<String, Notebook> notebooks;
 	private MongoDB mdb;
 	private Notebook selectedNotebook;
-	
+
+	private VBox pagesVBox;
+
 	public TextInputDialog newNotebookDialog;
 
-	public NotebooksPane() {
+	public NotebooksPane(VBox pagesVBox) {
 		//here add all the notebooks in the mongoDB database to the notebooks array list.
 		//this is initializing for now an empty array of notebooks
+
+		this.pagesVBox = pagesVBox;
+
 		notebooks = new HashMap<String, Notebook>();
 		mdb = new MongoDB();
 
@@ -49,31 +54,39 @@ public class NotebooksPane {
 	}
 
 	public Notebook createNewNotebook(String name) {
-		Notebook newNotebook = new Notebook(name);
+		Notebook newNotebook = new Notebook(name, pagesVBox);
 		this.notebooks.put(name, newNotebook);
 		return newNotebook;
 	}
 
 	public void selectNotebook(String name) {
 		Notebook notebook = this.notebooks.get(name);
+		Notebook oldNotebook;
+		VBox pagePane;
 
 		if(notebook == null) {
 			System.out.print("could not find notebook");
 			return;
 		}
 
-		Notebook oldNotebook = selectedNotebook;
-		selectedNotebook = notebook;
-
-		VBox pagePane = oldNotebook.getPagesPane().getPages().get(0).getVBox();
-
-		pagePane.getChildren().remove(0, pagePane.getChildren().size());
-
-		for(Page page : selectedNotebook.getPagesPane().getPages()) {
-			pagePane.getChildren().add(page.getButton());
+		if(selectedNotebook == null)
+		{
+			selectedNotebook = notebook;
+		} else {
+			oldNotebook = selectedNotebook;
+			selectedNotebook = notebook;
+			if (oldNotebook.getPagesPane().getPages().size() >= 0) {
+				pagesVBox.getChildren().remove(0, pagesVBox.getChildren().size());
+			}
 		}
 
-		selectedNotebook.getPagesPane().getPages().get(0).selectPage();
+		for(Page page : selectedNotebook.getPagesPane().getPages()) {
+			System.out.println(pagesVBox.toString());
+			pagesVBox.getChildren().add(page.getButton());
+		}
+
+		if(selectedNotebook.getPagesPane().getPages().size()>0)
+			selectedNotebook.getPagesPane().getPages().get(0).selectPage();
 	}
 
 	public Notebook getSelectedNotebook() {

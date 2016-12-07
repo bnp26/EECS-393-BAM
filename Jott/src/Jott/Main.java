@@ -28,11 +28,6 @@ public class Main extends Application {
             Region secondRegion = getPagePaneRegion(page);
 			Scene scene = new Scene(page,900, 600);
 
-			NotebooksPane notebooksPane = new NotebooksPane();
-			PagesPane pagesPane = new PagesPane();
-
-			JottController controller = new JottController(notebooksPane, pagesPane);
-
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
 
@@ -133,8 +128,6 @@ public class Main extends Application {
 		secondaryVBox.getChildren().add(trinaryVBox);
 
 		ComboBox<Notebook> notebookComboBox = new ComboBox<Notebook>();
-		Notebook initNotebook = new Notebook("My First Notebook");
-		notebookComboBox.getItems().add(initNotebook);
 
 		trinaryVBox.getChildren().add(notebookComboBox);
 

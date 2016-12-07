@@ -2,6 +2,7 @@ package Jott;
 
 import java.util.LinkedList;
 
+import com.mongodb.Mongo;
 import javafx.scene.control.Button;
 import javafx.scene.image.*;
 import javafx.scene.layout.VBox;
@@ -18,7 +19,7 @@ public class Page {
 	public static final double PAGE_WIDTH = 740;
 
 	public Page(String name) {
-        this.name = name;
+		this.name = name;
 
         lines = new LinkedList<Line>();
         Cursor cursor = new Cursor();
