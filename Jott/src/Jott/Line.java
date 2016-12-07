@@ -74,7 +74,23 @@ public class Line {
 		System.out.println(lineValue);
 		updateLabel();
 	}
-	
+
+	public void removeLetter(Location loc) {
+		if(loc.getLineNum() != lineNum) {
+			System.out.println("trying to remove a letter on the worng line");
+			return;
+		}
+		if(loc.getLetterNum()>lineValue.length()){
+			System.out.println("trying to remove a letter to a line where it can't");
+			return;
+		}
+		// if we have not returned yet, add the character to the correct line
+		String startValue = lineValue.substring(0, loc.getLetterNum()-1);
+		String endValue = lineValue.substring(loc.getLetterNum());
+		lineValue = startValue + endValue; // add the letter to the line
+		updateLabel();
+	}
+
 	public void moveLine(int newLineNum) {
 		this.lineNum = newLineNum;
 	}

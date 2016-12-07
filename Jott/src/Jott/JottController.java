@@ -263,26 +263,19 @@ public class JottController implements Initializable {
                 System.out.println(ke.getCode().toString());
                 break;
             case BACK_SPACE:
-                if(letterNum == 0) {
+                if(letterNum == 0 && lineNum != 0) {
                     lines.remove(lineNum);
                     lineNum -= 1;
                     letterNum = lines.get(lineNum).getLineValue().length() - 1;
-                }
-                else if(letterNum < lines.get(lineNum).getLineValue().length()-1) {
-                    Line line = lines.get(lineNum);
-                    String lineVal = line.getLineValue();
-                    lineVal = lineVal.substring(0, letterNum) + lineVal.substring(letterNum + 1);
-                    letterNum -= 1;
-                    line.setLineValue(lineVal);
+                    cursor.move(lineNum, letterNum);
                 }
                 else {
                     Line line = lines.get(lineNum);
-                    String lineVal = line.getLineValue();
-                    lineVal = lineVal.substring(0, letterNum);
-                    line.setLineValue(lineVal);
+
+                    line.removeLetter(cursor.getLocation());
+                    cursor.move(lineNum, letterNum-1);
                 }
-                cursor.move(lineNum, letterNum);
-                    break;
+                break;
             case CAPS:
                 toggleCaps();
                 break;
