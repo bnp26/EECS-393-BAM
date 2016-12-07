@@ -61,11 +61,6 @@ public class JottController implements Initializable {
     private boolean firstClick = false;
     private boolean toggleCaps = false;
     private boolean toggleSymbols = false;
-    
-    private boolean toggleControl = false;
-    private boolean toggleBold = false;
-    private boolean toggleItalics = false;
-    private boolean toggleUnderline = false;
 
     private String highlitedString = "";
     private Location highlightStart = null;
@@ -82,7 +77,7 @@ public class JottController implements Initializable {
 		this.notebooksPane = notebooksPane;
 		this.pagesPane = pagesPane;
 	}
-	
+
 	public PagesPane getPagesPane() {
 	    return this.pagesPane;
     }
@@ -116,6 +111,8 @@ public class JottController implements Initializable {
         });
         if(!pageAnchorPane.getChildren().contains(highlightedShape))
             pageAnchorPane.getChildren().add(highlightedShape);
+
+        highlitedString = "";
     }
 
     public void mouseReleased(MouseEvent me) {
@@ -132,11 +129,26 @@ public class JottController implements Initializable {
     }
 
     public void mouseDragged(MouseEvent me) {
+        Page currentPage = pagesPane.getSelectedPage();
+
         double xLoc = me.getX();
         double yLoc = me.getY();
 
         Location loc = new Location();
         loc = loc.pixelsToLocation(xLoc, yLoc);
+        Line firstLine = currentPage.getLines().get(highlightStart.getLineNum());
+        Line lastLine = currentPage.getLines().get(loc.getLineNum());
+
+        if(firstLine.getLineNum() < lastLine.getLineNum()) {
+            for(int x = firstLine.getLineNum(); x <= lastLine.getLineNum(); x++) {
+                if(x == firstLine.getLineNum())
+                    highlitedString += currentPage.getLines().get(x).getLineValue().substring(highlightStart.getLetterNum());
+                else if(x == lastLine.getLineNum())
+                    highlitedString += currentPage.getLines().get(x).getLineValue().substring(0, loc.getLetterNum());
+                else
+                    highlitedString += currentPage.getLines().get(x).getLineValue();
+            }
+        }
 
         double startXPixel = highlightStart.getXPixelValue();
         double startYPixel = highlightStart.getYPixelValue();
@@ -265,7 +277,7 @@ public class JottController implements Initializable {
 		newPageDialog = new TextInputDialog();
 		newPageDialog.setTitle("Create New Page");
 		newPageDialog.setHeaderText("Enter your new pages name");
-		
+
 		String newPageName;
 		Optional<String> result = newPageDialog.showAndWait();
 
@@ -518,42 +530,14 @@ public class JottController implements Initializable {
                 letterNum+=1;
                 cursor.move(lineNum, letterNum);
                 break;
-            case CONTROL:
-                toggleControl = true;
-                break;
             default:
-                if(toggleControl) {
-                    // IF B - Bold
-                    // IF C - Copy
-                    // IF I - Italic
-                    // IF U - Underline
-                    // IF V - Paste
-                    if(ke.getCode().getName().equals("B")) {
-                        if(toggleBold) {
-                            System.out.println("THE CONTROL IS HELD DOWN" + ke.getCode().getName());
-                            System.out.println("ToggleBold to false");
-                            toggleBold = false;
-                        }
-                        else {
-                            System.out.println("THE CONTROL ISHELD DOWN" + ke.getCode().getName());
-                            System.out.println("ToggleBold to true");
-                            toggleBold = true;
-                        }
-                    }
-                    else if (ke.getCode().getName().equals("I")) {
-                            toggleItalics = true;
-                    }
-                }
-                
-                else {
-                    char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
-                    lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), letter);
-                    letterNum+=1;
-                    cursor.move(lineNum, letterNum);
-                    System.out.println("letter = " + ke.getCode().toString());
-                    System.out.println("letter = " + ke.getCode().getName().toString());
-                    break;
-                }
+                char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
+                lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), letter);
+                letterNum+=1;
+                cursor.move(lineNum, letterNum);
+                System.out.println("letter = " + ke.getCode().toString());
+                System.out.println("letter = " + ke.getCode().getName().toString());
+                break;
         }
     }
 
