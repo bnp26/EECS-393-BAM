@@ -1,6 +1,5 @@
 package Jott;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.*;
 
@@ -62,7 +61,7 @@ public class JottController implements Initializable {
     private boolean toggleCaps = false;
     private boolean toggleSymbols = false;
 
-    private String highlitedString = "";
+    private StringBuilder highlitedString = new StringBuilder();
     private Location highlightStart = null;
     private Location highlightEnd = null;
 
@@ -111,8 +110,6 @@ public class JottController implements Initializable {
         });
         if(!pageAnchorPane.getChildren().contains(highlightedShape))
             pageAnchorPane.getChildren().add(highlightedShape);
-
-        highlitedString = "";
     }
 
     public void mouseReleased(MouseEvent me) {
@@ -139,16 +136,35 @@ public class JottController implements Initializable {
         Line firstLine = currentPage.getLines().get(highlightStart.getLineNum());
         Line lastLine = currentPage.getLines().get(loc.getLineNum());
 
-        if(firstLine.getLineNum() < lastLine.getLineNum()) {
+        highlitedString.delete(0, highlitedString.length());
+
+        if((highlightStart.getLetterNum() > loc.getLetterNum() && firstLine.getLineNum() == lastLine.getLineNum())) {
+            highlitedString.append(firstLine.getLineValue().substring(loc.getLetterNum(), highlightStart.getLetterNum()));
+        } else if (highlightStart.getLetterNum() < loc.getLetterNum() && firstLine.getLineNum() == lastLine.getLineNum()) {
+            highlitedString.append(firstLine.getLineValue().substring(highlightStart.getLetterNum(), loc.getLetterNum()));
+        }
+        else if(firstLine.getLineNum() <= lastLine.getLineNum()) {
             for(int x = firstLine.getLineNum(); x <= lastLine.getLineNum(); x++) {
                 if(x == firstLine.getLineNum())
-                    highlitedString += currentPage.getLines().get(x).getLineValue().substring(highlightStart.getLetterNum());
+                    highlitedString.append(currentPage.getLines().get(x).getLineValue().substring(highlightStart.getLetterNum()));
                 else if(x == lastLine.getLineNum())
-                    highlitedString += currentPage.getLines().get(x).getLineValue().substring(0, loc.getLetterNum());
+                    highlitedString.append(currentPage.getLines().get(x).getLineValue().substring(0, loc.getLetterNum()));
                 else
-                    highlitedString += currentPage.getLines().get(x).getLineValue();
+                    highlitedString.append(currentPage.getLines().get(x).getLineValue());
             }
         }
+        else {
+            for(int x = firstLine.getLineNum(); x >= lastLine.getLineNum(); x--) {
+                if(x == firstLine.getLineNum())
+                    highlitedString.append(currentPage.getLines().get(x).getLineValue().substring(highlightStart.getLetterNum()));
+                else if(x == lastLine.getLineNum())
+                    highlitedString.append(currentPage.getLines().get(x).getLineValue().substring(0, loc.getLetterNum()));
+                else
+                    highlitedString.append(currentPage.getLines().get(x).getLineValue());
+            }
+        }
+
+        System.out.println(highlitedString);
 
         double startXPixel = highlightStart.getXPixelValue();
         double startYPixel = highlightStart.getYPixelValue();
