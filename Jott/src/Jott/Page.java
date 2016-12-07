@@ -148,10 +148,10 @@ public class Page {
     }
 
     public void deselectPage() {
-		removeLinesFromPage();
 		pageButton.getStyleClass().remove("jott_current_page_item");
         pageButton.setGraphic(new ImageView());
         this.getCursor().getCursorImage().setVisible(false);
+		removeLinesFromPage();
     }
 
     public void addLinesToPage() {

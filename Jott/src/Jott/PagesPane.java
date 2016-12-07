@@ -88,6 +88,9 @@ public class PagesPane {
             }
         });
 
+        if(selectedPage != null)
+        	selectedPage.deselectPage();
+
 		page.setButton(button);
         selectedPage = page;
 		selectPage(page);

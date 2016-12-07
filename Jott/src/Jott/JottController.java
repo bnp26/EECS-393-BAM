@@ -700,7 +700,7 @@ public class JottController implements Initializable {
 		
 		page.setButton(newPage); 
 		//adds the new button to the pagesVBox but puts it always at the end of the list but above the add new page button
-        pagesVBox.getChildren().add(newPage);
+        pagesVBox.getChildren().add(0, newPage);
 		
 		pagesPane.addPage(page);
 
@@ -716,7 +716,9 @@ public class JottController implements Initializable {
         if(cursorImageIndex != -1) {
             pageAnchorPane.getChildren().remove(cursorImageIndex);
         }
+        pagesPane.getSelectedPage().deselectPage();
         pagesPane.selectPage(page);
+
         newPage.setVisible(true);
 		return page;
 	}
