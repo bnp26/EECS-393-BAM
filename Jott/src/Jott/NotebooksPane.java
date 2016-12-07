@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -69,19 +70,20 @@ public class NotebooksPane {
 			return;
 		}
 
+		pagesVBox.getChildren().remove(0, pagesVBox.getChildren().size());
+
 		if(selectedNotebook == null)
 		{
 			selectedNotebook = notebook;
 		} else {
 			oldNotebook = selectedNotebook;
 			selectedNotebook = notebook;
-			if (oldNotebook.getPagesPane().getPages().size() >= 0) {
-				pagesVBox.getChildren().remove(0, pagesVBox.getChildren().size());
-			}
 		}
 
 		for(Page page : selectedNotebook.getPagesPane().getPages()) {
-			System.out.println(pagesVBox.toString());
+			if(pagesVBox.getChildren().contains(page.getButton()))
+			    continue;
+
 			pagesVBox.getChildren().add(page.getButton());
 		}
 

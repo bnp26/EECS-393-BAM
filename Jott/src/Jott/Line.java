@@ -68,7 +68,7 @@ public class Line {
 			return;
 		}
                 // if we have not returned yet, add the character to the correct line
-                String startValue = lineValue.substring(0, loc.getLetterNum());
+		String startValue = lineValue.substring(0, loc.getLetterNum());
 		String endValue = lineValue.substring(loc.getLetterNum());
 		lineValue = startValue + letter + endValue; // add the letter to the line
 		System.out.println(lineValue);

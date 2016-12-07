@@ -18,6 +18,10 @@ public class PagesPane {
 	private Page selectedPage;
     private VBox pagesVBox;
 
+    public PagesPane() {
+    	pages = new ArrayList<Page>();
+	}
+
 	public PagesPane(String notebook, VBox pagesVBox) {
 		this.pagesVBox = pagesVBox;
         pages = new ArrayList<Page>();
@@ -59,14 +63,6 @@ public class PagesPane {
 		//adds the new button to the pagesVBox but puts it always at the end of the list but above the add new page button
 
 		addPage(page);
-
-		newPageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				selectPage(page);
-				System.out.println("selected page: " + page.getName());
-			}
-		});
 		return page;
 	}
 
@@ -83,7 +79,7 @@ public class PagesPane {
 
 	public void addPage(Page page) {
 		pages.add(page);
-		Button button = page.getButton();
+		JFXButton button = page.getButton();
 
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -94,7 +90,7 @@ public class PagesPane {
 
 		page.setButton(button);
         selectedPage = page;
-//		selectPage(page);
+		selectPage(page);
 	}
 
 	public void selectPage(Page page) {

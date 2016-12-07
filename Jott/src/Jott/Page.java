@@ -2,6 +2,7 @@ package Jott;
 
 import java.util.LinkedList;
 
+import com.jfoenix.controls.JFXButton;
 import com.mongodb.Mongo;
 import javafx.scene.control.Button;
 import javafx.scene.image.*;
@@ -14,7 +15,7 @@ public class Page {
 	private Cursor cursor;
     private VBox vBox;
 
-	private Button pageButton;
+	private JFXButton pageButton;
 
 	public static final double PAGE_WIDTH = 740;
 
@@ -47,11 +48,11 @@ public class Page {
         }
 	}
 
-	public void setButton(Button button){
+	public void setButton(JFXButton button){
 		this.pageButton = button;
 	}
 
-	public Button getButton() {
+	public JFXButton getButton() {
 		return pageButton;
 	}
 

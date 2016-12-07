@@ -1,5 +1,6 @@
 package Jott;
 
+import java.net.URL;
 import java.util.*;
 
 import com.jfoenix.controls.JFXButton;
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +23,7 @@ import javafx.scene.control.TextInputDialog;
  * @author bnp26
  *
  */
-public class JottController {
+public class JottController implements Initializable {
 
 	private NotebooksPane notebooksPane;
 	private PagesPane pagesPane;
@@ -31,7 +33,7 @@ public class JottController {
 	
 	@FXML //fx:id = "pagesVBox"
 	private VBox pagesVBox;
-		
+
 	@FXML //fx:id="newPageButton"
 	private JFXButton newPageButton;
 
@@ -52,10 +54,8 @@ public class JottController {
     private boolean toggleSymbols = false;
 
     public JottController() {
-        this.notebooksPane = new NotebooksPane(pagesVBox);
+        this.notebooksPane = null;
         this.pagesPane = null;
-
-
     }
 
     public JottController(NotebooksPane notebooksPane, PagesPane pagesPane) {
@@ -509,4 +509,10 @@ public class JottController {
 		Stage stage = Stage.class.cast(Control.class.cast(ae.getSource()).getScene().getWindow());
 		stage.setTitle("Dynamically added title");
 	}
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.notebooksPane = new NotebooksPane(pagesVBox);
+        this.pagesPane = new PagesPane();
+    }
 }
