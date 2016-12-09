@@ -851,15 +851,15 @@ public class JottController implements Initializable {
         for(int x = 0; x < notebooksPane.getNotebooks().size(); x++) {
             Notebook current = notebooksPane.getNotebooks().get(x);
 
-            ArrayList<String> pages = mongoDB.getPages(current.toString());
+            ArrayList<String> pages = mdb.getPages(current.toString());
             ArrayList<Page> pagesArrayList = createAndAddPagesToNotebook(current, pages);
 
             for(Page page:pagesArrayList) {
-                long pageLength = mongoDB.getPageLength(current.toString(), page.getName());
+                long pageLength = mdb.getPageLength(current.toString(), page.getName());
 
                 for(int y = 1; y <= pageLength; y++) {
                     Line line = new Line(y-1);
-                    line.setLineValue(mongoDB.getLine(current.toString(), page.getName(), y));
+                    line.setLineValue(mdb.getLine(current.toString(), page.getName(), y));
                     page.getLines().add(line);
                 }
             }
