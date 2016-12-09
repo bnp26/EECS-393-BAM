@@ -32,7 +32,7 @@ public class Line {
 		bulletTier = 0;
 		lineValue = ""; // initially lineValue is an empty string
 		line = new Label(lineValue);
-		line.setBackground(new Background(new BackgroundFill(Paint.valueOf("YELLOW"), null, null)));
+//		line.setBackground(new Background(new BackgroundFill(Paint.valueOf("YELLOW"), null, null)));
 		//line.setBorder(new Border(new BorderStroke(Paint.valueOf("black"), null, new CornerRadii(1.0), BorderStroke.THIN)));
 //		line.setPrefSize(Page.PAGE_WIDTH, LINE_HEIGHT);
 //		line.setMaxSize(Page.PAGE_WIDTH, 16.0);

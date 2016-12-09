@@ -1,5 +1,6 @@
 package Jott;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 
@@ -68,6 +69,8 @@ public class JottController implements Initializable {
     private boolean toggleUnderline = false;
     
     private StringBuilder highlitedString = new StringBuilder();
+    private String currentlyCoppied = null;
+
     private Location highlightStart = null;
     private Location highlightEnd = null;
 
@@ -285,9 +288,6 @@ public class JottController implements Initializable {
                         }
                     }
                     refreshNotebooksComboBox();
-                }
-                else {
-                    notebooksPane.selectNotebook((String)newValue);
                 }
             }
         });
@@ -689,11 +689,23 @@ public class JottController implements Initializable {
                             toggleBold = true;
                         }
                     }
-                        
                     else if (ke.getCode().getName().equals("I")) {
                         toggleItalics = true;
                     }
-                    
+                    else if(ke.getCode().getName().equals("C")) {
+                        currentlyCoppied = highlitedString.toString();
+                    }
+                    else if(ke.getCode().getName().equals("X")) {
+
+                    }
+                    else if(ke.getCode().getName().equals("V")) {
+                        for(char character:currentlyCoppied.toCharArray()) {
+                            lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), character);
+                            letterNum += 1;
+                        }
+
+                        cursor.move(lineNum, letterNum);
+                    }
                 }
                 else {
                     char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
@@ -788,8 +800,6 @@ public class JottController implements Initializable {
         //finds the number of children in the pagesVBox
         int comboItemsSize = notebooksComboBox.getChildrenUnmodifiable().size();
 
-
-        notebooksPane.selectNotebook(newNotebook.toString());
         notebooksComboBox.getItems().add(0, newNotebook.toString());
         notebooksComboBox.getSelectionModel().select(newNotebook.toString());
         return newNotebook;
@@ -831,7 +841,54 @@ public class JottController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        MongoDB mdb = new MongoDB();
         this.notebooksPane = new NotebooksPane(pagesVBox);
+
+		ArrayList<String> notebooks = mdb.getNotebooks();
+
+        createNotebooksFromDB(notebooks);
+
+        for(int x = 0; x < notebooksPane.getNotebooks().size(); x++) {
+            Notebook current = notebooksPane.getNotebooks().get(x);
+
+            ArrayList<String> pages = mongoDB.getPages(current.toString());
+            ArrayList<Page> pagesArrayList = createAndAddPagesToNotebook(current, pages);
+
+            for(Page page:pagesArrayList) {
+                long pageLength = mongoDB.getPageLength(current.toString(), page.getName());
+
+                for(int y = 1; y <= pageLength; y++) {
+                    Line line = new Line(y-1);
+                    line.setLineValue(mongoDB.getLine(current.toString(), page.getName(), y));
+                    page.getLines().add(line);
+                }
+            }
+        }
         this.pagesPane = new PagesPane();
+    }
+
+    private void createNotebooksFromDB(ArrayList<String> notebooks) {
+        for(String notebook:notebooks) {
+            if(notebook.equals("admin") || notebook.equals("local") || notebook.equals("Create New Notebook"))
+                continue;
+            createNewNotebook(notebook);
+            System.out.println("Notebook that was created: " + notebooksPane.getNotebook(notebook));
+        }
+    }
+
+    private ArrayList<Page> createAndAddPagesToNotebook(Notebook notebook, ArrayList<String> pages) {
+        ArrayList<Page> pagesArrayList = new ArrayList();
+
+        for(String pageStr:pages) {
+            if(pageStr.equals("-**BLANK**-") || pageStr.equals("system.indexes"))
+                continue;
+
+            Page page = pagesPane.createNewPage(pageStr);
+
+            notebook.getPagesPane().addPage(page);
+            pagesArrayList.add(page);
+        }
+
+        return pagesArrayList;
     }
 }

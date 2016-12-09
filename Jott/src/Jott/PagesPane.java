@@ -30,23 +30,11 @@ public class PagesPane {
 		ArrayList<String> pages = mongoDB.getPages(notebook);
 
 		for(String pageStr : pages) {
-			if(pageStr.equals("-**BLANK**-") || pageStr.equals("system.indexes"))
-				continue;
 
-			long pageLength = mongoDB.getPageLength(notebook, pageStr);
-			Page page = createNewPage(pageStr);
-
-			for(int x = 1; x <= pageLength; x++) {
-				Line line = new Line(x-1);
-				line.setLineValue(mongoDB.getLine(notebook, pageStr, x));
-				page.getLines().add(line);
-			}
-
-			addPage(page);
 		}
 	}
 
-	private Page createNewPage(String name) {
+	public Page createNewPage(String name) {
 
 		if(name == null)
 		{
