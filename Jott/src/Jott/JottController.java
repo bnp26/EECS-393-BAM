@@ -883,7 +883,7 @@ public class JottController implements Initializable {
             if(pageStr.equals("-**BLANK**-") || pageStr.equals("system.indexes"))
                 continue;
 
-            Page page = pagesPane.createNewPage(pageStr);
+            Page page = notebook.getPagesPane().createNewPage(pageStr);
 
             notebook.getPagesPane().addPage(page);
             pagesArrayList.add(page);

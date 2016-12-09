@@ -25,13 +25,6 @@ public class PagesPane {
 	public PagesPane(String notebook, VBox pagesVBox) {
 		this.pagesVBox = pagesVBox;
         pages = new ArrayList<Page>();
-
-		MongoDB mongoDB = new MongoDB();
-		ArrayList<String> pages = mongoDB.getPages(notebook);
-
-		for(String pageStr : pages) {
-
-		}
 	}
 
 	public Page createNewPage(String name) {

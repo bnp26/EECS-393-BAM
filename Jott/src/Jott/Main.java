@@ -6,11 +6,13 @@ import javafx.application.Application;
 import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.*;
@@ -30,6 +32,10 @@ public class Main extends Application {
 
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
+
+
+			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			System.out.println("Resolution: " + primaryScreenBounds.getHeight() + ", " + primaryScreenBounds.getWidth());
 
 			primaryStage.setScene(scene);
 			primaryStage.show();

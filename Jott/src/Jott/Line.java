@@ -10,11 +10,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Screen;
 import sun.print.BackgroundServiceLookup;
 
 public class Line {
 
-	public final static double LINE_HEIGHT = 16;
+	public final static double LINE_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight()/65.875;
 
 	private int lineNum;
 	private String lineValue;
