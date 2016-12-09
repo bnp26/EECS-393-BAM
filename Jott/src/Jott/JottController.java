@@ -699,7 +699,13 @@ public class JottController implements Initializable {
                         currentlyCoppied = highlitedString.toString();
                     }
                     else if(ke.getCode().getName().equals("X")) {
+                        currentlyCoppied = highlitedString.toString();
+                        for(int i=0; i<currentlyCoppied.length(); i++) {
+                            lines.get(cursor.getLocation().getLineNum()).removeLetter(cursor.getLocation());
+                            letterNum -= 1;
+                        }
 
+                        moveCursor(lineNum, letterNum);
                     }
                     else if(ke.getCode().getName().equals("V")) {
                         for(char character:currentlyCoppied.toCharArray()) {
