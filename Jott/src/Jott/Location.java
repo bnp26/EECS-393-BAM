@@ -17,6 +17,7 @@ public class Location {
         lineNum = 0;
   //      wordNum = 0;
         letterNum = 0;
+        System.out.println("letter hight = " + LETTER_HEIGHT + "\nletter width = " + LETTER_WIDTH);
     }
 
     // Constructor for location with arguments
@@ -25,6 +26,7 @@ public class Location {
 		lineNum = line;
 //		wordNum = word;
 		letterNum = letter;
+        System.out.println("letter hight = " + LETTER_HEIGHT + "\nletter width = " + LETTER_WIDTH);
 	}
 	
 	public int getLineNum() {

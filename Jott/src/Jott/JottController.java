@@ -99,6 +99,11 @@ public class JottController implements Initializable {
     }
 
     public void mousePressed(MouseEvent me) {
+        if(pageAnchorPane.getChildren().contains(highlightedShape))
+            pageAnchorPane.getChildren().remove(highlightedShape);
+
+        highlightedShape = new Polygon ();
+
         double xLoc = me.getX();
         double yLoc = me.getY();
 
@@ -129,9 +134,7 @@ public class JottController implements Initializable {
         loc = loc.pixelsToLocation(xLoc, yLoc);
 
         highlightEnd = loc;
-
-        pageAnchorPane.getChildren().remove(highlightedShape);
-        highlightedShape = new Polygon ();
+        System.out.println("HighlightedShape: " + highlightedShape.toString());
     }
 
     public void mouseDragged(MouseEvent me) {
@@ -353,10 +356,10 @@ public class JottController implements Initializable {
             else
                 cursor = selectedPage.getCursor();
 
-            //FIX THIS, REMOVES THE LINES FROM THE FLOW PANE
-            if (!pageAnchorPane.getChildrenUnmodifiable().contains(cursor.getCursorImage())) {
-                pageAnchorPane.getChildren().add(cursor.getCursorImage());
-            }
+//            //FIX THIS, REMOVES THE LINES FROM THE FLOW PANE
+//            if (!pageAnchorPane.getChildrenUnmodifiable().contains(cursor.getCursorImage())) {
+//                pageAnchorPane.getChildren().add(cursor.getCursorImage());
+//            }
             cursor.move(loc);
         }
         if(selectedPage == null) {
@@ -395,7 +398,7 @@ public class JottController implements Initializable {
                 else {
                     lineNum -= 1;
                     Location updatedLoc = new Location(lineNum, letterNum);
-                    cursor.move(updatedLoc);
+                    moveCursor(updatedLoc);
                     break;
                 }
             case DOWN:
@@ -405,7 +408,7 @@ public class JottController implements Initializable {
                 else {
                     lineNum += 1;
                     Location updatedLoc = new Location(lineNum, letterNum);
-                    cursor.move(updatedLoc);
+                    moveCursor(updatedLoc);
                     break;
                 }
             case LEFT:
@@ -419,7 +422,7 @@ public class JottController implements Initializable {
                 }
 
                 Location updatedLocation = new Location(lineNum, letterNum);
-                cursor.move(updatedLocation);
+                moveCursor(updatedLocation);
                 pageAnchorPane.setFocusTraversable(true);
                 System.out.println(ke.getCode().toString());
                 break;
@@ -432,7 +435,7 @@ public class JottController implements Initializable {
                     letterNum+=1;
                 }
                 Location updatedLoc = new Location(lineNum, letterNum);
-                cursor.move(updatedLoc);
+                moveCursor(updatedLoc);
                 System.out.println(ke.getCode().toString());
                 break;
             case ENTER:
@@ -441,7 +444,7 @@ public class JottController implements Initializable {
                 if(lines.get(lineNum).isBulleted() && lines.get(lineNum).getLineValue().substring(lines.get(lineNum).getLineValue().length()-3).equals(" - ")) {
                     lines.get(lineNum).setLineValue("");
                     lines.get(lineNum).toggleBullet();
-                    cursor.move(lineNum, 0);
+                    moveCursor(lineNum, 0);
                     lines.get(lineNum).updateLabel();
                     break;
                 }
@@ -458,7 +461,7 @@ public class JottController implements Initializable {
                 }
                 lineNum+=1;
                 letterNum=0+newLineValue.length();
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case BACK_SPACE:
                 if(letterNum == 3 && lines.get(lineNum).isBulleted()) {
@@ -471,7 +474,7 @@ public class JottController implements Initializable {
                     lines.get(lineNum).removeLetter(loc1);
 
                     letterNum -= 3;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                 }else if(lines.get(lineNum).isBulleted() && lines.get(lineNum).getLineValue().charAt(letterNum-2) == '-') {
                     Location loc1 = new Location(lineNum, 0);
                     Location loc2 = new Location(lineNum, 1);
@@ -483,13 +486,13 @@ public class JottController implements Initializable {
                     lines.remove(lineNum);
                     lineNum -= 1;
                     letterNum = lines.get(lineNum).getLineValue().length() - 1;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                 }
                 else if(!(lineNum == 0 && letterNum == 0)){
                     Line line = lines.get(lineNum);
 
                     line.removeLetter(cursor.getLocation());
-                    cursor.move(lineNum, letterNum-1);
+                    moveCursor(lineNum, letterNum-1);
                 }
                 break;
             case CAPS:
@@ -507,125 +510,125 @@ public class JottController implements Initializable {
                 System.out.println("pressed " + ke.getCode().toString());
                 for(int x = 1; x < 5; x++){
                     if(lines.get(lineNum).getLineValue().length() >= 40) {
-                        cursor.move(lineNum + 1, 0);
+                        moveCursor(lineNum + 1, 0);
                     }
                     lines.get(lineNum).insertLetter(cursor.getLocation(), ' ');
-                    cursor.move(lineNum, letterNum+x);
+                    moveCursor(lineNum, letterNum+x);
                 }
                 break;
             case DIGIT1:
                 num = toggleSymbols == true ? '!' : '1';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT2:
                 num = toggleSymbols == true ? '@' : '2';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT3:
                 num = toggleSymbols == true ? '#' : '3';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT4:
                 num = toggleSymbols == true ? '$' : '4';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT5:
                 num = toggleSymbols == true ? '%' : '5';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT6:
                 num = toggleSymbols == true ? '^' : '6';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT7:
                 num = toggleSymbols == true ? '&' : '7';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT8:
                 num = toggleSymbols == true ? '*' : '8';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT9:
                 num = toggleSymbols == true ? '(' : '9';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case DIGIT0:
                 num = toggleSymbols == true ? ')' : '0';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case COMMA:
                 num = toggleSymbols == true ? '<' : ',';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case PERIOD:
                 num = toggleSymbols == true ? '>' : '.';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case QUOTE:
                 num = toggleSymbols == true ? '\"' : '\'';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case SEMICOLON:
                 num = toggleSymbols == true ? ':' : ';';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case BACK_QUOTE:
                 num = toggleSymbols == true ? '~' : '`';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case SLASH:
                 num = toggleSymbols == true ? '?' : '/';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case BACK_SLASH:
                 num = toggleSymbols == true ? '|' : '\\';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case BRACELEFT:
                 num = toggleSymbols == true ? '{' : '[';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case BRACERIGHT:
                 num = toggleSymbols == true ? '}' : ']';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case MINUS:
                 num = toggleSymbols == true ? '_' : '-';
@@ -635,35 +638,35 @@ public class JottController implements Initializable {
                     lines.get(lineNum).insertLetter(cursor.getLocation(), ' ');
                     lines.get(lineNum).toggleBullet();
                     letterNum += 3;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                 } else {
                     lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                     letterNum += 1;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                 }
                 break;
             case EQUALS:
                 num = toggleSymbols == true ? '+' : '=';
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
-                cursor.move(lineNum, letterNum);
+                moveCursor(lineNum, letterNum);
                 break;
             case SPACE:
                 if(toggleControl && lines.get(lineNum).isBulleted()) {
                     lines.get(cursor.getLocation().getLineNum()).insertLetter(new Location(cursor.getLocation().getLineNum(), 0) , ' ');
                     lines.get(cursor.getLocation().getLineNum()).insertLetter(new Location(cursor.getLocation().getLineNum(), 0) , ' ');
                     letterNum += 2;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                 } else if(toggleShift && lines.get(lineNum).isBulleted() && !lines.get(lineNum).getLineValue().substring(0,3).equals(" - ")) {
                     Location loc1 = new Location(lineNum, 0);
                     lines.get(lineNum).removeLetter(loc1);
                     lines.get(lineNum).removeLetter(loc1);
                     letterNum-=2;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                 } else {
                     lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), ' ');
                     letterNum += 1;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                 }
                 break;
             case CONTROL:
@@ -704,14 +707,14 @@ public class JottController implements Initializable {
                             letterNum += 1;
                         }
 
-                        cursor.move(lineNum, letterNum);
+                        moveCursor(lineNum, letterNum);
                     }
                 }
                 else {
                     char letter = toggleCaps == true ? ke.getCode().getName().toUpperCase().charAt(0) : ke.getCode().getName().toLowerCase().charAt(0);
                     lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), letter);
                     letterNum+=1;
-                    cursor.move(lineNum, letterNum);
+                    moveCursor(lineNum, letterNum);
                     System.out.println("letter = " + ke.getCode().toString());
                     System.out.println("letter = " + ke.getCode().getName().toString());
                     break;
@@ -890,5 +893,24 @@ public class JottController implements Initializable {
         }
 
         return pagesArrayList;
+    }
+
+    private void moveCursor(Location loc) {
+        Page page = pagesPane.getSelectedPage();
+        page.getCursor().move(loc);
+        if(pageAnchorPane.getChildren().contains(highlightedShape)) {
+            pageAnchorPane.getChildren().remove(highlightedShape);
+            highlightedShape = new Polygon();
+        }
+    }
+
+    private void moveCursor(int lineNum, int letterNum) {
+
+        Page page = pagesPane.getSelectedPage();
+        page.getCursor().move(lineNum, letterNum);
+        if(pageAnchorPane.getChildren().contains(highlightedShape)) {
+            pageAnchorPane.getChildren().remove(highlightedShape);
+            highlightedShape = new Polygon();
+        }
     }
 }

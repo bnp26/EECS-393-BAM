@@ -33,12 +33,14 @@ public class Main extends Application {
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
 
-
 			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			System.out.println("DPI: " + Screen.getPrimary().getDpi());
 			System.out.println("Resolution: " + primaryScreenBounds.getHeight() + ", " + primaryScreenBounds.getWidth());
 
 			primaryStage.setScene(scene);
 			primaryStage.show();
+            System.out.println("Window height = " + scene.getWindow().getHeight());
+            System.out.println("Window width = " + scene.getWindow().getWidth());
 			//populateData(mongodb, controller);
 		} catch(Exception e) {
 			e.printStackTrace();
