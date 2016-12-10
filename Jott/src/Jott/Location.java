@@ -7,9 +7,10 @@ public class Location {
 
     // Constant values for Height and Width for a character/letter
     private final double REM = Math.rint(new Text("").getLayoutBounds().getHeight());
-    private final double rem = javafx.scene.text.Font.getDefault().getSize();
+    private final double REM2 = Math.rint(new Text("\n").getLayoutBounds().getHeight());
+    private final double rem = javafx.scene.text.Font.font("Monospaced", 14).getSize();
 
-    private final double LETTER_HEIGHT = 234/rem;
+    private final double LETTER_HEIGHT = 540/REM2;
     private final double LETTER_WIDTH = 126.09375/REM;
 
 	private int lineNum;
@@ -22,7 +23,7 @@ public class Location {
   //      wordNum = 0;
         letterNum = 0;
         System.out.println("letter hight = " + LETTER_HEIGHT + "\nletter width = " + LETTER_WIDTH);
-        System.out.println("rem: " + rem);
+        System.out.println("REM2: " + REM2);
     }
 
     // Constructor for location with arguments
@@ -32,7 +33,7 @@ public class Location {
 //		wordNum = word;
 		letterNum = letter;
         System.out.println("letter hight = " + LETTER_HEIGHT + "\nletter width = " + LETTER_WIDTH);
-        System.out.println("rem: " + rem);
+        System.out.println("REM2: " + REM2);
 	}
 	
 	public int getLineNum() {
