@@ -1,5 +1,6 @@
 .jott_notebooks_pane {
     -fx-background-image: url("static/white_wall_hash.png");
+     background-repeat: repeat;
 }
 
 .jott_notebook_combo_box {
@@ -23,6 +24,7 @@
     -fx-background-color: #efefef;
     -fx-border-width: 1.5px;
     -fx-border-color: #e0e0e0;
+    -fx-pref-height: 40px;
     -fx-padding: 0px 0px 0px 0px;
 }
 
@@ -31,6 +33,7 @@
     -fx-border-width: 0.5px;
     -fx-border-color: #dddddd;
     -fx-background-image: url("static/white_wall_hash.png");
+     background-repeat: repeat;
 }
 
 .jott_new_page_button {

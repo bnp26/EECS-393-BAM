@@ -17,7 +17,7 @@
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #eeeeee;" stylesheets="@JottPrototype.css">
          <children>
-            <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" editable="false" onShown="#initializeComboBox" prefHeight="39.0" prefWidth="150.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
+            <ComboBox fx:id="notebooksComboBox" blendMode="SRC_ATOP" editable="false" onShown="#initializeComboBox" prefHeight="40.0" prefWidth="150.0" promptText="Notebook 1" styleClass="jott_notebook_combo_box" stylesheets="@JottPrototype.css">
                <items>
                   <FXCollections fx:factory="observableArrayList">
                      <String fx:value="Create New Notebook" />
@@ -33,7 +33,7 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <JFXButton id="newPageButton" fx:id="newPageButton" alignment="CENTER" mnemonicParsing="false" onAction="#createNewPage" prefHeight="39.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
+            <JFXButton id="newPageButton" fx:id="newPageButton" alignment="CENTER" mnemonicParsing="false" onAction="#createNewPage" prefHeight="40.0" prefWidth="150.0" styleClass="jott_new_page_button" stylesheets="@JottPrototype.css" text="New Page">
                <graphic>
                   <ImageView>
                      <image>

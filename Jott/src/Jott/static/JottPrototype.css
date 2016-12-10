@@ -24,6 +24,7 @@
     -fx-background-color: #efefef;
     -fx-border-width: 1.5px;
     -fx-border-color: #e0e0e0;
+    -fx-pref-height: 40px;
     -fx-padding: 0px 0px 0px 0px;
 }
 
