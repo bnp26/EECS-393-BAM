@@ -335,6 +335,8 @@ public class JottController implements Initializable {
 
 	public void pageClicked(MouseEvent me) {
 		//prints out the x and y coordinates of the click
+        System.out.println("Main VBox Height: " + this.mainVBox.getHeight());
+        System.out.println("Main VBox Width: " + this.mainVBox.getWidth());
 		System.out.println(me.getX() + ", " + me.getY());
 
 		double xLoc = me.getX();
@@ -563,6 +565,9 @@ public class JottController implements Initializable {
                 lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), num);
                 letterNum+=1;
                 moveCursor(lineNum, letterNum);
+                System.out.println("layout bounds anchor pane: "+mainVBox.getLayoutBounds().getHeight() + ", " + mainVBox.getLayoutBounds().getWidth());
+                System.out.println("label size: " + lines.get(lineNum).getLabel().getLayoutBounds().getHeight() + ", " + lines.get(lineNum).getLabel().getLayoutBounds().getWidth());
+
                 break;
             case DIGIT9:
                 num = toggleSymbols == true ? '(' : '9';
@@ -850,6 +855,7 @@ public class JottController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         MongoDB mdb = new MongoDB();
         this.notebooksPane = new NotebooksPane(pagesVBox);
 

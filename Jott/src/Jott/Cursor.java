@@ -16,7 +16,7 @@ public class Cursor {
 
     // Cursor constructor defining the size and shape
     public Cursor() {
-        cursorImage = new Rectangle(2.0, 15.0,Paint.valueOf("BLACK"));
+        cursorImage = new Rectangle(1.25, 15.0,Paint.valueOf("BLACK"));
         setCursorTransition();
         // Initialy the cursor starts from the position 0,0 (top left of the document)
         location = new Location(0,0);

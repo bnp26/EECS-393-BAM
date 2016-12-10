@@ -1,12 +1,13 @@
 package Jott;
 
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 
 public class Location {
 
     // Constant values for Height and Width for a character/letter
-    private final double LETTER_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight()/58.5;
-    private final double LETTER_WIDTH = Screen.getPrimary().getVisualBounds().getWidth()/227.5;
+    private final double LETTER_HEIGHT = 270/Math.rint(new Text("").getLayoutBounds().getHeight());
+    private final double LETTER_WIDTH = 126.09375/Math.rint(new Text("").getLayoutBounds().getHeight());
 
 	private int lineNum;
 //	private int wordNum;

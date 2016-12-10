@@ -12,11 +12,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Main extends Application {
@@ -28,7 +30,14 @@ public class Main extends Application {
 			HBox page = (HBox) FXMLLoader.load(Main.class.getResource("static/JottPrototype.fxml"));
 
             Region secondRegion = getPagePaneRegion(page);
-			Scene scene = new Scene(page,900, 600);
+
+            final double rem = Math.rint(new Text("").getLayoutBounds().getHeight());
+            final double ram = Math.rint(new Text("").getLayoutBounds().getWidth());
+
+            Scene scene = new Scene(page, 60 * rem, 40 * rem);
+
+            System.out.println("rem = " + rem);
+            System.out.println("ram = " + ram);
 
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());
 			page.getChildren().get(1).setOnKeyPressed(page.getChildren().get(1).getOnKeyPressed());

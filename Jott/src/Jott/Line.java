@@ -16,6 +16,7 @@ import sun.print.BackgroundServiceLookup;
 public class Line {
 
 	public final static double LINE_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight()/65.875;
+	public final static double CHAR_PER_LINE = 89;
 
 	private int lineNum;
 	private String lineValue;

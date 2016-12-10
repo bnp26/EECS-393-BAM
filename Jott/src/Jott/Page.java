@@ -17,7 +17,7 @@ public class Page {
 
 	private JFXButton pageButton;
 
-	public static final double PAGE_WIDTH = 740;
+	public static final double PAGE_WIDTH = 751;
 
 	public Page(String name) {
 		this.name = name;
