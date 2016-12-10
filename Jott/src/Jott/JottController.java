@@ -243,7 +243,6 @@ public class JottController implements Initializable {
         else {
             //this is the top left corner
 
-
             highlightedShape.getPoints().addAll(new Double[] {
                     startXPixel, startYPixel,
                     startXPixel2, startYPixel2,
@@ -704,20 +703,30 @@ public class JottController implements Initializable {
                         currentlyCoppied = highlitedString.toString();
                     }
                     else if(ke.getCode().getName().equals("X")) {
+                        
                         currentlyCoppied = highlitedString.toString();
-                        for(int i=0; i<currentlyCoppied.length(); i++) {
-                            lines.get(cursor.getLocation().getLineNum()).removeLetter(cursor.getLocation());
-                            letterNum -= 1;
-                        }
+                        letterNum -= currentlyCoppied.length();
+                        moveCursor(lineNum, letterNum);
 
+                        for(int i = 0; i<=currentlyCoppied.length(); i++) {
+                            if(highlightStart != highlightEnd)
+                                lines.get(cursor.getLocation().getLineNum()).removeLetter(highlightStart);
+                        }
+                        
+                        letterNum -= 1;
                         moveCursor(lineNum, letterNum);
                     }
                     else if(ke.getCode().getName().equals("V")) {
+                        for(int i = 0; i<currentlyCoppied.length(); i++) {
+                            lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), currentlyCoppied.charAt(currentlyCoppied.length() - i - 1));
+                            letterNum += 1;
+                        }                  
+                        /*
                         for(char character:currentlyCoppied.toCharArray()) {
                             lines.get(cursor.getLocation().getLineNum()).insertLetter(cursor.getLocation(), character);
                             letterNum += 1;
                         }
-
+                        */
                         moveCursor(lineNum, letterNum);
                     }
                 }
